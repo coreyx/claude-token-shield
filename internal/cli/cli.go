@@ -19,6 +19,7 @@ import (
 
 // Env is the process environment a command runs in, injectable for tests.
 type Env struct {
+	Stdin          io.Reader
 	Stdout, Stderr io.Writer
 	Getenv         func(string) string
 	// Executable is the running binary's path, for self-install.
@@ -26,6 +27,8 @@ type Env struct {
 	Now        func() time.Time
 	// TzOffsetMin is minutes east of UTC for wall-clock times; nil means the local zone.
 	TzOffsetMin func() int
+	// ManagedSettings overrides where managed settings are looked for; nil means the platform paths.
+	ManagedSettings []string
 }
 
 // tzOffset is the zone offset to render times in.
@@ -39,7 +42,7 @@ func (e Env) tzOffset() int {
 
 // RealEnv is the environment of the running process.
 func RealEnv() Env {
-	return Env{Stdout: os.Stdout, Stderr: os.Stderr, Getenv: os.Getenv, Executable: os.Executable, Now: time.Now}
+	return Env{Stdin: os.Stdin, Stdout: os.Stdout, Stderr: os.Stderr, Getenv: os.Getenv, Executable: os.Executable, Now: time.Now}
 }
 
 // Exit codes outside the check states (REQ-19.0.3 reserves 0–50 for those).
@@ -55,6 +58,7 @@ commands:
   check          the cache state of the newest session [--verbose|--diff|--probe] [--session <id>]
   version        the companions' version
   paths          where Token Shield keeps its data
+  setup          point Claude Code's statusline at the bridge [--undo] [--yes]
   self-install   copy these binaries into the data directory`
 
 // Run runs one command line (without the program name) and returns the exit code.
@@ -64,8 +68,11 @@ func Run(args []string, env Env) int {
 		return ExitUsage
 	}
 	cmd, rest := args[0], args[1:]
-	if cmd == "check" {
+	switch cmd {
+	case "check":
 		return check(rest, env)
+	case "setup":
+		return setup(rest, env)
 	}
 	asJSON := false
 	for _, a := range rest {

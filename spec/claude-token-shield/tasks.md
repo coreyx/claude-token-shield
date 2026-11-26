@@ -152,7 +152,7 @@ The Go companions produce the same assessment, costs and text as the core, write
     3. Make `--probe` explain that an exact-prefix probe needs the mod, and make no request.
     4. Test: `--json` validates against `schemas/check.schema.json`; each state fixture exits with its code; `--probe` makes no network call.
 
-- [ ] **TASK-16: Build `tshield setup` for the bridge**
+- [x] **TASK-16: Build `tshield setup` for the bridge**
   - **Associated Acceptance Criteria**: `8.3`
   - **Concrete Steps**:
     1. Implement `tshield setup`: show the current and the new `statusLine` value, ask for confirmation, run `self-install`, save the previous command to `bridge.json`, and write `statusLine.command` and `refreshInterval` (as TASK-2 confirmed) into the user settings, aborting if the file changed since it was shown.
