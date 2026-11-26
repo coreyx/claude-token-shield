@@ -204,7 +204,7 @@ With the mod loaded, the status segment, band, toasts and `/cache-check` work fr
 
 Levers run with consent, prompts that would trigger an expensive rebuild are held, switches and resumes show their cost first, and the probe and keep-alive spend only what the user approved.
 
-- [ ] **TASK-21: Build the lever runner, the compact and clear controls, and the settings writer**
+- [x] **TASK-21: Build the lever runner, the compact and clear controls, and the settings writer**
   - **Associated Acceptance Criteria**: `5.1`, `5.2`, `5.3`, `5.4`, `17.1`, `17.2`, `17.3`, `17.4`
   - **Concrete Steps**:
     1. Implement `LeverRunner.run` for command levers through `$.command.run`, reporting a failure in a toast and changing nothing else.

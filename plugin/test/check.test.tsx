@@ -120,18 +120,6 @@ test('--diff after a model switch names it (AC 6.4)', async ($, on) => {
   expect(text).toContain('model: claude-opus-5-5 → claude-sonnet-5-5')
 })
 
-test('a lever button puts its command in the prompt', async ($, on) => {
-  const seen = engine(on)
-  const calls = uiCalls(on)
-  placeSnapshot(seen)
-  await $.session.start(START)
-  await $.command.run(check())
-  const bar = await $.ui.mount({ plugin: 'token-shield', component: 'Placed', requestId: 'token-shield-levers', surface: 'desktop', props: { id: 'token-shield-levers', plugin: 'token-shield' } })
-  await bar.press({ key: 'compact' })
-  expect(calls.filled).toEqual(['/compact'])
-  await bar.unmount()
-})
-
 test('/cache-check setup asks in the band and runs tshield setup on Confirm', async ($, on) => {
   const seen = engine(on, { binary: true })
   uiCalls(on)

@@ -5,8 +5,11 @@ import { formatString } from '../../core/data/load'
 import { renderCheck } from '../../core/render/check'
 import { glyphParams, glyphSet } from '../../core/render/format'
 import type { TokenShieldBand, TokenShieldLevers, TokenShieldPane } from '../../types'
+import { isCommandLever } from '../actions/levers'
+import { cancelSetting, offerSetting } from '../actions/settings'
 import { host } from '../host/host'
 import { evaluateFor, isTurnRunning } from '../session/model'
+import { LeverButton } from './lever-button'
 
 /** The pane's text (design D7: a mid-turn /cache-check opens the pane instead). */
 const paneAtom = atom({ plugin: 'token-shield', key: 'pane' } as const, null as TokenShieldPane)
@@ -20,7 +23,7 @@ export const PANE_ID = 'token-shield'
 export const LEVER_BAR_ID = 'token-shield-levers'
 
 /** Options built in later tasks; until then they say so. */
-const LATER = new Set(['--probe', '--force', 'history', 'keepalive', 'ttl', 'forget'])
+const LATER = new Set(['--probe', '--force', 'history', 'keepalive', 'forget'])
 
 /** A display-only answer: shown to the person, never sent in a request (REQ-6.0.5). */
 function shown(text: string) {
@@ -47,6 +50,7 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
   const words = args.trim() === '' ? [] : args.trim().split(/\s+/)
   const option = words[0]
   if (option === 'setup') return shown(await offerSetup($))
+  if (option === 'ttl') return shown(await offerTtl($, words.slice(1), t))
   if (option !== undefined && LATER.has(option)) return shown(t('command.not_yet', { option }))
   if (option !== undefined && option !== '--verbose' && option !== '--diff') return shown(t('command.unknown_option', { option }))
 
@@ -64,7 +68,7 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
     await $.ui.open({ id: PANE_ID, title: t('pane.title') })
     return shown('')
   }
-  const levers = ev.quotes.filter(q => q.kind === 'command' && COMMANDS.has(q.lever)).map(q => q.lever)
+  const levers = ev.quotes.filter(q => q.kind === 'command' && isCommandLever(q.lever)).map(q => q.lever)
   await update($, leversAtom, () => levers)
   if (levers.length > 0) await $.ui.place({ id: LEVER_BAR_ID })
   return shown(text)
@@ -90,19 +94,11 @@ export async function drawPane($: EngineInterface, e: RenderInput<'Pane'>): Prom
   )
 }
 
-/** Each command lever's slash command; /btw takes the question after it. */
-const COMMANDS = new Map<string, string>([
-  ['compact', '/compact'],
-  ['clear', '/clear'],
-  ['rewind', '/rewind'],
-  ['recap', '/recap'],
-  ['btw', '/btw '],
-])
-
 /**
- * Draws the lever bar placed under a /cache-check answer: one button per
- * command lever the last check found applicable. A button puts the command in the prompt; Enter runs it, so
- * the person always confirms (TASK-21 adds the runner and its confirmations).
+ * Draws the lever bar placed under a /cache-check answer: a LeverButton per
+ * command lever the last check found applicable (REQ-17.0.5). It is placed
+ * only from the main session's own /cache-check, so no control is offered for
+ * a subagent or another session (REQ-17.0.4).
  *
  * @param $ the engine interface
  * @param e the Placed render request
@@ -114,21 +110,29 @@ export async function drawLeverBar($: EngineInterface, e: RenderInput<'Placed'>)
   const shield = host()
   const title = shield?.data ? formatString(shield.data.strings, 'levers.title') : 'Token Shield levers:'
   const levers = await read($, leversAtom)
-  const { Box, Button, Text } = $.ui.resolve(e)
+  const buttons: RenderElement[] = []
+  for (const lever of levers) buttons.push(await LeverButton($, e, lever, `bar:${lever}`))
+  const { Box, Text } = $.ui.resolve(e)
   return (
     <Box flexDirection="row" gap={1}>
       <Text dimColor>{title}</Text>
-      {levers.map(id => {
-        const command = COMMANDS.get(id) ?? `/${id}`
-        return <Button key={id} label={command.trim()} onPress={() => fillPrompt($, command)} />
-      })}
+      {buttons}
     </Box>
   )
 }
 
-/** Puts a command in the prompt box for the person to send. */
-async function fillPrompt($: EngineInterface, command: string): Promise<void> {
-  await $.prompt.fill({ text: command })
+/**
+ * `/cache-check ttl 5m|1h [--subagent]`: offers the TTL setting through the
+ * settings writer's confirm band. The advisor (TASK-30) adds the bare form.
+ *
+ * @param $ the engine interface
+ * @param words the arguments after `ttl`
+ * @param t the string formatter
+ */
+async function offerTtl($: EngineInterface, words: readonly string[], t: (key: string, params?: Record<string, string>) => string): Promise<string> {
+  const value = words.find(w => w === '5m' || w === '1h')
+  if (value === undefined || words.some(w => w !== value && w !== '--subagent')) return t('command.ttl_usage')
+  return offerSetting($, { key: words.includes('--subagent') ? 'subagentPromptCacheTtl' : 'promptCacheTtl', value })
 }
 
 /**
@@ -174,5 +178,6 @@ export async function confirmSetup($: EngineInterface): Promise<void> {
 export async function cancelConfirm($: EngineInterface): Promise<void> {
   const h = host()
   await update($, bandAtom, () => null)
-  if (h?.data) $.ui.toast(formatString(h.data.strings, 'setup.cancelled'))
+  const wasSetting = await cancelSetting($)
+  if (h?.data) $.ui.toast(formatString(h.data.strings, wasSetting ? 'setting.cancelled' : 'setup.cancelled'))
 }

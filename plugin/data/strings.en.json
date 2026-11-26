@@ -885,6 +885,38 @@
     "button.cancel": {
       "text": "Cancel",
       "tense": "none"
+    },
+    "lever.failed": {
+      "text": "Token Shield: {command} didn't run ({reason}); nothing was changed.",
+      "tense": "none"
+    },
+    "lever.confirm_clear": {
+      "text": "CONFIRM?",
+      "tense": "none"
+    },
+    "setting.confirm": {
+      "text": "Token Shield {dot} set {key} to {value} in your user settings ({file})?",
+      "tense": "none"
+    },
+    "setting.done": {
+      "text": "Token Shield: {key} is now {value} in {file}.",
+      "tense": "none"
+    },
+    "setting.changed": {
+      "text": "Token Shield: {file} changed after it was shown, so nothing was written. Run the lever again to see it as it is now.",
+      "tense": "none"
+    },
+    "setting.paste": {
+      "text": "Token Shield: couldn't write {file} ({reason}). To make the change yourself, add {snippet}",
+      "tense": "none"
+    },
+    "setting.cancelled": {
+      "text": "Token Shield: setting unchanged.",
+      "tense": "none"
+    },
+    "command.ttl_usage": {
+      "text": "Token Shield: /cache-check ttl 5m|1h [--subagent] sets the TTL after you confirm; the advisor comes in a later build.",
+      "tense": "none"
     }
   }
 }
