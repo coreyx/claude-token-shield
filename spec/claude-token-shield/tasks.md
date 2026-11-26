@@ -127,7 +127,7 @@ The Go companions produce the same assessment, costs and text as the core, write
     2. Write `fixtures/parity/*.json` cases (input snapshots, events, prices, time → expected `CheckView`, costs, exit code) covering every state, every billing mode and the recommendation cases from TASK-9.
     3. Add a parity runner to both suites, and make both pass the shared render goldens.
 
-- [ ] **TASK-13: Build the data-directory store, launchers and self-install**
+- [x] **TASK-13: Build the data-directory store, launchers and self-install**
   - **Associated Acceptance Criteria**: none (infrastructure for the bridge, the CLI and the mod's binary resolution)
   - **Concrete Steps**:
     1. Implement `internal/store`: data-directory resolution (`TOKEN_SHIELD_HOME`, else the user's home), atomic replace (temp file, then rename, retried on Windows sharing violations), JSONL append with size rotation, and the lock files.
