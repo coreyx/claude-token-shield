@@ -49,7 +49,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     3. Add a TypeScript loader (data injected into `core/`, read through `$.fs.read` in the mod) and a Go loader over the embedded files.
     4. Add a catalog test that fails if any string tagged `future` contains "hit" or "miss" as a word.
 
-- [ ] **TASK-4: Set up continuous integration on three platforms**
+- [x] **TASK-4: Set up continuous integration on three platforms**
   - **Associated Acceptance Criteria**: `21.4`
   - **Concrete Steps**:
     1. Add `.github/workflows/ci.yml`: a matrix over `windows-latest`, `macos-latest` and `ubuntu-latest` running `tsc`, Vitest with coverage thresholds, `go vet`, `go test -cover ./...`, and the parity suite.
