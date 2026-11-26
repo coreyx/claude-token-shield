@@ -144,7 +144,7 @@ The Go companions produce the same assessment, costs and text as the core, write
     4. Fail open: any error still runs the wrapped command and exits 0, logging to `logs/companions.log`.
     5. Test with a fixture wrapped command and with the mod heartbeat present and absent. Add `go test -bench` on a 1M-token-session payload, asserting p95 ≤ 50 ms excluding the wrapped command.
 
-- [ ] **TASK-15: Build `tshield check`**
+- [x] **TASK-15: Build `tshield check`**
   - **Associated Acceptance Criteria**: `7.4`, `19.1`, `19.2`
   - **Concrete Steps**:
     1. Implement `tshield check [--verbose|--diff] [--session <id>] [--json]`, assessing from the newest (or named) session's snapshot plus its history, and naming in verbose output the events only the mod sees.

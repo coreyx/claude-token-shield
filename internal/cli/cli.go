@@ -24,6 +24,17 @@ type Env struct {
 	// Executable is the running binary's path, for self-install.
 	Executable func() (string, error)
 	Now        func() time.Time
+	// TzOffsetMin is minutes east of UTC for wall-clock times; nil means the local zone.
+	TzOffsetMin func() int
+}
+
+// tzOffset is the zone offset to render times in.
+func (e Env) tzOffset() int {
+	if e.TzOffsetMin != nil {
+		return e.TzOffsetMin()
+	}
+	_, off := e.Now().Zone()
+	return off / 60
 }
 
 // RealEnv is the environment of the running process.
@@ -41,6 +52,7 @@ const (
 const usage = `usage: tshield <command> [--json]
 
 commands:
+  check          the cache state of the newest session [--verbose|--diff|--probe] [--session <id>]
   version        the companions' version
   paths          where Token Shield keeps its data
   self-install   copy these binaries into the data directory`
@@ -52,6 +64,9 @@ func Run(args []string, env Env) int {
 		return ExitUsage
 	}
 	cmd, rest := args[0], args[1:]
+	if cmd == "check" {
+		return check(rest, env)
+	}
 	asJSON := false
 	for _, a := range rest {
 		if a == "--json" {

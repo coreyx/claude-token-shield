@@ -801,6 +801,10 @@
     "cause.likely_server_side": {
       "text": "likely server-side (Claude Code's guess)",
       "tense": "past"
+    },
+    "check.cli_gap": {
+      "text": "tshield reads Claude Code's snapshot and the recorded history only; events the mod sees live since the last request (model, effort or fast-mode switches, plugin reloads) are not included here.",
+      "tense": "none"
     }
   }
 }

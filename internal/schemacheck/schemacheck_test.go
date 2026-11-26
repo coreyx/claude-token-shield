@@ -65,7 +65,11 @@ func TestValidate(t *testing.T) {
 // TestValidateSchemaErrors checks that an unusable schema or document is an error, not a pass.
 func TestValidateSchemaErrors(t *testing.T) {
 	cases := []struct{ name, schema, doc, want string }{
-		{"unsupported keyword", `{"oneOf":[]}`, `{}`, `keyword "oneOf" is not supported`},
+		{"unsupported keyword", `{"anyOf":[]}`, `{}`, `keyword "anyOf" is not supported`},
+		{"bad oneOf", `{"oneOf":{}}`, `1`, "oneOf must be an array"},
+		{"bad oneOf entry", `{"oneOf":[1]}`, `1`, "oneOf entries must be objects"},
+		{"bad type in list", `{"type":["date"]}`, `1`, `type "date" is not supported`},
+		{"bad schema in oneOf", `{"oneOf":[{"anyOf":[]}]}`, `1`, `keyword "anyOf"`},
 		{"unsupported type", `{"type":"date"}`, `1`, `type "date" is not supported`},
 		{"external ref", `{"$ref":"other.json"}`, `1`, `$ref "other.json" is not supported`},
 		{"missing ref", `{"$ref":"#/$defs/x"}`, `1`, `$ref "#/$defs/x" not found`},
@@ -83,5 +87,35 @@ func TestValidateSchemaErrors(t *testing.T) {
 				t.Errorf("got error %v, want one containing %q", err, c.want)
 			}
 		})
+	}
+}
+
+// TestValidateExtended covers the keywords the check view's schema uses.
+func TestValidateExtended(t *testing.T) {
+	const s = `{
+  "type": "object",
+  "properties": {
+    "pair": { "type": "array", "maxItems": 2 },
+    "p": { "type": ["number", "null"], "maximum": 1 },
+    "k": { "const": "learning" },
+    "o": { "oneOf": [{ "type": "null" }, { "type": "string" }] }
+  }
+}`
+	cases := map[string]string{
+		`{"pair":[1,2],"p":null,"k":"learning","o":"x"}`: "",
+		`{"pair":[1,2,3]}`:  "$.pair: allows at most 2 items",
+		`{"p":1.5}`:         "$.p: must be <= 1",
+		`{"p":"x"}`:         "$.p: must be of type [number null]",
+		`{"k":"estimated"}`: "$.k: must be learning",
+		`{"o":1}`:           "$.o: must match exactly one of 2 alternatives (matched 0)",
+	}
+	for doc, want := range cases {
+		got, err := Validate([]byte(s), []byte(doc))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if strings.Join(got, "\n") != want {
+			t.Errorf("%s: got %q, want %q", doc, got, want)
+		}
 	}
 }

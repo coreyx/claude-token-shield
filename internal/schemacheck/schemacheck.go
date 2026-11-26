@@ -3,9 +3,9 @@
 // test suite can check the shared data files against schemas/ without a
 // third-party dependency (tech.md: standard library only).
 //
-// Supported keywords: type, properties, required, additionalProperties
-// (boolean or schema), items, minItems, enum, minimum, exclusiveMinimum,
-// minLength, pattern, $ref to "#/$defs/<name>", and $defs. Any other keyword
+// Supported keywords: type (a name or a list), properties, required, additionalProperties
+// (boolean or schema), items, minItems, maxItems, enum, const, minimum, maximum,
+// exclusiveMinimum, minLength, pattern, oneOf, $ref to "#/$defs/<name>", and $defs. Any other keyword
 // is an error, so a schema can't quietly rely on something unchecked.
 package schemacheck
 
@@ -102,6 +102,20 @@ func (v *validator) check(schema map[string]any, value any, path string) {
 			if arr, ok := value.([]any); ok && float64(len(arr)) < number(schema[k]) {
 				v.fail(path, "needs at least %v items", schema[k])
 			}
+		case "maxItems":
+			if arr, ok := value.([]any); ok && float64(len(arr)) > number(schema[k]) {
+				v.fail(path, "allows at most %v items", schema[k])
+			}
+		case "maximum":
+			if n, ok := asNumber(value); ok && n > number(schema[k]) {
+				v.fail(path, "must be <= %v", schema[k])
+			}
+		case "const":
+			if fmt.Sprint(schema[k]) != fmt.Sprint(value) {
+				v.fail(path, "must be %v", schema[k])
+			}
+		case "oneOf":
+			v.checkOneOf(schema[k], value, path)
 		case "enum":
 			v.checkEnum(schema[k], value, path)
 		case "minimum":
@@ -169,8 +183,52 @@ func (v *validator) checkObject(schema map[string]any, obj map[string]any, path 
 	}
 }
 
-// checkType applies a single "type" name.
+// checkOneOf requires exactly one of the subschemas to accept the value.
+func (v *validator) checkOneOf(list, value any, path string) {
+	subs, ok := list.([]any)
+	if !ok {
+		v.err = fmt.Errorf("schema: oneOf must be an array")
+		return
+	}
+	matched := 0
+	for _, s := range subs {
+		sub, ok := s.(map[string]any)
+		if !ok {
+			v.err = fmt.Errorf("schema: oneOf entries must be objects")
+			return
+		}
+		trial := &validator{root: v.root}
+		trial.check(sub, value, path)
+		if trial.err != nil {
+			v.err = trial.err
+			return
+		}
+		if len(trial.problems) == 0 {
+			matched++
+		}
+	}
+	if matched != 1 {
+		v.fail(path, "must match exactly one of %d alternatives (matched %d)", len(subs), matched)
+	}
+}
+
+// checkType applies "type": one name, or a list of names any of which may match.
 func (v *validator) checkType(want, value any, path string) {
+	if list, ok := want.([]any); ok {
+		for _, w := range list {
+			trial := &validator{root: v.root}
+			trial.checkType(w, value, path)
+			if trial.err != nil {
+				v.err = trial.err
+				return
+			}
+			if len(trial.problems) == 0 {
+				return
+			}
+		}
+		v.fail(path, "must be of type %v", list)
+		return
+	}
 	name := fmt.Sprint(want)
 	ok := false
 	switch name {
