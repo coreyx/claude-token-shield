@@ -9,7 +9,8 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true,
+    "allowJs": true,
     "skipLibCheck": true
   },
-  "include": ["plugin/core", "tests", "vitest.config.ts"]
+  "include": ["plugin/core", "tests", "scripts", "vitest.config.ts"]
 }

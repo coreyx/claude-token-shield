@@ -1,0 +1,88 @@
+# Continuous integration on the three platforms Token Shield ships for
+# (tech.md, "Testing and CI"; requirements AC 21.4).
+#
+# The parity suite (shared fixtures run by Vitest and go test) runs inside the
+# Vitest and go test steps once fixtures/parity/ exists (TASK-12).
+name: ci
+
+# Every branch push runs, so a short-lived feature branch is checked before
+# its pull request exists; pull requests run against their merge result.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Install development tooling
+        run: npm ci
+
+      - name: Type-check the core and tests
+        run: npm run typecheck
+
+      - name: Vitest with coverage thresholds
+        run: npm run coverage
+
+      - name: Hooks never write context (AC 5.4)
+        run: npm run check:hooks
+
+      - name: gofmt
+        run: |
+          unformatted="$(gofmt -l .)"
+          if [ -n "$unformatted" ]; then echo "gofmt needed:"; echo "$unformatted"; exit 1; fi
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: go test with coverage
+        run: go test -cover ./...
+
+      # Validation reads the manifest and module offline; it needs no sign-in.
+      # The hooks module itself is type-checked by validate here: tsc against
+      # the engine's types needs files the engine writes when it loads the mod,
+      # which a runner doesn't have.
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code && claude --version
+
+      - name: claude plugin validate
+        run: claude plugin validate plugin
+
+      # `claude plugin test` exits 1 when the plugin has no *.test.ts files,
+      # so it runs once the first plugin test exists. If it turns out to need a
+      # signed-in Claude Code on a runner, this step is marked skipped and the
+      # run moves to the release checklist (tech.md, Constraints & risks).
+      - name: claude plugin test
+        run: |
+          if find plugin -name '*.test.ts' -o -name '*.test.tsx' | grep -q .; then
+            claude plugin test plugin
+          else
+            echo "No plugin tests yet; skipping."
+          fi
