@@ -59,6 +59,9 @@ commands:
   history        re-cache spend by cause and what was avoidable [--session <id>|--all] [--since 7d] [--misses] [--calibration]
   calibration    how well predictions matched outcomes, across sessions [--since 30d]
   ttl            whether the 5-minute or the 1-hour TTL would have cost less [--since 30d]
+  backfill       read earlier transcripts, numbers only, for a baseline
+  prune          remove history older than historyDays
+  forget         delete all stored history, snapshots and backfill [--yes]
   version        the companions' version
   paths          where Token Shield keeps its data
   setup          point Claude Code's statusline at the bridge [--undo] [--yes]
@@ -82,6 +85,12 @@ func Run(args []string, env Env) int {
 		return calibrationCmd(rest, env)
 	case "ttl":
 		return ttlCmd(rest, env)
+	case "backfill":
+		return backfillCmd(rest, env)
+	case "prune":
+		return pruneCmd(rest, env)
+	case "forget":
+		return forgetCmd(rest, env)
 	}
 	asJSON := false
 	for _, a := range rest {

@@ -103,14 +103,27 @@ func historyCmd(args []string, env Env) int {
 	filter := summary.Filter{Misses: a.misses}
 	s := summary.Summarize(sessions, rng, filter, &d.Prices, bridge.Provider(env.Getenv))
 	advice := summary.Advice(sessions, rng, filter, &d.Prices)
+	// The baseline compares this window with the transcripts before the install.
+	all := []summary.SessionHistory{}
+	for _, id := range historySessions(p.History) {
+		all = append(all, summary.SessionHistory{SessionID: id, Requests: history.ReadSession(p.History, id).Requests})
+	}
+	backfilled := []summary.SessionHistory{}
+	backfillDir := filepath.Join(p.DataDir, "backfill")
+	for _, id := range historySessions(backfillDir) {
+		backfilled = append(backfilled, summary.SessionHistory{SessionID: id, Requests: history.ReadSession(backfillDir, id).Requests})
+	}
+	at, ok := summary.InstallTime(all)
+	base := summary.Baseline(backfilled, at, ok, s, &d.Prices, bridge.Provider(env.Getenv))
 	if a.json {
 		return emit(env, true, struct {
 			summary.Summary
-			Advice summary.AdviceReport `json:"advice"`
-		}{s, advice}, "")
+			Advice   summary.AdviceReport    `json:"advice"`
+			Baseline *summary.BaselineReport `json:"baseline"`
+		}{s, advice, base}, "")
 	}
 	opts := render.Options{Glyphs: render.GlyphSet(configuredGlyphs(p.Config)), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: env.tzOffset()}
-	return emit(env, false, nil, render.RenderHistory(s, columns(env.Getenv), opts, &advice))
+	return emit(env, false, nil, render.RenderHistory(s, columns(env.Getenv), opts, &advice, base))
 }
 
 // historySessions lists the sessions with history, oldest change first.

@@ -7,6 +7,7 @@ import { host } from '../host/host'
 import { offerKeepAlive, startKeepAlive, stopKeepAlive } from '../actions/keepalive'
 import { runProbe } from '../actions/probe'
 import { confirmSetting } from '../actions/settings'
+import { runBackfill, runForget } from '../actions/store'
 import { cancelConfirm, confirmSetup } from './check'
 
 /** What the band shows; `null` hides it (design D8, D13). */
@@ -68,4 +69,6 @@ async function runConfirmed($: EngineInterface, action: string | null): Promise<
   else if (action === 'setting') await confirmSetting($)
   else if (action === 'probe') await runProbe($)
   else if (action === 'keepalive') await startKeepAlive($)
+  else if (action === 'forget') await runForget($)
+  else if (action === 'backfill') await runBackfill($)
 }

@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 import { adviceReport } from '../../plugin/core/history/advice'
+import { baseline, installTime } from '../../plugin/core/history/baseline'
 import { sinceRange, summarize } from '../../plugin/core/history/summarize'
 import type { SessionHistory } from '../../plugin/core/history/summarize'
 import type { ProviderKey } from '../../plugin/core/data/types'
@@ -34,6 +35,8 @@ interface HistoryCase {
   readonly session?: string
   readonly misses: boolean
   readonly sessions: readonly SessionHistory[]
+  /** Sessions backfilled from transcripts, for the baseline. */
+  readonly backfill?: readonly SessionHistory[]
 }
 
 const NOW = Date.UTC(2026, 0, 31, 12, 0)
@@ -114,6 +117,25 @@ const CASES: readonly HistoryCase[] = [
       },
     ],
   },
+  {
+    ...base,
+    name: 'baseline-before-and-since',
+    sessions: [{ sessionId: S2, requests: [hit(NOW - 5 * DAY), miss(NOW - 5 * DAY + 70 * MIN), hit(NOW - 5 * DAY + 71 * MIN)], events: [], skipped: 0 }],
+    backfill: [
+      {
+        sessionId: S1,
+        requests: [
+          hit(NOW - 60 * DAY, { source: 'transcript', tsStartTier: 'inferred' }),
+          miss(NOW - 60 * DAY + 70 * MIN, { source: 'transcript', tsStartTier: 'inferred' }),
+          hit(NOW - 40 * DAY, { source: 'transcript', tsStartTier: 'inferred' }),
+          miss(NOW - 40 * DAY + 80 * MIN, { source: 'transcript', tsStartTier: 'inferred' }),
+          miss(NOW - 40 * DAY + 160 * MIN, { source: 'transcript', tsStartTier: 'inferred' }),
+        ],
+        events: [],
+        skipped: 0,
+      },
+    ],
+  },
   { ...base, name: 'empty-window', since: '1d', sessions: [{ sessionId: S1, requests: [hit(t0), miss(t0 + 90 * MIN)], events: [], skipped: 0 }] },
 ]
 
@@ -123,10 +145,12 @@ function run(c: HistoryCase) {
   const filter = { misses: c.misses, ...(c.session !== undefined ? { session: c.session } : {}) }
   const summary = summarize(c.sessions, range, filter, prices, c.provider)
   const advice = adviceReport(c.sessions, range, filter, prices)
+  const base = c.backfill !== undefined ? baseline(c.backfill, installTime(c.sessions), summary, prices, c.provider) : null
   return {
     summary: JSON.parse(JSON.stringify(summary)),
     advice: JSON.parse(JSON.stringify(advice)),
-    text: renderHistory(summary, c.width, { glyphs: glyphSet(c.glyphs), strings, display: rules.display, tzOffsetMin: c.tzOffsetMin }, advice),
+    baseline: JSON.parse(JSON.stringify(base)),
+    text: renderHistory(summary, c.width, { glyphs: glyphSet(c.glyphs), strings, display: rules.display, tzOffsetMin: c.tzOffsetMin }, advice, base),
   }
 }
 

@@ -104,6 +104,8 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
       if (cmd === 'version') return ok('{"version":"0.2.0"}')
       if (cmd === 'paths') return ok('{"dataDir":"/home/example/.token-shield"}')
       if (cmd === 'self-install') return ok('{"installed":[]}')
+      if (cmd === 'setup' || cmd === 'prune' || cmd === 'forget') return ok('')
+      if (cmd === 'backfill') return ok('Token Shield: read 2 transcripts: 14 requests from 2 sessions; 0 lines unreadable (100.0% coverage).')
     }
     return { value: { exitCode: 1, stdout: '', stderr: 'not found', isStdoutTruncated: false, isStderrTruncated: false } }
   })

@@ -289,6 +289,7 @@
       "share": 1,
       "unevaluated": 1
     },
+    "baseline": null,
     "text": "History  01-01 12:00 – 01-31 12:00 · sessions 1 · requests 5\nRe-cache spend  $12.56 across 2 (1,610,020 tokens)\n  TTL expiry                      $6.28  1\n  unexplained                     $6.28  1\nAvoidable       $6.28 across 1\nAdvice          cheapest in hindsight 3 of 3 (100%)\n\nWhen         Session   Model                Outcome  Cause         Tokens      Cost\n01-29 13:10  11111111  claude-opus-5-5      miss     TTL expiry    805,010     $6.28  avoidable\n01-29 13:11  11111111  claude-opus-5-5      hit                          0     $0.00\n01-29 13:12  11111111  claude-opus-5-5      hit                          0     $0.00\n01-29 14:10  11111111  claude-opus-5-5      miss     unexplained   805,010     $6.28"
   }
 }

@@ -6,6 +6,7 @@
 
 import { formatString } from '../data/load';
 import type { AdviceReport } from '../history/advice';
+import type { BaselineReport } from '../history/baseline';
 import type { Calibration } from '../history/calibrate';
 import { MIN_GAPS, MIN_SESSIONS } from '../history/ttl';
 import type { TtlAdvice } from '../history/ttl';
@@ -27,8 +28,9 @@ const CAUSE_LABEL = 32;
  * @param width terminal columns; lines are fitted to it
  * @param o glyphs, catalog and time zone
  * @param advice the advice report for the same sessions, when there is one
+ * @param base the pre-install baseline, when transcripts were backfilled
  */
-export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOptions, advice: AdviceReport | null = null): string {
+export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOptions, advice: AdviceReport | null = null, base: BaselineReport | null = null): string {
   const t = (key: string, params: Record<string, string | number> = {}): string =>
     formatString(o.strings, key, { ...glyphParams(o.glyphs), ...params });
   const stamp = (ms: number) => formatStamp(ms, o.tzOffsetMin);
@@ -45,7 +47,11 @@ export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOp
     }
     lines.push(t('history.avoidable', { usd: formatUsd(s.avoidableUsd), count: s.avoidableCount }));
     if (s.unpriced > 0) lines.push(t('history.unpriced', { count: s.unpriced }));
-    if (advice !== null) {
+    if (base !== null) {
+      lines.push(t('history.baseline', { before: formatUsd(base.beforePerWeekUsd), weeks: Math.round(base.weeks), current: formatUsd(base.currentPerWeekUsd) }));
+    }
+    // Only with recommendations to report: a line of zeros says nothing.
+    if (advice !== null && advice.evaluated + advice.unevaluated > 0) {
       lines.push(
         advice.share !== null
           ? t('history.advice', { cheapest: advice.cheapest, n: advice.evaluated, share: formatPercent(advice.share, 0) })

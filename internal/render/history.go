@@ -15,7 +15,7 @@ const causeLabel = 32
 
 // RenderHistory renders a history summary at a width, with the advice line
 // when a report is given (plugin/core/render/history.ts).
-func RenderHistory(s summary.Summary, w int, o Options, advice *summary.AdviceReport) string {
+func RenderHistory(s summary.Summary, w int, o Options, advice *summary.AdviceReport, base *summary.BaselineReport) string {
 	g := o.Glyphs
 	t := func(key string, params map[string]string) string {
 		all := g.params()
@@ -43,7 +43,11 @@ func RenderHistory(s summary.Summary, w int, o Options, advice *summary.AdviceRe
 		if s.Unpriced > 0 {
 			lines = append(lines, t("history.unpriced", map[string]string{"count": itoa(s.Unpriced)}))
 		}
-		if advice != nil {
+		if base != nil {
+			lines = append(lines, t("history.baseline", map[string]string{"before": FormatUSD(base.BeforePerWeekUSD), "weeks": itoa(int(jsRound(base.Weeks))), "current": FormatUSD(base.CurrentPerWeekUSD)}))
+		}
+		// Only with recommendations to report: a line of zeros says nothing.
+		if advice != nil && advice.Evaluated+advice.Unevaluated > 0 {
 			if advice.Share != nil {
 				lines = append(lines, t("history.advice", map[string]string{"cheapest": itoa(advice.Cheapest), "n": itoa(advice.Evaluated), "share": FormatPercent(*advice.Share, 0)}))
 			} else {

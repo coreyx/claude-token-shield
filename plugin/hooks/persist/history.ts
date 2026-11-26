@@ -203,9 +203,10 @@ export async function writeHeartbeat($: EngineInterface, dataDir: string, sessio
  * @param $ the engine interface
  * @param dataDir the data directory
  * @param sessionId the session's id
+ * @param folder `history` for the mod's own records, `backfill` for those read from transcripts
  */
-export async function readSessionHistory($: EngineInterface, dataDir: string, sessionId: string): Promise<SessionHistory> {
-  const dir = `${dataDir}/history/${sessionId}`
+export async function readSessionHistory($: EngineInterface, dataDir: string, sessionId: string, folder: 'history' | 'backfill' = 'history'): Promise<SessionHistory> {
+  const dir = `${dataDir}/${folder}/${sessionId}`
   const entries = await $.fs.list(dir).catch(() => [])
   const chunks: { seq: number; records: HistoryRecord[] }[] = []
   let skipped = 0
@@ -245,8 +246,9 @@ export async function readSessionHistory($: EngineInterface, dataDir: string, se
  *
  * @param $ the engine interface
  * @param dataDir the data directory
+ * @param folder `history` or `backfill`
  */
-export async function historySessions($: EngineInterface, dataDir: string): Promise<string[]> {
-  const entries = await $.fs.list(`${dataDir}/history`).catch(() => [])
+export async function historySessions($: EngineInterface, dataDir: string, folder: 'history' | 'backfill' = 'history'): Promise<string[]> {
+  const entries = await $.fs.list(`${dataDir}/${folder}`).catch(() => [])
   return entries.filter(e => e.kind === 'dir').map(e => e.name)
 }

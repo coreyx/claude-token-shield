@@ -287,7 +287,7 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
     3. Add `/cache-check ttl` and `tshield ttl`, offering the TTL setting lever through TASK-21's settings writer.
     4. Test: a fixture with gaps mostly between 10 and 50 minutes on an API key recommends 1h with the estimated savings; a small fixture shows "not enough data".
 
-- [ ] **TASK-31: Build backfill, the baseline, pruning and deletion**
+- [x] **TASK-31: Build backfill, the baseline, pruning and deletion**
   - **Associated Acceptance Criteria**: `14.6`, `20.3`
   - **Concrete Steps**:
     1. Implement `tshield backfill` per design D17: incremental per-file cursors, numbers-only extraction picked by key, `backfill/` chunks under a lock, and a coverage report for unparsable lines.

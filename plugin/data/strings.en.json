@@ -827,15 +827,11 @@
       "tense": "none"
     },
     "command.description": {
-      "text": "Token Shield: the prompt cache's state, costs and levers (--verbose, --diff, --probe, history, keepalive, ttl, setup)",
+      "text": "Token Shield: the prompt cache's state, costs and levers (--verbose, --diff, --probe, history, keepalive, ttl, setup, forget)",
       "tense": "none"
     },
     "command.unknown_option": {
       "text": "Token Shield: unknown /cache-check option {option}. Try --verbose, --diff or setup.",
-      "tense": "none"
-    },
-    "command.not_yet": {
-      "text": "Token Shield: /cache-check {option} isn't available in this build yet.",
       "tense": "none"
     },
     "command.off": {
@@ -1248,6 +1244,58 @@
     },
     "ttl.billing_api": {
       "text": "the setting matters most on an API key or a provider.",
+      "tense": "none"
+    },
+    "history.baseline": {
+      "text": "Baseline        {before}/week avoidable before Token Shield ({weeks} weeks of transcripts), {current}/week since",
+      "tense": "past"
+    },
+    "backfill.done": {
+      "text": "Token Shield: read {files} transcripts: {requests} requests from {sessions} sessions; {unreadable} lines unreadable ({coverage} coverage).",
+      "tense": "past"
+    },
+    "backfill.busy": {
+      "text": "Token Shield: another backfill is running; try again when it finishes.",
+      "tense": "none"
+    },
+    "backfill.offer": {
+      "text": "Token Shield {dot} read your earlier Claude Code transcripts, numbers only, to measure what re-caching cost before Token Shield?",
+      "tense": "future"
+    },
+    "backfill.failed": {
+      "text": "Token Shield: the backfill didn't complete ({reason}).",
+      "tense": "none"
+    },
+    "backfill.cancelled": {
+      "text": "Token Shield: no backfill; run tshield backfill any time.",
+      "tense": "none"
+    },
+    "prune.done": {
+      "text": "Token Shield: removed {removed} sessions of history older than {days} days.",
+      "tense": "past"
+    },
+    "forget.needs_yes": {
+      "text": "Token Shield: forget deletes all stored history, snapshots and backfill; run it again with --yes to go ahead.",
+      "tense": "none"
+    },
+    "forget.done": {
+      "text": "Token Shield: all stored history, snapshots and backfill are deleted.",
+      "tense": "past"
+    },
+    "forget.confirm": {
+      "text": "Token Shield {dot} delete all stored history, snapshots and backfill? This can't be undone.",
+      "tense": "future"
+    },
+    "forget.failed": {
+      "text": "Token Shield: forget didn't complete ({reason}); some history may remain.",
+      "tense": "none"
+    },
+    "forget.no_binary": {
+      "text": "Token Shield: deleting history needs the tshield binary, which isn't available here.",
+      "tense": "none"
+    },
+    "forget.cancelled": {
+      "text": "Token Shield: nothing was deleted.",
       "tense": "none"
     }
   }

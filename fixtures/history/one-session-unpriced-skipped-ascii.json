@@ -188,6 +188,7 @@
       "share": null,
       "unevaluated": 0
     },
-    "text": "History  01-01 07:00 - 01-31 07:00 | sessions 1 | requests 3\nRe-cache spend  $6.26 across 2 (1,608,020 tokens)\n  TTL expiry                      $6.26  2\nAvoidable       $6.26 across 2\n1 re-caches have no price and are left out of the dollar figures.\nAdvice          none judged yet (0 with no action to judge)\n\nWhen         Session   Model                Outcome  Cause         To...\n01-29 08:30  66666666  claude-unknown-9     miss     TTL expiry    80...\n01-29 10:20  66666666  claude-opus-5-5      miss     TTL expiry    80...\n\n2 history chunks skipped (unreadable, or from a newer version)."
+    "baseline": null,
+    "text": "History  01-01 07:00 - 01-31 07:00 | sessions 1 | requests 3\nRe-cache spend  $6.26 across 2 (1,608,020 tokens)\n  TTL expiry                      $6.26  2\nAvoidable       $6.26 across 2\n1 re-caches have no price and are left out of the dollar figures.\n\nWhen         Session   Model                Outcome  Cause         To...\n01-29 08:30  66666666  claude-unknown-9     miss     TTL expiry    80...\n01-29 10:20  66666666  claude-opus-5-5      miss     TTL expiry    80...\n\n2 history chunks skipped (unreadable, or from a newer version)."
   }
 }

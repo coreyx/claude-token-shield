@@ -7,6 +7,7 @@ import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
 import { calibrateInBackground } from './actions/calibration'
+import { pruneInBackground } from './actions/store'
 import { gateSubmit, resetGate } from './actions/gate'
 import { keepAliveOnPrompt, resetKeepAlive } from './actions/keepalive'
 import { clearResume, showResume } from './actions/resume'
@@ -58,6 +59,8 @@ export const register: Register = (on, options) => {
     await historyTtl
     // Calibration reads every session's history: in the background, off the render path (D19).
     void calibrateInBackground($)
+    // Retention, through tshield since the mod's file access can't delete (D16).
+    void pruneInBackground($)
     // Registration fails on its own: the segment, band and history still start.
     if (h.data !== null) {
       try {

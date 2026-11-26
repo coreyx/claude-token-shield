@@ -5,6 +5,7 @@ import { formatString } from '../../core/data/load'
 import { sinceRange, summarize } from '../../core/history/summarize'
 import { renderCheck } from '../../core/render/check'
 import { adviceReport } from '../../core/history/advice'
+import { baseline, installTime } from '../../core/history/baseline'
 import { adviseTtl } from '../../core/history/ttl'
 import { calibrate } from '../../core/history/calibrate'
 import { renderCalibration, renderHistory, renderTtlAdvice } from '../../core/render/history'
@@ -14,6 +15,7 @@ import { isCommandLever } from '../actions/levers'
 import { recordedAssessments } from '../actions/calibration'
 import { cancelKeepAliveOffer, offerKeepAlive } from '../actions/keepalive'
 import { offerProbe } from '../actions/probe'
+import { offerBackfillOnce, offerForget } from '../actions/store'
 import { cancelSetting, offerSetting } from '../actions/settings'
 import { host } from '../host/host'
 import { flushHistory, historySessions, readSessionHistory } from '../persist/history'
@@ -30,9 +32,6 @@ const leversAtom = atom({ plugin: 'token-shield', key: 'levers' } as const, [] a
 /** The pane's and the lever bar's ids. */
 export const PANE_ID = 'token-shield'
 export const LEVER_BAR_ID = 'token-shield-levers'
-
-/** Options built in later tasks; until then they say so. */
-const LATER = new Set(['forget'])
 
 /** A display-only answer: shown to the person, never sent in a request (REQ-6.0.5). */
 function shown(text: string) {
@@ -66,7 +65,7 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
     const text = await answerHistory($, words.slice(1), Math.max(40, columns))
     return text === null ? shown(t('command.history_usage')) : showOrPane($, text, t('pane.title'))
   }
-  if (option !== undefined && LATER.has(option)) return shown(t('command.not_yet', { option }))
+  if (option === 'forget' && words.length === 1) return shown(await offerForget($))
   if (option !== undefined && option !== '--verbose' && option !== '--diff') return shown(t('command.unknown_option', { option }))
 
   const mode = option === '--verbose' ? 'verbose' : option === '--diff' ? 'diff' : 'default'
@@ -162,7 +161,11 @@ async function answerHistory($: EngineInterface, words: readonly string[], width
   const sessions = await Promise.all(ids.map(id => readSessionHistory($, dir, id)))
   const summary = summarize(sessions, range, { misses }, h.data!.prices, h.env.provider)
   const advice = adviceReport(sessions, range, { misses }, h.data!.prices)
-  return renderHistory(summary, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin }, advice)
+  // The baseline: the transcripts backfilled from before the install, against this window.
+  const everyone = all ? sessions : await Promise.all((await historySessions($, dir)).map(id => readSessionHistory($, dir, id)))
+  const backfilled = await Promise.all((await historySessions($, dir, 'backfill')).map(id => readSessionHistory($, dir, id, 'backfill')))
+  const base = baseline(backfilled, installTime(everyone), summary, h.data!.prices, h.env.provider)
+  return renderHistory(summary, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin }, advice, base)
 }
 
 /**
@@ -278,6 +281,7 @@ export async function confirmSetup($: EngineInterface): Promise<void> {
   const s = h.data.strings
   try {
     const r = await $.process.run([h.companions.bin, 'setup', '--yes'], { timeoutMs: 60_000 })
+    if (r.exitCode === 0) await offerBackfillOnce($)
     $.ui.toast(r.exitCode === 0 ? formatString(s, 'setup.done') : formatString(s, 'setup.failed', { reason: (r.stdout + r.stderr).trim().split('\n').pop() ?? `exit ${r.exitCode}` }))
   } catch (err) {
     $.ui.toast(formatString(s, 'setup.failed', { reason: err instanceof Error ? err.message : 'tshield did not run' }))
@@ -295,6 +299,7 @@ export async function cancelConfirm($: EngineInterface): Promise<void> {
   await update($, bandAtom, () => null)
   const wasSetting = await cancelSetting($)
   const wasKeepAlive = cancelKeepAliveOffer()
-  const key = wasSetting ? 'setting.cancelled' : wasKeepAlive ? 'keepalive.cancelled' : action === 'probe' ? 'probe.cancelled' : 'setup.cancelled'
+  const byAction: Record<string, string> = { probe: 'probe.cancelled', forget: 'forget.cancelled', backfill: 'backfill.cancelled' }
+  const key = wasSetting ? 'setting.cancelled' : wasKeepAlive ? 'keepalive.cancelled' : (byAction[action ?? ''] ?? 'setup.cancelled')
   if (h?.data) $.ui.toast(formatString(h.data.strings, key))
 }

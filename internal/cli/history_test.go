@@ -97,6 +97,7 @@ func TestHistoryMatchesFixtures(t *testing.T) {
 			_ = json.Unmarshal(out.Bytes(), &got)
 			advice := got["advice"]
 			delete(got, "advice")
+			delete(got, "baseline")
 			if d := diffJSON("summary", f.Expect.Summary, any(got)); d != "" {
 				t.Errorf("summary differs from the core's: %s", d)
 			}
