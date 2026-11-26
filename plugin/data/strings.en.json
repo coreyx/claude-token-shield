@@ -915,7 +915,7 @@
       "tense": "none"
     },
     "command.ttl_usage": {
-      "text": "Token Shield: /cache-check ttl 5m|1h [--subagent] sets the TTL after you confirm; the advisor comes in a later build.",
+      "text": "Token Shield: /cache-check ttl [--since 30d] shows the TTL advisor; /cache-check ttl 5m|1h [--subagent] sets the TTL after you confirm.",
       "tense": "none"
     },
     "detail.COLD": {
@@ -1192,6 +1192,62 @@
     },
     "history.advice_none": {
       "text": "Advice          none judged yet ({unevaluated} with no action to judge)",
+      "tense": "none"
+    },
+    "ttl.title": {
+      "text": "TTL advisor  {from} {dash} {to}",
+      "tense": "none"
+    },
+    "ttl.bucket.main": {
+      "text": "Main conversation",
+      "tense": "none"
+    },
+    "ttl.bucket.subagent": {
+      "text": "Subagents",
+      "tense": "none"
+    },
+    "ttl.gaps": {
+      "text": "{label}  {sessions} sessions {dot} {gaps} idle gaps",
+      "tense": "none"
+    },
+    "ttl.costs": {
+      "text": "  5-minute TTL {approx} {cost5m}   1-hour TTL {approx} {cost1h}   {arrow} {ttl} saves {approx} {savings}",
+      "tense": "none"
+    },
+    "ttl.not_enough": {
+      "text": "  not enough data yet: {sessions} of {minSessions} sessions, {gaps} of {minGaps} idle gaps",
+      "tense": "none"
+    },
+    "ttl.unpriced": {
+      "text": "  some requests have no price, so no recommendation",
+      "tense": "none"
+    },
+    "ttl.name.5m": {
+      "text": "5 minutes",
+      "tense": "none"
+    },
+    "ttl.name.1h": {
+      "text": "1 hour",
+      "tense": "none"
+    },
+    "ttl.billing": {
+      "text": "Subscriptions use the 1-hour TTL within plan usage,",
+      "tense": "none"
+    },
+    "ttl.apply": {
+      "text": "To apply: /cache-check ttl {ttl}{subagent} in Claude Code.",
+      "tense": "none"
+    },
+    "ttl.gap_lengths": {
+      "text": "  under 5 min {a} {dot} 5{dash}60 min {b} {dot} over an hour {c}",
+      "tense": "none"
+    },
+    "ttl.billing_credits": {
+      "text": "and the 5-minute TTL once on usage credits;",
+      "tense": "none"
+    },
+    "ttl.billing_api": {
+      "text": "the setting matters most on an API key or a provider.",
       "tense": "none"
     }
   }

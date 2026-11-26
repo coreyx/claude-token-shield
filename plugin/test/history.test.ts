@@ -100,3 +100,32 @@ test('each recommendation is stored with every alternative and its cost, and the
   expect(records.filter(r => r.type === 'lever_taken').map(r => r.lever!.lever)).toEqual(['compact'])
   expect((await $.command.run(check('history'))).text).toMatch(/\nAdvice          (cheapest in hindsight \d+ of \d+ \(\d+%\)|none judged yet)/)
 })
+
+test('/cache-check ttl shows the advisor and offers the cheaper TTL through the confirm band (AC 16.1)', async ($, on) => {
+  const seen = engine(on, { env: { HOME: '/home/example' } })
+  for (let s = 0; s < 12; s++) {
+    let ts = T0 - (s + 1) * DAY
+    const requests = [hit(ts)]
+    for (const gap of [12, 25, 48]) {
+      ts += gap * MIN
+      requests.push(request(ts, 400_000, 4_000))
+    }
+    placeChunk(seen, `session-${String(s).padStart(2, '0')}`, 0, requests)
+  }
+  await $.session.start(START)
+  const { text } = await $.command.run(check('ttl'))
+  expect(text).toMatch(/Main conversation  12 sessions · 36 idle gaps/)
+  expect(text).toMatch(/→ 1 hour saves ≈ \$\d+\.\d\d/)
+  expect(text).toMatch(/set promptCacheTtl to "1h" in your user settings \(~\/\.claude\/settings\.json\)\?$/)
+  expect(seen.files.has('/home/example/.claude/settings.json')).toBe(false)
+})
+
+test('/cache-check ttl with too little history says so and offers nothing (AC 16.2)', async ($, on) => {
+  const seen = engine(on)
+  placeChunk(seen, SESSION, 0, [hit(T0 - DAY), request(T0 - DAY + 20 * MIN, 400_000, 4_000)])
+  await $.session.start(START)
+  const { text } = await $.command.run(check('ttl'))
+  expect(text).toContain('not enough data yet: 1 of 10 sessions, 1 of 20 idle gaps')
+  expect(text).not.toMatch(/set promptCacheTtl/)
+  expect((await $.command.run(check('ttl --since soon'))).text).toMatch(/^Token Shield: \/cache-check ttl \[--since 30d\]/)
+})

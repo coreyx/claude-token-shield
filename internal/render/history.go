@@ -131,3 +131,40 @@ func RenderCalibration(c summary.Calibration, minCalibrationN, w int, o Options)
 	}
 	return strings.Join(lines, "\n")
 }
+
+// RenderTTLAdvice renders the TTL advisor (plugin/core/render/history.ts).
+func RenderTTLAdvice(a summary.TTLAdvice, w int, o Options) string {
+	g := o.Glyphs
+	t := func(key string, params map[string]string) string {
+		all := g.params()
+		for k, v := range params {
+			all[k] = v
+		}
+		return o.Strings.Format(key, all)
+	}
+	itoa := strconv.Itoa
+	stamp := func(ms float64) string { return FormatStamp(ms, o.TzOffsetMin) }
+	lines := []string{t("ttl.title", map[string]string{"from": stamp(a.Range.From), "to": stamp(a.Range.To)})}
+	for _, name := range []string{"main", "subagent"} {
+		b := a.Main
+		if name == "subagent" {
+			b = a.Subagent
+		}
+		lines = append(lines, "",
+			t("ttl.gaps", map[string]string{"label": t("ttl.bucket."+name, nil), "sessions": itoa(b.Sessions), "gaps": itoa(b.GapCount)}),
+			t("ttl.gap_lengths", map[string]string{"a": itoa(b.Gaps.Under5m), "b": itoa(b.Gaps.Under1h), "c": itoa(b.Gaps.Over1h)}))
+		switch {
+		case b.Recommended != nil:
+			lines = append(lines, t("ttl.costs", map[string]string{"cost5m": FormatUSD(*b.Cost5mUSD), "cost1h": FormatUSD(*b.Cost1hUSD), "ttl": t("ttl.name."+*b.Recommended, nil), "savings": FormatUSD(*b.SavingsUSD)}))
+		case b.Sessions >= summary.MinSessions && b.GapCount >= summary.MinGaps:
+			lines = append(lines, t("ttl.unpriced", nil))
+		default:
+			lines = append(lines, t("ttl.not_enough", map[string]string{"sessions": itoa(b.Sessions), "minSessions": itoa(summary.MinSessions), "gaps": itoa(b.GapCount), "minGaps": itoa(summary.MinGaps)}))
+		}
+	}
+	lines = append(lines, "", t("ttl.billing", nil), t("ttl.billing_credits", nil), t("ttl.billing_api", nil))
+	for i, l := range lines {
+		lines[i] = Fit(l, w, g.Ellipsis)
+	}
+	return strings.Join(lines, "\n")
+}

@@ -5,8 +5,9 @@ import { formatString } from '../../core/data/load'
 import { sinceRange, summarize } from '../../core/history/summarize'
 import { renderCheck } from '../../core/render/check'
 import { adviceReport } from '../../core/history/advice'
+import { adviseTtl } from '../../core/history/ttl'
 import { calibrate } from '../../core/history/calibrate'
-import { renderCalibration, renderHistory } from '../../core/render/history'
+import { renderCalibration, renderHistory, renderTtlAdvice } from '../../core/render/history'
 import { glyphParams, glyphSet } from '../../core/render/format'
 import type { TokenShieldBand, TokenShieldLevers, TokenShieldPane } from '../../types'
 import { isCommandLever } from '../actions/levers'
@@ -82,6 +83,32 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
   await update($, leversAtom, () => levers)
   if (levers.length > 0) await $.ui.place({ id: LEVER_BAR_ID })
   return shown(text)
+}
+
+/**
+ * The bare `/cache-check ttl [--since 30d]` (REQ-16): the TTL advisor over
+ * every session in the window, and when the main conversation has a
+ * recommendation, that setting offered in the band's confirm mode through
+ * the settings writer. Nothing changes until Confirm.
+ *
+ * @param $ the engine interface
+ * @param words the arguments after `ttl`
+ * @param t the string formatter
+ */
+async function adviseAndOffer($: EngineInterface, words: readonly string[], t: (key: string, params?: Record<string, string>) => string): Promise<string> {
+  const h = host()!
+  if (words.length !== 0 && words.length !== 2) return t('command.ttl_usage')
+  const range = sinceRange(words[1], await $.clock.now())
+  if (range === null) return t('command.ttl_usage')
+  const dir = h.companions.dataDir
+  await flushHistory($, dir, h.sessionId)
+  const sessions = await Promise.all((await historySessions($, dir)).map(id => readSessionHistory($, dir, id)))
+  const advice = adviseTtl(sessions, range, h.data!.prices, h.env.provider)
+  const text = renderTtlAdvice(advice, 100, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin })
+  const lines = [text]
+  if (advice.subagent.recommended !== null) lines.push(t('ttl.apply', { ttl: advice.subagent.recommended, subagent: ' --subagent' }))
+  if (advice.main.recommended !== null) lines.push('', await offerSetting($, { key: 'promptCacheTtl', value: advice.main.recommended }))
+  return lines.join('\n')
 }
 
 /**
@@ -216,6 +243,7 @@ export async function drawLeverBar($: EngineInterface, e: RenderInput<'Placed'>)
  * @param t the string formatter
  */
 async function offerTtl($: EngineInterface, words: readonly string[], t: (key: string, params?: Record<string, string>) => string): Promise<string> {
+  if (words.length === 0 || words[0] === '--since') return adviseAndOffer($, words, t)
   const value = words.find(w => w === '5m' || w === '1h')
   if (value === undefined || words.some(w => w !== value && w !== '--subagent')) return t('command.ttl_usage')
   return offerSetting($, { key: words.includes('--subagent') ? 'subagentPromptCacheTtl' : 'promptCacheTtl', value })

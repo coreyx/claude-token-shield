@@ -1,0 +1,964 @@
+{
+  "name": "short-gaps-5m",
+  "now": 1769860800000,
+  "width": 100,
+  "glyphs": "unicode",
+  "provider": "firstParty",
+  "sessions": [
+    {
+      "sessionId": "s0",
+      "requests": [
+        {
+          "id": "req-1769774400000",
+          "lane": "main",
+          "tsStart": 1769774400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769774460000",
+          "lane": "main",
+          "tsStart": 1769774460000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769774580000",
+          "lane": "main",
+          "tsStart": 1769774580000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769774760000",
+          "lane": "main",
+          "tsStart": 1769774760000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769775000000",
+          "lane": "main",
+          "tsStart": 1769775000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s1",
+      "requests": [
+        {
+          "id": "req-1769688000000",
+          "lane": "main",
+          "tsStart": 1769688000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688060000",
+          "lane": "main",
+          "tsStart": 1769688060000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688180000",
+          "lane": "main",
+          "tsStart": 1769688180000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688360000",
+          "lane": "main",
+          "tsStart": 1769688360000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688600000",
+          "lane": "main",
+          "tsStart": 1769688600000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s2",
+      "requests": [
+        {
+          "id": "req-1769601600000",
+          "lane": "main",
+          "tsStart": 1769601600000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769601660000",
+          "lane": "main",
+          "tsStart": 1769601660000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769601780000",
+          "lane": "main",
+          "tsStart": 1769601780000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769601960000",
+          "lane": "main",
+          "tsStart": 1769601960000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769602200000",
+          "lane": "main",
+          "tsStart": 1769602200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s3",
+      "requests": [
+        {
+          "id": "req-1769515200000",
+          "lane": "main",
+          "tsStart": 1769515200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515260000",
+          "lane": "main",
+          "tsStart": 1769515260000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515380000",
+          "lane": "main",
+          "tsStart": 1769515380000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515560000",
+          "lane": "main",
+          "tsStart": 1769515560000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515800000",
+          "lane": "main",
+          "tsStart": 1769515800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s4",
+      "requests": [
+        {
+          "id": "req-1769428800000",
+          "lane": "main",
+          "tsStart": 1769428800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769428860000",
+          "lane": "main",
+          "tsStart": 1769428860000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769428980000",
+          "lane": "main",
+          "tsStart": 1769428980000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769429160000",
+          "lane": "main",
+          "tsStart": 1769429160000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769429400000",
+          "lane": "main",
+          "tsStart": 1769429400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s5",
+      "requests": [
+        {
+          "id": "req-1769342400000",
+          "lane": "main",
+          "tsStart": 1769342400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769342460000",
+          "lane": "main",
+          "tsStart": 1769342460000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769342580000",
+          "lane": "main",
+          "tsStart": 1769342580000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769342760000",
+          "lane": "main",
+          "tsStart": 1769342760000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769343000000",
+          "lane": "main",
+          "tsStart": 1769343000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s6",
+      "requests": [
+        {
+          "id": "req-1769256000000",
+          "lane": "main",
+          "tsStart": 1769256000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256060000",
+          "lane": "main",
+          "tsStart": 1769256060000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256180000",
+          "lane": "main",
+          "tsStart": 1769256180000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256360000",
+          "lane": "main",
+          "tsStart": 1769256360000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256600000",
+          "lane": "main",
+          "tsStart": 1769256600000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s7",
+      "requests": [
+        {
+          "id": "req-1769169600000",
+          "lane": "main",
+          "tsStart": 1769169600000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769169660000",
+          "lane": "main",
+          "tsStart": 1769169660000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769169780000",
+          "lane": "main",
+          "tsStart": 1769169780000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769169960000",
+          "lane": "main",
+          "tsStart": 1769169960000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769170200000",
+          "lane": "main",
+          "tsStart": 1769170200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s8",
+      "requests": [
+        {
+          "id": "req-1769083200000",
+          "lane": "main",
+          "tsStart": 1769083200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083260000",
+          "lane": "main",
+          "tsStart": 1769083260000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083380000",
+          "lane": "main",
+          "tsStart": 1769083380000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083560000",
+          "lane": "main",
+          "tsStart": 1769083560000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083800000",
+          "lane": "main",
+          "tsStart": 1769083800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s9",
+      "requests": [
+        {
+          "id": "req-1768996800000",
+          "lane": "main",
+          "tsStart": 1768996800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768996860000",
+          "lane": "main",
+          "tsStart": 1768996860000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768996980000",
+          "lane": "main",
+          "tsStart": 1768996980000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768997160000",
+          "lane": "main",
+          "tsStart": 1768997160000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768997400000",
+          "lane": "main",
+          "tsStart": 1768997400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    }
+  ],
+  "expect": {
+    "advice": {
+      "range": {
+        "from": 1767268800000,
+        "to": 1769860800000
+      },
+      "main": {
+        "sessions": 10,
+        "gaps": {
+          "under5m": 40,
+          "under1h": 0,
+          "over1h": 0
+        },
+        "gapCount": 40,
+        "cost5mUsd": 4.832079999999999,
+        "cost1hUsd": 5.312080000000003,
+        "recommended": "5m",
+        "savingsUsd": 0.480000000000004
+      },
+      "subagent": {
+        "sessions": 0,
+        "gaps": {
+          "under5m": 0,
+          "under1h": 0,
+          "over1h": 0
+        },
+        "gapCount": 0,
+        "cost5mUsd": 0,
+        "cost1hUsd": 0,
+        "recommended": null,
+        "savingsUsd": null
+      }
+    },
+    "text": "TTL advisor  01-01 12:00 – 01-31 12:00\n\nMain conversation  10 sessions · 40 idle gaps\n  under 5 min 40 · 5–60 min 0 · over an hour 0\n  5-minute TTL ≈ $4.83   1-hour TTL ≈ $5.31   → 5 minutes saves ≈ $0.48\n\nSubagents  0 sessions · 0 idle gaps\n  under 5 min 0 · 5–60 min 0 · over an hour 0\n  not enough data yet: 0 of 10 sessions, 0 of 20 idle gaps\n\nSubscriptions use the 1-hour TTL within plan usage,\nand the 5-minute TTL once on usage credits;\nthe setting matters most on an API key or a provider."
+  }
+}

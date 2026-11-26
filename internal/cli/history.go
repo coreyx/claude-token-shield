@@ -216,3 +216,60 @@ func calibrationCmd(args []string, env Env) int {
 	opts := render.Options{Glyphs: render.GlyphSet(configuredGlyphs(p.Config)), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: env.tzOffset()}
 	return emit(env, false, nil, render.RenderCalibration(c, pr.MinCalibrationN, columns(env.Getenv), opts))
 }
+
+// ttlCmd prints the TTL advisor across every session in the window
+// (REQ-16): `tshield ttl [--since 30d] [--json]`. Changing the setting is the
+// mod's, through its confirmation, so the text ends with how to apply it there.
+func ttlCmd(args []string, env Env) int {
+	since, asJSON := "", false
+	for i := 0; i < len(args); i++ {
+		switch args[i] {
+		case "--json":
+			asJSON = true
+		case "--since":
+			if i+1 >= len(args) {
+				fmt.Fprintln(env.Stderr, "tshield ttl: --since needs a value")
+				return ExitUsage
+			}
+			i++
+			since = args[i]
+		default:
+			fmt.Fprintf(env.Stderr, "tshield ttl: unknown option %q\n", args[i])
+			return ExitUsage
+		}
+	}
+	now := float64(env.Now().UnixMilli())
+	rng, ok := summary.SinceRange(since, now)
+	if !ok {
+		fmt.Fprintln(env.Stderr, "tshield ttl: --since takes a number of days or hours, such as 30d or 12h")
+		return ExitUsage
+	}
+	d, err := data.Load()
+	if err != nil {
+		return fail(env, asJSON, err)
+	}
+	p, err := ResolvePaths(env.Getenv)
+	if err != nil {
+		return fail(env, asJSON, err)
+	}
+	sessions := []summary.SessionHistory{}
+	for _, id := range historySessions(p.History) {
+		h := history.ReadSession(p.History, id)
+		sessions = append(sessions, summary.SessionHistory{SessionID: id, Requests: h.Requests})
+	}
+	a := summary.AdviseTTL(sessions, rng, &d.Prices, bridge.Provider(env.Getenv))
+	if asJSON {
+		return emit(env, true, a, "")
+	}
+	opts := render.Options{Glyphs: render.GlyphSet(configuredGlyphs(p.Config)), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: env.tzOffset()}
+	text := render.RenderTTLAdvice(a, columns(env.Getenv), opts)
+	for _, b := range []struct {
+		bucket summary.TTLBucket
+		flag   string
+	}{{a.Main, ""}, {a.Subagent, " --subagent"}} {
+		if b.bucket.Recommended != nil {
+			text += "\n" + d.Strings.Format("ttl.apply", map[string]string{"ttl": *b.bucket.Recommended, "subagent": b.flag})
+		}
+	}
+	return emit(env, false, nil, text)
+}

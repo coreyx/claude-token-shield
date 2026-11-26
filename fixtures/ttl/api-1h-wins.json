@@ -1,0 +1,1556 @@
+{
+  "name": "api-1h-wins",
+  "now": 1769860800000,
+  "width": 100,
+  "glyphs": "unicode",
+  "provider": "firstParty",
+  "sessions": [
+    {
+      "sessionId": "s0",
+      "requests": [
+        {
+          "id": "req-1769774400000",
+          "lane": "main",
+          "tsStart": 1769774400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769775120000",
+          "lane": "main",
+          "tsStart": 1769775120000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769776620000",
+          "lane": "main",
+          "tsStart": 1769776620000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769779500000",
+          "lane": "main",
+          "tsStart": 1769779500000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769783700000",
+          "lane": "main",
+          "tsStart": 1769783700000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769774400000",
+          "lane": "subagent",
+          "tsStart": 1769774400000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769774520000",
+          "lane": "subagent",
+          "tsStart": 1769774520000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s1",
+      "requests": [
+        {
+          "id": "req-1769688000000",
+          "lane": "main",
+          "tsStart": 1769688000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688720000",
+          "lane": "main",
+          "tsStart": 1769688720000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769690220000",
+          "lane": "main",
+          "tsStart": 1769690220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769693100000",
+          "lane": "main",
+          "tsStart": 1769693100000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769697300000",
+          "lane": "main",
+          "tsStart": 1769697300000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688000000",
+          "lane": "subagent",
+          "tsStart": 1769688000000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688120000",
+          "lane": "subagent",
+          "tsStart": 1769688120000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s2",
+      "requests": [
+        {
+          "id": "req-1769601600000",
+          "lane": "main",
+          "tsStart": 1769601600000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769602320000",
+          "lane": "main",
+          "tsStart": 1769602320000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769603820000",
+          "lane": "main",
+          "tsStart": 1769603820000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769606700000",
+          "lane": "main",
+          "tsStart": 1769606700000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769610900000",
+          "lane": "main",
+          "tsStart": 1769610900000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769601600000",
+          "lane": "subagent",
+          "tsStart": 1769601600000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769601720000",
+          "lane": "subagent",
+          "tsStart": 1769601720000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s3",
+      "requests": [
+        {
+          "id": "req-1769515200000",
+          "lane": "main",
+          "tsStart": 1769515200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515920000",
+          "lane": "main",
+          "tsStart": 1769515920000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769517420000",
+          "lane": "main",
+          "tsStart": 1769517420000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769520300000",
+          "lane": "main",
+          "tsStart": 1769520300000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769524500000",
+          "lane": "main",
+          "tsStart": 1769524500000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515200000",
+          "lane": "subagent",
+          "tsStart": 1769515200000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769515320000",
+          "lane": "subagent",
+          "tsStart": 1769515320000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s4",
+      "requests": [
+        {
+          "id": "req-1769428800000",
+          "lane": "main",
+          "tsStart": 1769428800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769429520000",
+          "lane": "main",
+          "tsStart": 1769429520000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769431020000",
+          "lane": "main",
+          "tsStart": 1769431020000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769433900000",
+          "lane": "main",
+          "tsStart": 1769433900000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769438100000",
+          "lane": "main",
+          "tsStart": 1769438100000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769428800000",
+          "lane": "subagent",
+          "tsStart": 1769428800000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769428920000",
+          "lane": "subagent",
+          "tsStart": 1769428920000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s5",
+      "requests": [
+        {
+          "id": "req-1769342400000",
+          "lane": "main",
+          "tsStart": 1769342400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769343120000",
+          "lane": "main",
+          "tsStart": 1769343120000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769344620000",
+          "lane": "main",
+          "tsStart": 1769344620000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769347500000",
+          "lane": "main",
+          "tsStart": 1769347500000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769351700000",
+          "lane": "main",
+          "tsStart": 1769351700000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769342400000",
+          "lane": "subagent",
+          "tsStart": 1769342400000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769342520000",
+          "lane": "subagent",
+          "tsStart": 1769342520000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s6",
+      "requests": [
+        {
+          "id": "req-1769256000000",
+          "lane": "main",
+          "tsStart": 1769256000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256720000",
+          "lane": "main",
+          "tsStart": 1769256720000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769258220000",
+          "lane": "main",
+          "tsStart": 1769258220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769261100000",
+          "lane": "main",
+          "tsStart": 1769261100000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769265300000",
+          "lane": "main",
+          "tsStart": 1769265300000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256000000",
+          "lane": "subagent",
+          "tsStart": 1769256000000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769256120000",
+          "lane": "subagent",
+          "tsStart": 1769256120000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s7",
+      "requests": [
+        {
+          "id": "req-1769169600000",
+          "lane": "main",
+          "tsStart": 1769169600000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769170320000",
+          "lane": "main",
+          "tsStart": 1769170320000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769171820000",
+          "lane": "main",
+          "tsStart": 1769171820000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769174700000",
+          "lane": "main",
+          "tsStart": 1769174700000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769178900000",
+          "lane": "main",
+          "tsStart": 1769178900000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769169600000",
+          "lane": "subagent",
+          "tsStart": 1769169600000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769169720000",
+          "lane": "subagent",
+          "tsStart": 1769169720000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s8",
+      "requests": [
+        {
+          "id": "req-1769083200000",
+          "lane": "main",
+          "tsStart": 1769083200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083920000",
+          "lane": "main",
+          "tsStart": 1769083920000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769085420000",
+          "lane": "main",
+          "tsStart": 1769085420000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769088300000",
+          "lane": "main",
+          "tsStart": 1769088300000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769092500000",
+          "lane": "main",
+          "tsStart": 1769092500000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083200000",
+          "lane": "subagent",
+          "tsStart": 1769083200000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769083320000",
+          "lane": "subagent",
+          "tsStart": 1769083320000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s9",
+      "requests": [
+        {
+          "id": "req-1768996800000",
+          "lane": "main",
+          "tsStart": 1768996800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768997520000",
+          "lane": "main",
+          "tsStart": 1768997520000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768999020000",
+          "lane": "main",
+          "tsStart": 1768999020000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769001900000",
+          "lane": "main",
+          "tsStart": 1769001900000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769006100000",
+          "lane": "main",
+          "tsStart": 1769006100000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768996800000",
+          "lane": "subagent",
+          "tsStart": 1768996800000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768996920000",
+          "lane": "subagent",
+          "tsStart": 1768996920000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s10",
+      "requests": [
+        {
+          "id": "req-1768910400000",
+          "lane": "main",
+          "tsStart": 1768910400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768911120000",
+          "lane": "main",
+          "tsStart": 1768911120000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768912620000",
+          "lane": "main",
+          "tsStart": 1768912620000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768915500000",
+          "lane": "main",
+          "tsStart": 1768915500000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768919700000",
+          "lane": "main",
+          "tsStart": 1768919700000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768910400000",
+          "lane": "subagent",
+          "tsStart": 1768910400000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768910520000",
+          "lane": "subagent",
+          "tsStart": 1768910520000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    },
+    {
+      "sessionId": "s11",
+      "requests": [
+        {
+          "id": "req-1768824000000",
+          "lane": "main",
+          "tsStart": 1768824000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768824720000",
+          "lane": "main",
+          "tsStart": 1768824720000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768826220000",
+          "lane": "main",
+          "tsStart": 1768826220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768829100000",
+          "lane": "main",
+          "tsStart": 1768829100000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768833300000",
+          "lane": "main",
+          "tsStart": 1768833300000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768824000000",
+          "lane": "subagent",
+          "tsStart": 1768824000000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 800000,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1768824120000",
+          "lane": "subagent",
+          "tsStart": 1768824120000,
+          "tsStartTier": "measured",
+          "model": "claude-haiku-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write5m": 0,
+            "write1h": 4000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    }
+  ],
+  "expect": {
+    "advice": {
+      "range": {
+        "from": 1767268800000,
+        "to": 1769860800000
+      },
+      "main": {
+        "sessions": 12,
+        "gaps": {
+          "under5m": 0,
+          "under1h": 36,
+          "over1h": 12
+        },
+        "gapCount": 48,
+        "cost5mUsd": 121.92240000000008,
+        "cost1hUsd": 44.236631999999965,
+        "recommended": "1h",
+        "savingsUsd": 77.68576800000011
+      },
+      "subagent": {
+        "sessions": 12,
+        "gaps": {
+          "under5m": 12,
+          "under1h": 0,
+          "over1h": 0
+        },
+        "gapCount": 12,
+        "cost5mUsd": 0.48750599999999994,
+        "cost1hUsd": 0.49110600000000004,
+        "recommended": null,
+        "savingsUsd": null
+      }
+    },
+    "text": "TTL advisor  01-01 12:00 – 01-31 12:00\n\nMain conversation  12 sessions · 48 idle gaps\n  under 5 min 0 · 5–60 min 36 · over an hour 12\n  5-minute TTL ≈ $121.92   1-hour TTL ≈ $44.24   → 1 hour saves ≈ $77.69\n\nSubagents  12 sessions · 12 idle gaps\n  under 5 min 12 · 5–60 min 0 · over an hour 0\n  not enough data yet: 12 of 10 sessions, 12 of 20 idle gaps\n\nSubscriptions use the 1-hour TTL within plan usage,\nand the 5-minute TTL once on usage credits;\nthe setting matters most on an API key or a provider."
+  }
+}

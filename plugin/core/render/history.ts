@@ -7,6 +7,8 @@
 import { formatString } from '../data/load';
 import type { AdviceReport } from '../history/advice';
 import type { Calibration } from '../history/calibrate';
+import { MIN_GAPS, MIN_SESSIONS } from '../history/ttl';
+import type { TtlAdvice } from '../history/ttl';
 import { CAUSES } from '../history/summarize';
 import type { HistorySummary } from '../history/summarize';
 import type { CheckRenderOptions } from './check';
@@ -109,5 +111,45 @@ export function renderCalibration(c: Calibration, minCalibrationN: number, width
   } else if (c.hot.n < minCalibrationN) {
     lines.push('', t('calibration.priors', { n: c.hot.n, min: minCalibrationN }));
   }
+  return lines.map(l => fit(l, width, o.glyphs.ellipsis)).join('\n');
+}
+
+/**
+ * Renders the TTL advisor (REQ-16): for the main conversation and subagents,
+ * the idle gaps by length and both TTLs' costs with the cheaper one, or how
+ * far the history is from enough; then the billing explanation (REQ-16.0.3).
+ *
+ * @param advice the advice
+ * @param width terminal columns; lines are fitted to it
+ * @param o glyphs, catalog and time zone
+ */
+export function renderTtlAdvice(advice: TtlAdvice, width: number, o: CheckRenderOptions): string {
+  const t = (key: string, params: Record<string, string | number> = {}): string =>
+    formatString(o.strings, key, { ...glyphParams(o.glyphs), ...params });
+  const stamp = (ms: number) => formatStamp(ms, o.tzOffsetMin);
+  const lines = [t('ttl.title', { from: stamp(advice.range.from), to: stamp(advice.range.to) })];
+  for (const name of ['main', 'subagent'] as const) {
+    const b = advice[name];
+    lines.push(
+      '',
+      t('ttl.gaps', { label: t(`ttl.bucket.${name}`), sessions: b.sessions, gaps: b.gapCount }),
+      t('ttl.gap_lengths', { a: b.gaps.under5m, b: b.gaps.under1h, c: b.gaps.over1h }),
+    );
+    if (b.recommended !== null) {
+      lines.push(
+        t('ttl.costs', {
+          cost5m: formatUsd(b.cost5mUsd!),
+          cost1h: formatUsd(b.cost1hUsd!),
+          ttl: t(`ttl.name.${b.recommended}`),
+          savings: formatUsd(b.savingsUsd!),
+        }),
+      );
+    } else if (b.sessions >= MIN_SESSIONS && b.gapCount >= MIN_GAPS) {
+      lines.push(t('ttl.unpriced'));
+    } else {
+      lines.push(t('ttl.not_enough', { sessions: b.sessions, minSessions: MIN_SESSIONS, gaps: b.gapCount, minGaps: MIN_GAPS }));
+    }
+  }
+  lines.push('', t('ttl.billing'), t('ttl.billing_credits'), t('ttl.billing_api'));
   return lines.map(l => fit(l, width, o.glyphs.ellipsis)).join('\n');
 }

@@ -279,7 +279,7 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
     2. Implement `evaluateAdvice` in TypeScript and Go with the 5-turn horizon and the 5% tolerance, and show the cheapest-in-hindsight share with `n` in the history views.
     3. Test with a fixture of recommendations and known outcomes.
 
-- [ ] **TASK-30: Build the TTL advisor**
+- [x] **TASK-30: Build the TTL advisor**
   - **Associated Acceptance Criteria**: `16.1`, `16.2`
   - **Concrete Steps**:
     1. Implement `adviseTtl` in TypeScript and Go: compare re-cache costs under 5m and 1h across the recorded idle-gap distribution, separately for the main conversation and subagents, and require at least 10 sessions with 20 idle gaps per bucket.

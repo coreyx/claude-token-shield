@@ -199,3 +199,53 @@ func TestCalibrationCommand(t *testing.T) {
 		}
 	}
 }
+
+// TestTTLCommand gives the core's advice from chunks on disk, and how to apply it (AC 16.1, 16.2).
+func TestTTLCommand(t *testing.T) {
+	raw, _ := os.ReadFile("../../fixtures/ttl/api-1h-wins.json")
+	var f struct {
+		Now      float64                  `json:"now"`
+		Sessions []summary.SessionHistory `json:"sessions"`
+		Expect   struct {
+			Advice any `json:"advice"`
+		} `json:"expect"`
+	}
+	if err := json.Unmarshal(raw, &f); err != nil {
+		t.Fatal(err)
+	}
+	home := t.TempDir()
+	for _, s := range f.Sessions {
+		c := history.Chunk{V: history.Version, SessionID: s.SessionID}
+		for i := range s.Requests {
+			c.Records = append(c.Records, history.Record{Type: "request", Request: &s.Requests[i]})
+		}
+		if err := history.WriteChunk(filepath.Join(home, "history"), c); err != nil {
+			t.Fatal(err)
+		}
+	}
+	env, out, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home})
+	env.Now = func() time.Time { return time.UnixMilli(int64(f.Now)) }
+	if code := Run([]string{"ttl", "--json"}, env); code != ExitOK {
+		t.Fatalf("exit %d", code)
+	}
+	var got any
+	_ = json.Unmarshal(out.Bytes(), &got)
+	if d := diffJSON("advice", f.Expect.Advice, got); d != "" {
+		t.Errorf("advice differs from the core's: %s", d)
+	}
+	env2, out2, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home, "COLUMNS": "100"})
+	env2.Now = env.Now
+	if code := Run([]string{"ttl"}, env2); code != ExitOK || !strings.Contains(out2.String(), "To apply: /cache-check ttl 1h in Claude Code.") {
+		t.Errorf("text: exit %d\n%s", code, out2.String())
+	}
+	empty, out3, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": t.TempDir()})
+	if code := Run([]string{"ttl"}, empty); code != ExitOK || !strings.Contains(out3.String(), "not enough data yet") {
+		t.Errorf("empty: exit %d\n%s", code, out3.String())
+	}
+	for _, bad := range [][]string{{"ttl", "--since", "x"}, {"ttl", "--since"}, {"ttl", "--what"}} {
+		env, _, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home})
+		if code := Run(bad, env); code != ExitUsage {
+			t.Errorf("%v: exit %d", bad, code)
+		}
+	}
+}
