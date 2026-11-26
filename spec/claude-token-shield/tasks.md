@@ -61,7 +61,7 @@ The repository builds and tests on three platforms, the shared data files exist,
 
 `plugin/core/` assesses any fixture, prices it, quotes the levers, recommends one, decides the gate, and renders the check and the segment, all as pure, tested functions.
 
-- [ ] **TASK-5: Model facts, native snapshots and the session reducer**
+- [x] **TASK-5: Model facts, native snapshots and the session reducer**
   - **Associated Acceptance Criteria**: `1.1`, `1.3`, `1.7`
   - **Concrete Steps**:
     1. Define the `Fact` union, `NativeSnapshot`, `RequestRecord`, `EventRecord` and `SessionState` types with tier-tagged values (`measured`, `inferred`, `estimated`, `absent`).
