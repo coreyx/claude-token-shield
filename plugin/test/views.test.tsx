@@ -168,3 +168,27 @@ test('the comparator shows every lever with one recommended, and its /compact ru
   expect(commands).toEqual(['compact', 'compact'])
   await bar.unmount()
 })
+
+test('the history dashboard loads off the render path and shows spend by cause per day (AC 13.5)', async ($, on) => {
+  const seen = engine(on)
+  beneath(on, [])
+  const DAY = 86_400_000
+  const MIN = 60_000
+  const req = (ts: number, read: number, write: number) => ({
+    type: 'request',
+    request: { id: `r${ts}`, lane: 'main', tsStart: ts, tsStartTier: 'measured', model: 'claude-opus-5-5', speed: 'standard', ttl: '1h', usage: { input: 10, read, write5m: 0, write1h: write, output: 500 }, source: 'mod' },
+  })
+  const t0 = T0 - 2 * DAY
+  seen.files.set(`/plugin-data/history/${SESSION}/000000.json`, {
+    text: JSON.stringify({ v: 1, session_id: SESSION, seq: 0, records: [req(t0, 802_500, 2_000), req(t0 + 70 * MIN, 0, 802_500), req(t0 + 71 * MIN, 802_500, 2_000)] }),
+    mtimeMs: T0,
+  })
+  await $.session.start(START)
+  const pane = await $.ui.mount(PANE(100))
+  await pane.press({ key: 'tab:history' })
+  expect(await pane.find({ type: 'Text', text: /^History dashboard · re-cache spend by cause per day$/ })).toBeDefined()
+  expect(await pane.find({ type: 'Text', text: /^\d\d-\d\d {2}T+ +\$6\.\d\d$/ })).toBeDefined()
+  expect(await pane.find({ type: 'Text', text: /^Re-cache spend {2}\$6\.\d\d across 1/ })).toBeDefined()
+  expect(await pane.find({ type: 'Text', text: /^TTL advisor/ })).toBeDefined()
+  await pane.unmount()
+})

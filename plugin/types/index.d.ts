@@ -60,6 +60,19 @@ export type TokenShieldContext = { name: string; tokens: number; kind: string }[
 /** A counter bumped to redraw the runway while it is shown. */
 export type TokenShieldTick = number
 
+/**
+ * The history dashboard's data, gathered off the render path when its tab
+ * opens: plain JSON holding the core's history summary, advice report,
+ * calibration and TTL advice. Opaque here because a contract can't import
+ * the core's types; the pane, its one writer and reader, knows the shapes.
+ */
+export type TokenShieldDashboard = {
+  summary: unknown
+  advice: unknown
+  calibration: unknown
+  ttl: unknown
+} | null
+
 /** Contract version of the values below. */
 export type TokenShieldContractVersion = 1
 
@@ -71,6 +84,7 @@ declare module 'claude-code' {
       pane: TokenShieldPane
       context: TokenShieldContext
       tick: TokenShieldTick
+      dashboard: TokenShieldDashboard
       levers: TokenShieldLevers
       armed: TokenShieldArmed
       setting: TokenShieldPendingSetting

@@ -2,15 +2,26 @@ import { atom, read, update } from 'claude-code'
 import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 
 import { formatString } from '../../core/data/load'
-import { formatUsd, glyphParams, glyphSet } from '../../core/render/format'
+import { adviceReport } from '../../core/history/advice'
+import type { AdviceReport } from '../../core/history/advice'
+import { calibrate } from '../../core/history/calibrate'
+import type { Calibration } from '../../core/history/calibrate'
+import { sinceRange, summarize } from '../../core/history/summarize'
+import type { HistorySummary } from '../../core/history/summarize'
+import { adviseTtl } from '../../core/history/ttl'
+import type { TtlAdvice } from '../../core/history/ttl'
+import { formatPercent, formatUsd, glyphParams, glyphSet } from '../../core/render/format'
+import { renderCalibration, renderTtlAdvice } from '../../core/render/history'
 import { renderContext } from '../../core/render/views/context'
+import { renderDashboard } from '../../core/render/views/dashboard'
 import { renderLevers } from '../../core/render/views/levers'
 import { layersOf, renderPrefixMap } from '../../core/render/views/map'
 import { renderRunway } from '../../core/render/views/runway'
-import type { TokenShieldContext, TokenShieldPane, TokenShieldPaneTab, TokenShieldTick } from '../../types'
+import type { TokenShieldContext, TokenShieldDashboard, TokenShieldPane, TokenShieldPaneTab, TokenShieldTick } from '../../types'
 import { isCommandLever } from '../actions/levers'
 import { host } from '../host/host'
 import { reportFailure } from '../host/failure'
+import { flushHistory, historySessions, readSessionHistory } from '../persist/history'
 import { currentEvaluation, modelState } from '../session/model'
 import { LeverButton } from './lever-button'
 
@@ -21,6 +32,17 @@ const paneAtom = atom({ plugin: 'token-shield', key: 'pane' } as const, null as 
 const contextAtom = atom({ plugin: 'token-shield', key: 'context' } as const, null as TokenShieldContext)
 /** Bumped every few seconds while the runway is shown, so it redraws. */
 const tickAtom = atom({ plugin: 'token-shield', key: 'tick' } as const, 0 as TokenShieldTick)
+
+/** The history dashboard's data, gathered off the render path (REQ-13.0.5). */
+const dashboardAtom = atom({ plugin: 'token-shield', key: 'dashboard' } as const, null as TokenShieldDashboard)
+
+/** What loadDashboard stores in the dashboard value. */
+interface Dashboard {
+  readonly summary: HistorySummary
+  readonly advice: AdviceReport
+  readonly calibration: Calibration
+  readonly ttl: TtlAdvice
+}
 
 /** How often the runway redraws while it is shown. */
 export const RUNWAY_REFRESH_MS = 5_000
@@ -61,6 +83,7 @@ export async function openView($: EngineInterface, args: string) {
 async function showTab($: EngineInterface, tab: TokenShieldPaneTab): Promise<void> {
   await update($, paneAtom, current => ({ tab, text: current?.text ?? null }))
   if (tab === 'context' || tab === 'map') await refreshContext($)
+  if (tab === 'history') await loadDashboard($)
 }
 
 /**
@@ -76,6 +99,35 @@ export async function refreshContext($: EngineInterface): Promise<void> {
     await update($, contextAtom, () => rows)
   } catch (err) {
     reportFailure($, 'context breakdown', err)
+  }
+}
+
+/**
+ * Gathers the history dashboard: every session's history in the last 30
+ * days, summarized with its advice, calibration and TTL advice. It reads
+ * files, so it runs when the tab opens, never while drawing (REQ-13.0.5).
+ *
+ * @param $ the engine interface
+ */
+export async function loadDashboard($: EngineInterface): Promise<void> {
+  try {
+    const h = host()
+    if (h === null || h.data === null) return
+    const dir = h.companions.dataDir
+    await flushHistory($, dir, h.sessionId)
+    const sessions = await Promise.all((await historySessions($, dir)).map(id => readSessionHistory($, dir, id)))
+    const range = sinceRange(undefined, await $.clock.now())!
+    const p = h.data.rules.priors
+    const assessments = sessions.flatMap(s => s.assessments ?? []).filter(a => a.ts >= range.from)
+    const data = {
+      summary: summarize(sessions, range, { misses: false }, h.data.prices, h.env.provider),
+      advice: adviceReport(sessions, range, { misses: false }, h.data.prices),
+      calibration: calibrate(assessments, { epsWithin: p.epsWithin, epsAfter: p.epsAfter, minCalibrationN: p.minCalibrationN }),
+      ttl: adviseTtl(sessions, range, h.data.prices, h.env.provider),
+    }
+    await update($, dashboardAtom, () => data)
+  } catch (err) {
+    reportFailure($, 'history dashboard', err)
   }
 }
 
@@ -179,6 +231,15 @@ async function viewText($: EngineInterface, tab: TokenShieldPaneTab, check: stri
     case 'levers': {
       const ev = await currentEvaluation($)
       return ev === null ? formatString(o.strings, 'view.runway.unknown') : renderLevers(ev.quotes, ev.rec, width, o)
+    }
+    case 'history': {
+      const stored = await read($, dashboardAtom)
+      if (stored === null) return formatString(o.strings, 'view.history.loading')
+      // loadDashboard wrote these shapes; the contract can only call them unknown.
+      const d = stored as unknown as Dashboard
+      const p = h.data!.rules.priors
+      const advice = d.advice.share !== null ? formatString(o.strings, 'history.advice', { cheapest: String(d.advice.cheapest), n: String(d.advice.evaluated), share: formatPercent(d.advice.share, 0) }) : null
+      return renderDashboard(d.summary, { advice, calibration: renderCalibration(d.calibration, p.minCalibrationN, width, o), ttl: renderTtlAdvice(d.ttl, width, o) }, width, o)
     }
     case 'context': {
       const rows = await read($, contextAtom)

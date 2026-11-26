@@ -322,7 +322,7 @@ The Token Shield pane draws all five views from the same data as `/cache-check`,
     2. Route presses through `LeverRunner`, so a lever run here behaves exactly as from `/cache-check`'s lever bar.
     3. Test that the `COLD` 812k fixture shows the four levers with exactly one recommended, and that running `/compact` from the comparator equals running it from the lever bar.
 
-- [ ] **TASK-35: Build the history dashboard**
+- [x] **TASK-35: Build the history dashboard**
   - **Associated Acceptance Criteria**: `13.4`, `13.5`
   - **Concrete Steps**:
     1. Draw re-cache spend by cause per day as stacked text bars, the idle-gap histogram against the TTL line, advice outcomes, the reliability table, and the TTL advisor section.
