@@ -4,6 +4,7 @@ import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 import { formatString } from '../../core/data/load'
 import { sinceRange, summarize } from '../../core/history/summarize'
 import { renderCheck } from '../../core/render/check'
+import { adviceReport } from '../../core/history/advice'
 import { calibrate } from '../../core/history/calibrate'
 import { renderCalibration, renderHistory } from '../../core/render/history'
 import { glyphParams, glyphSet } from '../../core/render/format'
@@ -133,7 +134,8 @@ async function answerHistory($: EngineInterface, words: readonly string[], width
   const ids = all ? await historySessions($, dir) : [session ?? h.sessionId]
   const sessions = await Promise.all(ids.map(id => readSessionHistory($, dir, id)))
   const summary = summarize(sessions, range, { misses }, h.data!.prices, h.env.provider)
-  return renderHistory(summary, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin })
+  const advice = adviceReport(sessions, range, { misses }, h.data!.prices)
+  return renderHistory(summary, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin }, advice)
 }
 
 /**

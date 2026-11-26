@@ -126,7 +126,10 @@ test('history and the heartbeat hold no prompt or response text (AC 1.2, 20.3)',
   const written = [...seen.files.entries()].filter(([p]) => p.includes('/history/') || p.includes('/sessions/'))
   const chunk = written.find(([p]) => p.includes('/history/'))
   expect(chunk).toBeDefined()
-  expect(JSON.parse(chunk![1].text).records[0].type).toBe('request')
+  const types = (JSON.parse(chunk![1].text).records as { type: string }[]).map(r => r.type)
+  expect(types).toContain('request')
+  // Every record is of a known, whitelisted kind.
+  expect(types.every(t => ['request', 'event', 'assessment', 'recommendation', 'lever_taken'].includes(t))).toBe(true)
   for (const [, f] of written) {
     expect(f.text).not.toContain('SECRET-PROMPT-TEXT')
     expect(f.text).not.toContain('SECRET-ANSWER-TEXT')

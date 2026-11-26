@@ -98,14 +98,19 @@ func historyCmd(args []string, env Env) int {
 	sessions := make([]summary.SessionHistory, 0, len(ids))
 	for _, id := range ids {
 		h := history.ReadSession(p.History, id)
-		sessions = append(sessions, summary.SessionHistory{SessionID: id, Requests: h.Requests, Events: h.Events, Skipped: h.Skipped})
+		sessions = append(sessions, summary.SessionHistory{SessionID: id, Requests: h.Requests, Events: h.Events, Recommendations: h.Recommendations, Levers: h.Levers, Skipped: h.Skipped})
 	}
-	s := summary.Summarize(sessions, rng, summary.Filter{Misses: a.misses}, &d.Prices, bridge.Provider(env.Getenv))
+	filter := summary.Filter{Misses: a.misses}
+	s := summary.Summarize(sessions, rng, filter, &d.Prices, bridge.Provider(env.Getenv))
+	advice := summary.Advice(sessions, rng, filter, &d.Prices)
 	if a.json {
-		return emit(env, true, s, "")
+		return emit(env, true, struct {
+			summary.Summary
+			Advice summary.AdviceReport `json:"advice"`
+		}{s, advice}, "")
 	}
 	opts := render.Options{Glyphs: render.GlyphSet(configuredGlyphs(p.Config)), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: env.tzOffset()}
-	return emit(env, false, nil, render.RenderHistory(s, columns(env.Getenv), opts))
+	return emit(env, false, nil, render.RenderHistory(s, columns(env.Getenv), opts, &advice))
 }
 
 // historySessions lists the sessions with history, oldest change first.

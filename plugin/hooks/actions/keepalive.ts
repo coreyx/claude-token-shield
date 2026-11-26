@@ -11,7 +11,7 @@ import { formatClock, formatUsd, glyphParams, glyphSet } from '../../core/render
 import type { TokenShieldBand } from '../../types'
 import { host } from '../host/host'
 import { reportFailure } from '../host/failure'
-import { recordRequest } from '../persist/history'
+import { recordLeverTaken, recordRequest } from '../persist/history'
 import { applyFacts, currentEvaluation, publish } from '../session/model'
 
 /** The band: confirm mode before it starts, keep-alive mode with the spend while it runs. */
@@ -90,6 +90,7 @@ export async function startKeepAlive($: EngineInterface): Promise<void> {
   if (o === null || context() === null) return
   if (running !== null) await stopKeepAlive($, 'user')
   running = { until: o.until, budgetUsd: o.budgetUsd, ttl: o.ttl, spentUsd: 0, promptSince: false, nextAt: o.firstAt, timer: null }
+  recordLeverTaken({ ts: await $.clock.now(), lever: 'keepalive' })
   await schedule($)
 }
 

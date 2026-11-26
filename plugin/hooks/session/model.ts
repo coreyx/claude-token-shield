@@ -12,6 +12,7 @@ import { bandText, notificationText } from '../../core/render/band'
 import { glyphSet } from '../../core/render/format'
 import { renderSegment } from '../../core/render/segment'
 import { reportFailure } from '../host/failure'
+import { recordRecommendation } from '../persist/history'
 import { host } from '../host/host'
 import type { TokenShieldBand } from '../../types'
 
@@ -148,8 +149,28 @@ export function noteToast(now: number): void {
   toastLog = { lastAt: now }
 }
 
+/** The state and lever of the recommendation last recorded, so each change is recorded once. */
+let recorded: string | null = null
+
+/** Records the recommendation when it changes, with every quote (AC 4.5, D18). */
+function recordIfChanged(ev: Evaluation): void {
+  const key = `${ev.a.state}|${ev.rec.lever}`
+  if (key === recorded || ev.a.state === 'UNKNOWN') return
+  recorded = key
+  recordRecommendation({
+    ts: ev.a.at,
+    state: ev.a.state,
+    lever: ev.rec.lever,
+    pHit: ev.a.pHit,
+    readUsd: ev.cost?.usd?.warm ?? null,
+    writeUsd: ev.cost?.usd?.cold ?? null,
+    quotes: ev.quotes.map(q => ({ lever: q.lever, nowUsd: q.now.usd, perTurnUsd: q.perTurnAfter?.usd ?? null })),
+  })
+}
+
 /** Starts the UI state over for a new session. */
 export function resetPublishing(): void {
+  recorded = null
   previous = null
   toastLog = EMPTY_LOG
   boundary?.cancel()
@@ -171,6 +192,7 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
   const glyphs = glyphSet(h.config.glyphs)
   const text = { glyphs, strings: h.data.strings, display: h.data.rules.display, tzOffsetMin: h.tzOffsetMin }
   $.ui.status(renderSegment(ev.a, ev.cost, { ...text, billing: ev.billing }))
+  recordIfChanged(ev)
 
   const band = bandText(ev.view, text)
   const lever = ev.rec.lever === 'none' ? null : ev.rec.lever

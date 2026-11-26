@@ -13,8 +13,9 @@ const MaxHistoryRows = 30
 // causeLabel is the width of the cause labels in the by-cause lines.
 const causeLabel = 32
 
-// RenderHistory renders a history summary at a width (plugin/core/render/history.ts).
-func RenderHistory(s summary.Summary, w int, o Options) string {
+// RenderHistory renders a history summary at a width, with the advice line
+// when a report is given (plugin/core/render/history.ts).
+func RenderHistory(s summary.Summary, w int, o Options, advice *summary.AdviceReport) string {
 	g := o.Glyphs
 	t := func(key string, params map[string]string) string {
 		all := g.params()
@@ -41,6 +42,13 @@ func RenderHistory(s summary.Summary, w int, o Options) string {
 		lines = append(lines, t("history.avoidable", map[string]string{"usd": FormatUSD(s.AvoidableUSD), "count": itoa(s.AvoidableCount)}))
 		if s.Unpriced > 0 {
 			lines = append(lines, t("history.unpriced", map[string]string{"count": itoa(s.Unpriced)}))
+		}
+		if advice != nil {
+			if advice.Share != nil {
+				lines = append(lines, t("history.advice", map[string]string{"cheapest": itoa(advice.Cheapest), "n": itoa(advice.Evaluated), "share": FormatPercent(*advice.Share, 0)}))
+			} else {
+				lines = append(lines, t("history.advice_none", map[string]string{"unevaluated": itoa(advice.Unevaluated)}))
+			}
 		}
 		if len(s.Rows) > 0 {
 			lines = append(lines, "", t("history.rows_header", nil))

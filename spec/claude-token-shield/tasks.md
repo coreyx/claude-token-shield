@@ -272,7 +272,7 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
     3. Feed calibrated `ε` and intervals back into the assessor at session start (in the background, off the render path), and raise one critical toast per drift episode.
     4. Add `tshield calibration` and `history --calibration`. Test that table counts match the recorded predictions, and that a fixture with `HOT` misses above the interval raises exactly one alert.
 
-- [ ] **TASK-29: Build recommendation records and the advice report**
+- [x] **TASK-29: Build recommendation records and the advice report**
   - **Associated Acceptance Criteria**: `4.5`, `14.5`
   - **Concrete Steps**:
     1. Persist every recommendation with all quotes, and record the lever taken per design D18 (first action within 10 minutes or before the next main request).

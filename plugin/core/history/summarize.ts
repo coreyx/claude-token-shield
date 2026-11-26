@@ -7,6 +7,7 @@
 
 import { nextTurnCost } from '../cost/cost';
 import type { Prices, ProviderKey } from '../data/types';
+import type { LeverTakenRecord, RecommendationRecord } from './advice';
 import type { AssessmentRecord } from './calibrate';
 import type { EventRecord, RequestRecord, Ttl } from '../model/types';
 import { classifyProbe } from '../probe/probe';
@@ -19,6 +20,9 @@ export interface SessionHistory {
   readonly events: readonly EventRecord[];
   /** The assessments recorded before main requests, for calibration. */
   readonly assessments?: readonly AssessmentRecord[];
+  /** The recommendations shown and the levers taken, for the advice report. */
+  readonly recommendations?: readonly RecommendationRecord[];
+  readonly levers?: readonly LeverTakenRecord[];
   /** Chunks that couldn't be read or are from a newer format. */
   readonly skipped: number;
 }

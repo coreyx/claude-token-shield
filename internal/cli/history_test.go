@@ -23,6 +23,7 @@ type historyFixture struct {
 	Sessions []summary.SessionHistory `json:"sessions"`
 	Expect   struct {
 		Summary any `json:"summary"`
+		Advice  any `json:"advice"`
 	} `json:"expect"`
 }
 
@@ -36,6 +37,12 @@ func layHistory(t *testing.T, home string, f historyFixture) {
 		}
 		for i := range s.Events {
 			c.Records = append(c.Records, history.Record{Type: "event", Event: &s.Events[i]})
+		}
+		for i := range s.Recommendations {
+			c.Records = append(c.Records, history.Record{Type: "recommendation", Recommendation: &s.Recommendations[i]})
+		}
+		for i := range s.Levers {
+			c.Records = append(c.Records, history.Record{Type: "lever_taken", Lever: &s.Levers[i]})
 		}
 		if err := history.WriteChunk(filepath.Join(home, "history"), c); err != nil {
 			t.Fatal(err)
@@ -86,10 +93,15 @@ func TestHistoryMatchesFixtures(t *testing.T) {
 			if code := Run(args, env); code != ExitOK {
 				t.Fatalf("exit %d: %s", code, errOut.String())
 			}
-			var got any
+			var got map[string]any
 			_ = json.Unmarshal(out.Bytes(), &got)
-			if d := diffJSON("summary", f.Expect.Summary, got); d != "" {
+			advice := got["advice"]
+			delete(got, "advice")
+			if d := diffJSON("summary", f.Expect.Summary, any(got)); d != "" {
 				t.Errorf("summary differs from the core's: %s", d)
+			}
+			if d := diffJSON("advice", f.Expect.Advice, advice); d != "" {
+				t.Errorf("advice differs from the core's: %s", d)
 			}
 		})
 	}

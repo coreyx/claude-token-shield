@@ -63,3 +63,40 @@ test('an unreadable or newer chunk is skipped and counted, and bad options say h
     expect((await $.command.run(check(bad))).text).toMatch(/^Token Shield: \/cache-check history \[--session/)
   }
 })
+
+test('each recommendation is stored with every alternative and its cost, and the lever taken is recorded (AC 4.5)', async ($, on) => {
+  const seen = engine(on)
+  on('command.run', () => ({ text: '' }))
+  on('turn.complete', () => ({ text: '' }))
+  on('turn.step', async function* (_, e) {
+    return {
+      turnId: e.turnId,
+      index: e.index,
+      answer: '',
+      toolUses: [],
+      stopReason: 'end_turn' as const,
+      usage: { input_tokens: 12, output_tokens: 900, cache_read_input_tokens: 0, cache_creation_input_tokens: 40_000, ephemeral_5m_input_tokens: 0, ephemeral_1h_input_tokens: 40_000, model: 'claude-opus-5-5' },
+    }
+  })
+  // Cold on a big prefix: Token Shield recommends a lever and quotes the rest.
+  const payload = { session_id: SESSION, model: { id: 'claude-opus-5-5' }, version: '2.1.332', prompt_cache: { warm: false, caching_observed: true, ttl: '1h', expires_at: null, recache_tokens_if_cold: 812470 } }
+  seen.files.set(`/plugin-data/sessions/${SESSION}/snapshot.json`, { text: JSON.stringify({ v: 1, receivedAt: T0, payload }), mtimeMs: T0 })
+  placeChunk(seen, SESSION, 0, [hit(T0 - 3 * 3_600_000)])
+  await $.session.start(START)
+  await seen.clock.advance(60_000)
+  await $.command.run({ command: 'compact', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 100 } })
+  const stream = $.turn.step({ turnId: 't1', index: 0, model: 'claude-opus-5-5', messageCount: 3 })
+  for await (const _ of stream) {
+    // Nothing streams.
+  }
+  await stream.result
+  await $.turn.complete({ turnId: 't1', answer: '', durationMs: 1, isAborted: false, reason: 'answer' })
+  const records = [...seen.files.entries()]
+    .filter(([p]) => p.startsWith(`/plugin-data/history/${SESSION}/`))
+    .flatMap(([, f]) => JSON.parse(f.text).records as { type: string; recommendation?: { lever: string; quotes: { lever: string; nowUsd: number | null }[] }; lever?: { lever: string } }[])
+  const rec = records.find(r => r.type === 'recommendation')!.recommendation!
+  expect(rec.quotes.map(q => q.lever)).toEqual(expect.arrayContaining(['continue', 'compact', 'clear']))
+  expect(rec.quotes.find(q => q.lever === 'continue')!.nowUsd).toBeGreaterThan(1)
+  expect(records.filter(r => r.type === 'lever_taken').map(r => r.lever!.lever)).toEqual(['compact'])
+  expect((await $.command.run(check('history'))).text).toMatch(/\nAdvice          (cheapest in hindsight \d+ of \d+ \(\d+%\)|none judged yet)/)
+})

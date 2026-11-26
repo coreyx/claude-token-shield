@@ -26,6 +26,9 @@ type Record struct {
 	Event   *native.Event   `json:"event,omitempty"`
 	// Assessment is the assessment that preceded a main request, with its outcome.
 	Assessment *summary.AssessmentRecord `json:"assessment,omitempty"`
+	// Recommendation and Lever are the advice report's records.
+	Recommendation *summary.RecommendationRecord `json:"recommendation,omitempty"`
+	Lever          *summary.LeverTakenRecord     `json:"lever,omitempty"`
 }
 
 // Chunk is one history file.
@@ -42,6 +45,9 @@ type Session struct {
 	Events   []native.Event
 	// Assessments are the calibration pairs, for calibration.
 	Assessments []summary.AssessmentRecord
+	// Recommendations and Levers are the advice report's records.
+	Recommendations []summary.RecommendationRecord
+	Levers          []summary.LeverTakenRecord
 	// Skipped counts chunks that couldn't be read or are from a newer format.
 	Skipped int
 }
@@ -74,6 +80,10 @@ func ReadSession(historyDir, sessionID string) Session {
 				s.Events = append(s.Events, *r.Event)
 			case r.Type == "assessment" && r.Assessment != nil:
 				s.Assessments = append(s.Assessments, *r.Assessment)
+			case r.Type == "recommendation" && r.Recommendation != nil:
+				s.Recommendations = append(s.Recommendations, *r.Recommendation)
+			case r.Type == "lever_taken" && r.Lever != nil:
+				s.Levers = append(s.Levers, *r.Lever)
 			}
 		}
 	}

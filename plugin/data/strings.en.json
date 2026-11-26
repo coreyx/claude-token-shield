@@ -1185,6 +1185,14 @@
     "calibration.band.unknown": {
       "text": "unknown",
       "tense": "none"
+    },
+    "history.advice": {
+      "text": "Advice          cheapest in hindsight {cheapest} of {n} ({share})",
+      "tense": "past"
+    },
+    "history.advice_none": {
+      "text": "Advice          none judged yet ({unevaluated} with no action to judge)",
+      "tense": "none"
     }
   }
 }

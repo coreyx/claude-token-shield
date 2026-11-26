@@ -103,5 +103,6 @@ test('a resumed session keeps its earlier history: new records start the next ch
   await $.command.run({ command: 'rewind', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 100 } })
   await seen.clock.advance(31_000)
   expect(seen.files.get(`${HISTORY}/000001.json`)!.text).toBe(earlier)
-  expect(JSON.parse(seen.files.get(`${HISTORY}/000002.json`)!.text).records[0].event.kind).toBe('rewind')
+  const records = JSON.parse(seen.files.get(`${HISTORY}/000002.json`)!.text).records as { type: string; event?: { kind: string } }[]
+  expect(records.find(r => r.type === 'event')?.event?.kind).toBe('rewind')
 })

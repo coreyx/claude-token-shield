@@ -21,6 +21,9 @@ type SessionHistory struct {
 	Events    []native.Event   `json:"events"`
 	// Assessments are the calibration pairs recorded before main requests.
 	Assessments []AssessmentRecord `json:"assessments,omitempty"`
+	// Recommendations and Levers feed the advice report.
+	Recommendations []RecommendationRecord `json:"recommendations,omitempty"`
+	Levers          []LeverTakenRecord     `json:"levers,omitempty"`
 	// Skipped counts chunks that couldn't be read or are from a newer format.
 	Skipped int `json:"skipped"`
 }

@@ -9,7 +9,7 @@ import { formatClock, formatTokensLong, formatUsd, glyphParams, glyphSet } from 
 import type { TokenShieldBand } from '../../types'
 import { host } from '../host/host'
 import { reportFailure } from '../host/failure'
-import { recordRequest } from '../persist/history'
+import { recordLeverTaken, recordRequest } from '../persist/history'
 import { applyFacts, currentEvaluation, publish } from '../session/model'
 
 /** The band, set to confirm mode while a probe waits for Confirm. */
@@ -65,6 +65,7 @@ export async function runProbe($: EngineInterface): Promise<void> {
   try {
     const before = await currentEvaluation($, true)
     const startedAt = await $.clock.now()
+    recordLeverTaken({ ts: startedAt, lever: 'probe' })
     const r = await $.model.fork({ prompt: PROBE_PROMPT })
     const endedAt = await $.clock.now()
     if (!r.isAnswered) {

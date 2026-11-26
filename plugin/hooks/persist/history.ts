@@ -1,5 +1,6 @@
 import type { EngineInterface } from 'claude-code'
 
+import type { LeverTakenRecord, RecommendationRecord } from '../../core/history/advice'
 import type { AssessmentRecord } from '../../core/history/calibrate'
 import type { SessionHistory } from '../../core/history/summarize'
 import type { EventRecord, RequestRecord, Ttl } from '../../core/model/types'
@@ -17,6 +18,8 @@ export type HistoryRecord =
   | { readonly type: 'request'; readonly request: RequestRecord }
   | { readonly type: 'event'; readonly event: EventRecord }
   | { readonly type: 'assessment'; readonly assessment: AssessmentRecord }
+  | { readonly type: 'recommendation'; readonly recommendation: RecommendationRecord }
+  | { readonly type: 'lever_taken'; readonly lever: LeverTakenRecord }
 
 /** Chunk limits (D16). */
 export const MAX_RECORDS = 500
@@ -78,6 +81,29 @@ function cleanAssessment(a: AssessmentRecord): AssessmentRecord {
 /** Buffers the assessment that preceded a main request, with its outcome (REQ-14.0.4). */
 export function recordAssessment(a: AssessmentRecord): void {
   records.push({ type: 'assessment', assessment: cleanAssessment(a) })
+  dirty = true
+}
+
+/** Buffers a recommendation as shown, with every quote (AC 4.5). */
+export function recordRecommendation(r: RecommendationRecord): void {
+  records.push({
+    type: 'recommendation',
+    recommendation: {
+      ts: r.ts,
+      state: r.state,
+      lever: r.lever,
+      pHit: r.pHit,
+      readUsd: r.readUsd,
+      writeUsd: r.writeUsd,
+      quotes: r.quotes.map(q => ({ lever: q.lever, nowUsd: q.nowUsd, perTurnUsd: q.perTurnUsd })),
+    },
+  })
+  dirty = true
+}
+
+/** Buffers a lever the person took (D18). */
+export function recordLeverTaken(l: LeverTakenRecord): void {
+  records.push({ type: 'lever_taken', lever: { ts: l.ts, lever: l.lever } })
   dirty = true
 }
 
@@ -200,14 +226,18 @@ export async function readSessionHistory($: EngineInterface, dataDir: string, se
   const requests: RequestRecord[] = []
   const events: EventRecord[] = []
   const assessments: AssessmentRecord[] = []
+  const recommendations: RecommendationRecord[] = []
+  const levers: LeverTakenRecord[] = []
   for (const c of chunks) {
     for (const r of c.records) {
       if (r.type === 'request' && r.request !== undefined) requests.push(r.request)
       else if (r.type === 'event' && r.event !== undefined) events.push(r.event)
       else if (r.type === 'assessment' && r.assessment !== undefined) assessments.push(r.assessment)
+      else if (r.type === 'recommendation' && r.recommendation !== undefined) recommendations.push(r.recommendation)
+      else if (r.type === 'lever_taken' && r.lever !== undefined) levers.push(r.lever)
     }
   }
-  return { sessionId, requests, events, assessments, skipped }
+  return { sessionId, requests, events, assessments, recommendations, levers, skipped }
 }
 
 /**

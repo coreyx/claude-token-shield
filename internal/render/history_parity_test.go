@@ -23,6 +23,7 @@ type historyCase struct {
 	Sessions    []summary.SessionHistory `json:"sessions"`
 	Expect      struct {
 		Summary any    `json:"summary"`
+		Advice  any    `json:"advice"`
 		Text    string `json:"text"`
 	} `json:"expect"`
 }
@@ -49,14 +50,22 @@ func TestHistoryParity(t *testing.T) {
 			if !ok {
 				t.Fatalf("since %q", c.Since)
 			}
-			s := summary.Summarize(c.Sessions, rng, summary.Filter{Session: c.Session, Misses: c.Misses}, &d.Prices, c.Provider)
+			filter := summary.Filter{Session: c.Session, Misses: c.Misses}
+			s := summary.Summarize(c.Sessions, rng, filter, &d.Prices, c.Provider)
+			advice := summary.Advice(c.Sessions, rng, filter, &d.Prices)
+			ab, _ := json.Marshal(advice)
+			var gotAdvice any
+			_ = json.Unmarshal(ab, &gotAdvice)
+			if diff := compare("advice", c.Expect.Advice, gotAdvice); diff != "" {
+				t.Errorf("advice differs: %s", diff)
+			}
 			b, _ := json.Marshal(s)
 			var got any
 			_ = json.Unmarshal(b, &got)
 			if diff := compare("summary", c.Expect.Summary, got); diff != "" {
 				t.Errorf("summary differs: %s", diff)
 			}
-			text := RenderHistory(s, c.Width, Options{Glyphs: GlyphSet(c.Glyphs), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: c.TzOffsetMin})
+			text := RenderHistory(s, c.Width, Options{Glyphs: GlyphSet(c.Glyphs), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: c.TzOffsetMin}, &advice)
 			if text != c.Expect.Text {
 				t.Errorf("text differs:\n--- got\n%s\n--- want\n%s", text, c.Expect.Text)
 			}

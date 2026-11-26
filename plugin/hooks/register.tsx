@@ -2,6 +2,7 @@ import type { EngineInterface, Register } from 'claude-code'
 
 import { calibrationPair } from '../core/history/calibrate'
 import type { Fact, Ttl } from '../core/model/types'
+import type { LeverId } from '../core/recommend/levers'
 import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
@@ -12,7 +13,7 @@ import { clearResume, showResume } from './actions/resume'
 import { clearGuard, clearGuardIfUnchanged, guardChange, guardSwitch, resetGuard } from './actions/guard'
 import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
-import { continueHistory, flushHistory, recordAssessment, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
+import { continueHistory, flushHistory, recordAssessment, recordLeverTaken, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
 import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
@@ -36,6 +37,8 @@ const HEARTBEAT_MS = 30_000
 
 /** The session's timers, cancelled when it ends. */
 let timers: { cancel: () => void }[] = []
+/** Slash commands that are levers, recorded when taken (D18); effort and fast count as the model lever. */
+const TAKEN_COMMANDS = new Set(['compact', 'clear', 'rewind', 'recap', 'btw'])
 /** The session history's last recorded TTL, read once per session. */
 let historyTtl: Promise<Ttl | undefined> | null = null
 
@@ -130,14 +133,19 @@ export const register: Register = (on, options) => {
     // The person is back: a running keep-alive stops before its next refresh.
     await keepAliveOnPrompt($)
     const drop = await gateSubmit($, e.text)
-    return drop === null ? next(e) : { drop }
+    if (drop !== null) return { drop }
+    // A prompt that goes through is the lever 'continue' (D18).
+    recordLeverTaken({ ts: await $.clock.now(), lever: 'continue' })
+    return next(e)
   }).catch(($, e, next) => {
     reportFailure($, 'prompt.submit', next.error)
     return next(e)
   })
 
   on('command.run', async ($, e, next) => {
-    const event = commandEvent(e.command, await $.clock.now())
+    const at = await $.clock.now()
+    if (TAKEN_COMMANDS.has(e.command)) recordLeverTaken({ ts: at, lever: e.command as LeverId })
+    const event = commandEvent(e.command, at)
     if (event !== null) {
       // Weighed before it's recorded, so the guard sees the cache as it was (D10).
       await guardChange($, event.kind)
@@ -152,6 +160,7 @@ export const register: Register = (on, options) => {
   on('config.set', async ($, e, next) => {
     const event = configEvent(e.key, await $.clock.now())
     if (event !== null) {
+      recordLeverTaken({ ts: event.ts, lever: 'model' })
       await guardChange($, event.kind)
       await observe($, { kind: 'event', event })
     }
@@ -195,6 +204,7 @@ export const register: Register = (on, options) => {
 
   on('classic.PostModelSwitch', async ($, e, next) => {
     await clearGuard($)
+    recordLeverTaken({ ts: await $.clock.now(), lever: 'model' })
     await observe($, { kind: 'event', event: switchEvent(e.from_model, e.to_model, await $.clock.now()) })
     return next(e)
   }).catch(($, e, next) => {

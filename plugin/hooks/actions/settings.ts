@@ -7,6 +7,7 @@ import { applySetting, fingerprint, isAllowedSetting, pasteSnippet } from '../..
 import type { SettingChange } from '../../core/settings/settings'
 import type { TokenShieldBand, TokenShieldPendingSetting } from '../../types'
 import { host } from '../host/host'
+import { recordLeverTaken } from '../persist/history'
 
 /** The change waiting for Confirm. */
 const settingAtom = atom({ plugin: 'token-shield', key: 'setting' } as const, null as TokenShieldPendingSetting)
@@ -87,6 +88,7 @@ export async function confirmSetting($: EngineInterface): Promise<void> {
   const t = strings()
   if (pending === null || t === null) return
   const change = { key: pending.key, value: pending.value }
+  if (/promptCacheTtl$/i.test(pending.key)) recordLeverTaken({ ts: await $.clock.now(), lever: 'ttl' })
   const value = JSON.stringify(pending.value)
   const paste = (reason: string) => $.ui.toast(t('setting.paste', { file: pending.display, reason, snippet: pasteSnippet(change) }))
 

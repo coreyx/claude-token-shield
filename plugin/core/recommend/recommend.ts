@@ -8,7 +8,7 @@ import type { Assessment } from '../assess/types';
 import type { LeverId, LeverQuote } from './levers';
 
 /** The levers compared on cost when the cache is cold or invalidated (REQ-4.0.5). */
-const COLD_CANDIDATES: readonly LeverId[] = ['continue', 'compact', 'rewind'];
+export const COLD_CANDIDATES: readonly LeverId[] = ['continue', 'compact', 'rewind'];
 
 /** The chance range where a probe's answer is worth its price (D6). */
 const PROBE_RANGE: readonly [number, number] = [0.2, 0.8];

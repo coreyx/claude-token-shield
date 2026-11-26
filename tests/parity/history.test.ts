@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url'
 
 import { describe, expect, it } from 'vitest'
 
+import { adviceReport } from '../../plugin/core/history/advice'
 import { sinceRange, summarize } from '../../plugin/core/history/summarize'
 import type { SessionHistory } from '../../plugin/core/history/summarize'
 import type { ProviderKey } from '../../plugin/core/data/types'
@@ -90,15 +91,42 @@ const CASES: readonly HistoryCase[] = [
     ],
   },
   { ...base, name: 'bedrock-5m', provider: 'bedrock', sessions: [{ sessionId: S1, requests: [hit(t0, { ttl: '5m' }), miss(t0 + 8 * MIN, { ttl: '5m' }), miss(t0 + 30 * MIN, { ttl: '5m' })], events: [], skipped: 0 }] },
+  {
+    ...base,
+    name: 'advice-judged',
+    sessions: [
+      {
+        sessionId: S1,
+        requests: [hit(t0), miss(t0 + 70 * MIN), hit(t0 + 71 * MIN), hit(t0 + 72 * MIN), miss(t0 + 130 * MIN, { usage: { input: 10, read: 0, write1h: 40_000, write5m: 0, output: 500 } })],
+        events: [],
+        skipped: 0,
+        recommendations: [
+          { ts: t0 + 69 * MIN, state: 'COLD', lever: 'compact', pHit: 0.01, readUsd: 0.17, writeUsd: 6.42, quotes: [{ lever: 'continue', nowUsd: 6.36, perTurnUsd: 0.17 }, { lever: 'compact', nowUsd: 1.2, perTurnUsd: 0.02 }] },
+          { ts: t0 + 70 * MIN + 30_000, state: 'HOT', lever: 'continue', pHit: 0.99, readUsd: 0.17, writeUsd: 6.42, quotes: [{ lever: 'continue', nowUsd: 0.23, perTurnUsd: 0.17 }, { lever: 'compact', nowUsd: 1.2, perTurnUsd: 0.02 }] },
+          { ts: t0 + 129 * MIN, state: 'COLD', lever: 'compact', pHit: 0.01, readUsd: 0.17, writeUsd: 6.42, quotes: [{ lever: 'continue', nowUsd: 6.36, perTurnUsd: 0.17 }, { lever: 'compact', nowUsd: 1.2, perTurnUsd: 0.02 }] },
+          { ts: t0 + 140 * MIN, state: 'HOT', lever: 'none', pHit: 0.99, readUsd: 0.17, writeUsd: 6.42, quotes: [] },
+        ],
+        levers: [
+          { ts: t0 + 69 * MIN + 30_000, lever: 'continue' },
+          { ts: t0 + 70 * MIN + 40_000, lever: 'continue' },
+          { ts: t0 + 129 * MIN + 30_000, lever: 'compact' },
+        ],
+      },
+    ],
+  },
   { ...base, name: 'empty-window', since: '1d', sessions: [{ sessionId: S1, requests: [hit(t0), miss(t0 + 90 * MIN)], events: [], skipped: 0 }] },
 ]
 
 /** Runs one case through the core: what the fixture records as expected. */
 function run(c: HistoryCase) {
-  const summary = summarize(c.sessions, sinceRange(c.since, c.now)!, { misses: c.misses, ...(c.session !== undefined ? { session: c.session } : {}) }, prices, c.provider)
+  const range = sinceRange(c.since, c.now)!
+  const filter = { misses: c.misses, ...(c.session !== undefined ? { session: c.session } : {}) }
+  const summary = summarize(c.sessions, range, filter, prices, c.provider)
+  const advice = adviceReport(c.sessions, range, filter, prices)
   return {
     summary: JSON.parse(JSON.stringify(summary)),
-    text: renderHistory(summary, c.width, { glyphs: glyphSet(c.glyphs), strings, display: rules.display, tzOffsetMin: c.tzOffsetMin }),
+    advice: JSON.parse(JSON.stringify(advice)),
+    text: renderHistory(summary, c.width, { glyphs: glyphSet(c.glyphs), strings, display: rules.display, tzOffsetMin: c.tzOffsetMin }, advice),
   }
 }
 

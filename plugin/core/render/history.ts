@@ -5,6 +5,7 @@
  */
 
 import { formatString } from '../data/load';
+import type { AdviceReport } from '../history/advice';
 import type { Calibration } from '../history/calibrate';
 import { CAUSES } from '../history/summarize';
 import type { HistorySummary } from '../history/summarize';
@@ -23,8 +24,9 @@ const CAUSE_LABEL = 32;
  * @param s the summary
  * @param width terminal columns; lines are fitted to it
  * @param o glyphs, catalog and time zone
+ * @param advice the advice report for the same sessions, when there is one
  */
-export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOptions): string {
+export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOptions, advice: AdviceReport | null = null): string {
   const t = (key: string, params: Record<string, string | number> = {}): string =>
     formatString(o.strings, key, { ...glyphParams(o.glyphs), ...params });
   const stamp = (ms: number) => formatStamp(ms, o.tzOffsetMin);
@@ -41,6 +43,13 @@ export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOp
     }
     lines.push(t('history.avoidable', { usd: formatUsd(s.avoidableUsd), count: s.avoidableCount }));
     if (s.unpriced > 0) lines.push(t('history.unpriced', { count: s.unpriced }));
+    if (advice !== null) {
+      lines.push(
+        advice.share !== null
+          ? t('history.advice', { cheapest: advice.cheapest, n: advice.evaluated, share: formatPercent(advice.share, 0) })
+          : t('history.advice_none', { unevaluated: advice.unevaluated }),
+      );
+    }
 
     if (s.rows.length > 0) {
       lines.push('', t('history.rows_header'));
