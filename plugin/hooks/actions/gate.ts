@@ -40,7 +40,9 @@ export async function gateSubmit($: EngineInterface, text: string): Promise<stri
   const ev = await currentEvaluation($)
   if (h === null || h.data === null || ev === null || ev.cost === null) return null
   const now = await $.clock.now()
-  const d = gateDecision(ev.a, ev.cost, ev.billing, h.config, held, sha256Hex(text), now)
+  // Only COLD and INVALIDATED can hold, so only then is the text worth hashing.
+  const canHold = ev.a.state === 'COLD' || ev.a.state === 'INVALIDATED'
+  const d = gateDecision(ev.a, ev.cost, ev.billing, h.config, held, canHold ? sha256Hex(text) : '', now)
   held = d.held
   if (d.action === 'pass') return null
   const o = { glyphs: glyphSet(h.config.glyphs), strings: h.data.strings, display: h.data.rules.display, tzOffsetMin: h.tzOffsetMin }

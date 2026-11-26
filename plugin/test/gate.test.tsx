@@ -103,15 +103,23 @@ test('the submit hook adds at most 20 ms at p95 (AC 21.2)', async ($, on) => {
   placeSnapshot(seen, false)
   await $.session.start(START)
   const long = 'x'.repeat(50_000)
-  const times: number[] = []
+  // The hook's overhead is the gated submit's time less a baseline submit's
+  // through the same engine: a command, which the hook passes straight on.
+  // Pairing each run with its own baseline keeps the engine's dispatch and
+  // the machine's speed out of the figure.
+  const overhead: number[] = []
   for (let i = 0; i < 200; i++) {
-    // Alternate a hold and its release, and move time on so the cached evaluation goes stale half the time.
-    const start = performance.now()
-    await $.prompt.submit(prompt(i % 4 < 2 ? long : TYPED))
-    times.push(performance.now() - start)
+    const text = i % 4 < 2 ? long : TYPED
+    const b0 = performance.now()
+    await $.prompt.submit({ ...prompt(text), command: { name: 'noop', args: '' } })
+    const baseline = performance.now() - b0
+    const g0 = performance.now()
+    // Alternates a hold and its release; time moves on so the cached evaluation goes stale half the time.
+    await $.prompt.submit(prompt(text))
+    overhead.push(performance.now() - g0 - baseline)
     if (i % 2 === 1) await seen.clock.advance(1_500)
   }
-  times.sort((a, b) => a - b)
-  const p95 = times[Math.floor(times.length * 0.95)]!
+  overhead.sort((a, b) => a - b)
+  const p95 = overhead[Math.floor(overhead.length * 0.95)]!
   expect(p95).toBeLessThanOrEqual(20)
 })
