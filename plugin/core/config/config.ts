@@ -86,7 +86,8 @@ export function validateConfig(raw: Readonly<Record<string, unknown>>): ConfigRe
     keepAliveDefaultBudgetUsd: pick('keepAliveDefaultBudgetUsd', positiveNumber),
     keepAliveDefaultMinutes: pick('keepAliveDefaultMinutes', positiveNumber),
     historyDays: pick('historyDays', v => (positiveNumber(v) !== undefined && Number.isInteger(v) ? (v as number) : undefined)),
-    priceOverridesPath: pick('priceOverridesPath', v => (typeof v === 'string' && v.trim() !== '' ? v : undefined)),
+    // An empty path is the manifest's default: the standard location, not an error.
+    priceOverridesPath: pick('priceOverridesPath', v => (typeof v === 'string' ? (v.trim() === '' ? null : v) : undefined)),
   };
   return { config, invalid };
 }

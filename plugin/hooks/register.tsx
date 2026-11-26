@@ -7,7 +7,8 @@ import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
 import { flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
-import { applyFacts, currentEvaluation, modelState, publish, resetModel } from './session/model'
+import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing } from './session/model'
+import { drawBand } from './ui/band'
 
 /**
  * Token Shield's hooks module: the only entry point the engine loads. It only
@@ -32,6 +33,7 @@ export const register: Register = (on, options) => {
   on('session.start', async ($, e, next) => {
     const started = await next(e)
     resetModel()
+    resetPublishing()
     resetHistory()
     resetSnapshotReader()
     await startHost($, options)
@@ -49,6 +51,7 @@ export const register: Register = (on, options) => {
   on('session.end', async ($, e, next) => {
     for (const t of timers) t.cancel()
     timers = []
+    resetPublishing()
     const h = host()
     if (h !== null) await flushHistory($, h.companions.dataDir, h.sessionId)
     stopHost()
@@ -128,6 +131,11 @@ export const register: Register = (on, options) => {
     return next(e)
   }).catch(($, e, next) => {
     reportFailure($, 'classic.PostModelSwitch', next.error)
+    return next(e)
+  })
+
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => (await drawBand($, e)) ?? next(e)).catch(($, e, next) => {
+    reportFailure($, 'band', next.error)
     return next(e)
   })
 

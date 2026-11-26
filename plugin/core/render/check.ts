@@ -234,7 +234,7 @@ function unknownReason(view: CheckView, t: (key: string, params?: Record<string,
 }
 
 /** The recommendation as one line. */
-function recommendationText(
+export function recommendationText(
   view: CheckView,
   t: (key: string, params?: Record<string, string | number>) => string,
   clock: (ms: number) => string,

@@ -1,12 +1,25 @@
+import { atom, update } from 'claude-code'
 import type { EngineInterface } from 'claude-code'
 
-import type { Evaluation } from '../../core/pipeline'
-import { evaluate } from '../../core/pipeline'
+import type { Assessment } from '../../core/assess/types'
 import { initialState, reduce } from '../../core/model/reduce'
 import type { Fact, SessionState } from '../../core/model/types'
+import { EMPTY_LOG, logNotification, nextBoundary, notify } from '../../core/notify/notify'
+import type { NotifyLog } from '../../core/notify/notify'
+import type { Evaluation } from '../../core/pipeline'
+import { evaluate } from '../../core/pipeline'
+import { bandText, notificationText } from '../../core/render/band'
 import { glyphSet } from '../../core/render/format'
 import { renderSegment } from '../../core/render/segment'
+import { reportFailure } from '../host/failure'
 import { host } from '../host/host'
+import type { TokenShieldBand } from '../../types'
+
+/**
+ * The band's value (the same $.state slot ui/band.tsx reads). Declared here as
+ * well because the validator reads each atom where it is used.
+ */
+const bandAtom = atom({ plugin: 'token-shield', key: 'band' } as const, null as TokenShieldBand)
 
 /**
  * The mod's session model (design D1): the core's reducer state, fed by the
@@ -68,9 +81,24 @@ export async function currentEvaluation($: EngineInterface, force = false): Prom
   return ev
 }
 
+/** The assessment the last toast decision saw, the toast log and the boundary timer. */
+let previous: Assessment | null = null
+let toastLog: NotifyLog = EMPTY_LOG
+let boundary: { cancel: () => void } | null = null
+
+/** Starts the UI state over for a new session. */
+export function resetPublishing(): void {
+  previous = null
+  toastLog = EMPTY_LOG
+  boundary?.cancel()
+  boundary = null
+}
+
 /**
- * Recomputes and shows the status segment (REQ-8). Called after every fact
- * and timer tick; the segment is the one surface that is always on.
+ * Recomputes and redraws: the status segment (REQ-8), the band (REQ-9.0.3),
+ * at most one toast for the transition (D13), and one timer at the next
+ * boundary so EXPIRING and COLD show on time in an idle session (REQ-9.0.5).
+ * Called after every fact and tick.
  *
  * @param $ the engine interface
  */
@@ -78,13 +106,34 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
   const ev = await currentEvaluation($, true)
   const h = host()
   if (ev === null || h === null || h.data === null) return ev
-  const segment = renderSegment(ev.a, ev.cost, {
-    glyphs: glyphSet(h.config.glyphs),
-    strings: h.data.strings,
-    display: h.data.rules.display,
-    tzOffsetMin: h.tzOffsetMin,
-    billing: ev.billing,
-  })
-  $.ui.status(segment)
+  const glyphs = glyphSet(h.config.glyphs)
+  const text = { glyphs, strings: h.data.strings, display: h.data.rules.display, tzOffsetMin: h.tzOffsetMin }
+  $.ui.status(renderSegment(ev.a, ev.cost, { ...text, billing: ev.billing }))
+
+  const band = bandText(ev.view, text)
+  await update($, bandAtom, () => (band === null ? null : { mode: 'state' as const, text: band, lever: ev.rec.lever === 'none' ? null : ev.rec.lever }))
+
+  const now = ev.a.at
+  const n = notify(previous, ev.a, toastLog, h.config, now)
+  if (n !== null) {
+    $.ui.toast(notificationText(n, text))
+    toastLog = logNotification(toastLog, n, now)
+  }
+  previous = ev.a
+
+  boundary?.cancel()
+  boundary = null
+  const at = nextBoundary(ev.a, now)
+  // A little past the boundary, so the recomputation lands on the new side of it.
+  if (at !== null) boundary = $.clock.after(at - now + 50, () => void republish($))
   return ev
+}
+
+/** A timer's redraw; a failure is reported, never thrown into the engine. */
+async function republish($: EngineInterface): Promise<void> {
+  try {
+    await publish($)
+  } catch (err) {
+    reportFailure($, 'boundary timer', err)
+  }
 }

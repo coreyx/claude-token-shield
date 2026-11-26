@@ -182,7 +182,7 @@ With the mod loaded, the status segment, band, toasts and `/cache-check` work fr
     4. Implement the history writer: whitelisted records only, debounced whole-file chunk writes (close at 256 KiB or 500 records), and a heartbeat every 30 s.
     5. Test with `claude plugin test`: a sequence of steps and a snapshot produce the right state; MCP config and CLAUDE.md edits change nothing; a model switch gives `INVALIDATED`; written chunks contain none of the fixture's prompt or response strings.
 
-- [ ] **TASK-19: Show the status segment, band, toasts and timers**
+- [x] **TASK-19: Show the status segment, band, toasts and timers**
   - **Associated Acceptance Criteria**: `8.1`, `8.2`, `9.1`, `9.2`, `9.3`, `9.4`, `9.5`, `22.3`
   - **Concrete Steps**:
     1. Call `$.ui.status(renderSegment(...))` after every assessment, honoring the glyph setting.

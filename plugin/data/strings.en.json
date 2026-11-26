@@ -805,6 +805,26 @@
     "check.cli_gap": {
       "text": "tshield reads Claude Code's snapshot and the recorded history only; events the mod sees live since the last request (model, effort or fast-mode switches, plugin reloads) are not included here.",
       "tense": "none"
+    },
+    "band.EXPIRING": {
+      "text": "Token Shield {dot} cache warm until {time}; send before then, or the next prompt re-caches {tokens} tokens{cost}.",
+      "tense": "future"
+    },
+    "band.COLD": {
+      "text": "Token Shield {dot} cache cold; the next prompt re-caches {tokens} tokens{cost}.",
+      "tense": "future"
+    },
+    "band.INVALIDATED": {
+      "text": "Token Shield {dot} {cause} invalidated the cache; the next prompt re-caches {tokens} tokens{cost}.",
+      "tense": "future"
+    },
+    "band.cost": {
+      "text": " ({approx} {cost})",
+      "tense": "none"
+    },
+    "band.advice": {
+      "text": "  {arrow} {text}",
+      "tense": "none"
     }
   }
 }

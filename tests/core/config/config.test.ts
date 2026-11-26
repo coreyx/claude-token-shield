@@ -64,7 +64,7 @@ describe('validateConfig', () => {
       keepAliveDefaultBudgetUsd: 'lots',
       keepAliveDefaultMinutes: 0,
       historyDays: 'forever',
-      priceOverridesPath: '  ',
+      priceOverridesPath: 42,
     })
     expect(config).toEqual(DEFAULT_CONFIG)
     expect(invalid).toEqual([
@@ -84,7 +84,8 @@ describe('validateConfig', () => {
     expect(formatString(strings, 'error.config_invalid', { key: invalid[0]!, default: '2' })).toContain('thresholdUsd')
   })
 
-  it('treats undefined like missing', () => {
+  it('treats undefined like missing, and an empty override path as the default location', () => {
     expect(validateConfig({ gate: undefined }).invalid).toEqual([])
+    expect(validateConfig({ priceOverridesPath: '' })).toEqual({ config: DEFAULT_CONFIG, invalid: [] })
   })
 })
