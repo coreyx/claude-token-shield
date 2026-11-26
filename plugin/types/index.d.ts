@@ -54,6 +54,12 @@ export type TokenShieldPendingSetting = {
   fingerprint: string
 } | null
 
+/** The context breakdown's categories, fetched for the Context view and the prefix map's layers. */
+export type TokenShieldContext = { name: string; tokens: number; kind: string }[] | null
+
+/** A counter bumped to redraw the runway while it is shown. */
+export type TokenShieldTick = number
+
 /** Contract version of the values below. */
 export type TokenShieldContractVersion = 1
 
@@ -63,6 +69,8 @@ declare module 'claude-code' {
       status: TokenShieldStatus
       band: TokenShieldBand
       pane: TokenShieldPane
+      context: TokenShieldContext
+      tick: TokenShieldTick
       levers: TokenShieldLevers
       armed: TokenShieldArmed
       setting: TokenShieldPendingSetting

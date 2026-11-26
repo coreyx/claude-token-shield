@@ -1429,6 +1429,10 @@
     "view.not_yet": {
       "text": "The {view} view comes in a later build.",
       "tense": "none"
+    },
+    "view.context.loading": {
+      "text": "Context composition: counting the prefix{dash}",
+      "tense": "none"
     }
   }
 }

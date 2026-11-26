@@ -3,13 +3,24 @@ import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 
 import { formatString } from '../../core/data/load'
 import { glyphParams, glyphSet } from '../../core/render/format'
-import { renderPrefixMap } from '../../core/render/views/map'
-import type { TokenShieldPane, TokenShieldPaneTab } from '../../types'
+import { renderContext } from '../../core/render/views/context'
+import { layersOf, renderPrefixMap } from '../../core/render/views/map'
+import { renderRunway } from '../../core/render/views/runway'
+import type { TokenShieldContext, TokenShieldPane, TokenShieldPaneTab, TokenShieldTick } from '../../types'
 import { host } from '../host/host'
-import { modelState } from '../session/model'
+import { reportFailure } from '../host/failure'
+import { currentEvaluation, modelState } from '../session/model'
 
 /** The pane: its tab and the last mid-turn check (design D7). */
 const paneAtom = atom({ plugin: 'token-shield', key: 'pane' } as const, null as TokenShieldPane)
+
+/** The context breakdown, fetched off the render path when the Context view opens. */
+const contextAtom = atom({ plugin: 'token-shield', key: 'context' } as const, null as TokenShieldContext)
+/** Bumped every few seconds while the runway is shown, so it redraws. */
+const tickAtom = atom({ plugin: 'token-shield', key: 'tick' } as const, 0 as TokenShieldTick)
+
+/** How often the runway redraws while it is shown. */
+export const RUNWAY_REFRESH_MS = 5_000
 
 /** The pane's id. */
 export const PANE_ID = 'token-shield'
@@ -43,9 +54,39 @@ export async function openView($: EngineInterface, args: string) {
   return { text: t('view.opened', { view: t(`view.tab.${tab}`) }), isTextDisplayOnly: true as const }
 }
 
-/** Switches the pane to a tab, keeping the last mid-turn check. */
+/** Switches the pane to a tab, keeping the last mid-turn check, and fetches what the tab needs. */
 async function showTab($: EngineInterface, tab: TokenShieldPaneTab): Promise<void> {
   await update($, paneAtom, current => ({ tab, text: current?.text ?? null }))
+  if (tab === 'context' || tab === 'map') await refreshContext($)
+}
+
+/**
+ * Fetches the context breakdown for the Context view and the map's layers,
+ * outside drawing: it asks the engine to count the prefix.
+ *
+ * @param $ the engine interface
+ */
+export async function refreshContext($: EngineInterface): Promise<void> {
+  try {
+    const usage = await $.session.usage({ breakdown: 'summary' })
+    const rows = (usage.context.breakdown?.categories ?? []).map(c => ({ name: c.name, tokens: c.tokens, kind: c.kind }))
+    await update($, contextAtom, () => rows)
+  } catch (err) {
+    reportFailure($, 'context breakdown', err)
+  }
+}
+
+/**
+ * The runway's refresh: bumps the tick while the pane is shown on the runway,
+ * so its now marker moves (REQ-13.0.2); otherwise does nothing.
+ *
+ * @param $ the engine interface
+ */
+export async function refreshRunway($: EngineInterface): Promise<void> {
+  const pane = await read($, paneAtom)
+  if (pane?.tab !== 'runway') return
+  const shown = (await $.ui.panes()).some(p => p.id === PANE_ID && p.isShown)
+  if (shown) await update($, tickAtom, n => n + 1)
 }
 
 /**
@@ -61,6 +102,8 @@ export async function drawPane($: EngineInterface, e: RenderInput<'Pane'>): Prom
   if (e.requestId !== PANE_ID) return null
   const pane = await read($, paneAtom)
   const tab = pane?.tab ?? 'map'
+  // Read so the runway redraws when the tick moves.
+  await read($, tickAtom)
   const t = formatter()
   const { Box, Button, Text } = $.ui.resolve(e)
   if (t === null) return <Text>Token Shield: not started.</Text>
@@ -96,8 +139,18 @@ async function viewText($: EngineInterface, tab: TokenShieldPaneTab, check: stri
   switch (tab) {
     case 'check':
       return check ?? ''
-    case 'map':
-      return renderPrefixMap(s.requests, s.events, null, width, o, h.data!.prices)
+    case 'map': {
+      const rows = await read($, contextAtom)
+      return renderPrefixMap(s.requests, s.events, rows !== null ? layersOf(rows) : null, width, o, h.data!.prices)
+    }
+    case 'runway': {
+      const ev = await currentEvaluation($)
+      return ev === null ? formatString(o.strings, 'view.runway.unknown') : renderRunway(ev.a, ev.cost, width, o)
+    }
+    case 'context': {
+      const rows = await read($, contextAtom)
+      return rows === null ? formatString(o.strings, 'view.context.loading') : renderContext(rows, width, o)
+    }
     default:
       return formatString(o.strings, 'view.not_yet', { view: formatString(o.strings, `view.tab.${tab}`) })
   }

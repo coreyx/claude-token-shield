@@ -81,3 +81,59 @@ test('/cache-view with an unknown view says which there are', async ($, on) => {
   await $.session.start(START)
   expect((await $.command.run(view('graphs'))).text).toBe('Token Shield: /cache-view map|runway|levers|context|history')
 })
+
+test('the runway shows now inside the warn window, and redraws while shown (AC 13.2)', async ($, on) => {
+  const seen = engine(on)
+  beneath(on, [])
+  on('ui.panes', () => ({ value: [{ id: 'token-shield', title: 'Token Shield', isShown: true, isFocused: true, isPlaced: true }] as never }))
+  // Warm for 8 more minutes: inside the 10-minute warn window.
+  const payload = { session_id: SESSION, model: { id: 'claude-opus-5-5' }, version: '2.1.332', prompt_cache: { warm: true, caching_observed: true, ttl: '1h', expires_at: T0 / 1000 + 8 * 60, recache_tokens_if_cold: 812470 } }
+  seen.files.set(`/plugin-data/sessions/${SESSION}/snapshot.json`, { text: JSON.stringify({ v: 1, receivedAt: T0, payload }), mtimeMs: T0 })
+  await $.session.start(START)
+  await $.command.run(view('runway'))
+  const pane = await $.ui.mount(PANE(100))
+  expect(await pane.find({ type: 'Text', text: /^Expiry runway · cache EXPIRING$/ })).toBeDefined()
+  expect(await pane.find({ type: 'Text', text: /^Act before \d\d:\d\d ≈ \$0\.\d\d · after ≈ \$6\.50$/ })).toBeDefined()
+  const before = (await pane.find({ type: 'Text', text: /▲now/ }))!.text!.indexOf('▲')
+  await seen.clock.advance(4 * 60_000)
+  const after = (await pane.find({ type: 'Text', text: /▲now/ }))!.text!.indexOf('▲')
+  expect(after).toBeGreaterThan(before)
+  await pane.unmount()
+})
+
+test('the context view counts the prefix off the render path, and the map gains its layer ruler (REQ-13.0.4)', async ($, on) => {
+  const seen = engine(on)
+  beneath(on, [{ read: 780_000, write: 20_000 }])
+  let counted = 0
+  on('session.usage', () => {
+    counted += 1
+    return {
+      value: {
+        startedAt: T0,
+        rateLimits: [],
+        context: {
+          window: 1_000_000,
+          breakdown: {
+            categories: [
+              { name: 'System prompt', tokens: 3_000, color: '', isDeferred: false, kind: 'used' },
+              { name: 'System tools', tokens: 15_000, color: '', isDeferred: false, kind: 'used' },
+              { name: 'Memory files', tokens: 4_000, color: '', isDeferred: false, kind: 'used' },
+              { name: 'Messages', tokens: 780_000, color: '', isDeferred: false, kind: 'used' },
+            ],
+          },
+        },
+      } as never,
+    }
+  })
+  placeSnapshot(seen)
+  await $.session.start(START)
+  await turn($, 't1')
+  await $.command.run(view('context'))
+  expect(counted).toBe(1)
+  const pane = await $.ui.mount(PANE(100))
+  expect(await pane.find({ type: 'Text', text: /^Messages +█+ +780k {2}changes each turn$/ })).toBeDefined()
+  expect(await pane.find({ type: 'Text', text: /^System tools +█+ +15k {2}stable$/ })).toBeDefined()
+  await pane.press({ key: 'tab:map' })
+  expect(await pane.find({ type: 'Text', text: /s system\+tools 18k {2}p project 4k {2}c conversation 780k/ })).toBeDefined()
+  await pane.unmount()
+})

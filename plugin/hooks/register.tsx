@@ -19,7 +19,7 @@ import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
 import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
 import { answerCacheCheck, drawLeverBar } from './ui/check'
-import { drawPane, openView } from './ui/pane'
+import { drawPane, openView, refreshRunway, RUNWAY_REFRESH_MS } from './ui/pane'
 
 /**
  * Token Shield's hooks module: the only entry point the engine loads. It only
@@ -75,6 +75,7 @@ export const register: Register = (on, options) => {
     await publish($)
     timers.push($.clock.every(SNAPSHOT_POLL_MS, () => void tick($)))
     timers.push($.clock.every(HEARTBEAT_MS, () => void beat($)))
+    timers.push($.clock.every(RUNWAY_REFRESH_MS, () => void refreshRunway($).catch(err => reportFailure($, 'runway refresh', err))))
     await beat($)
     return started
   }).catch(($, e, next) => {

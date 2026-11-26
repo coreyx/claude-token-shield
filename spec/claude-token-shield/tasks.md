@@ -308,7 +308,7 @@ The Token Shield pane draws all five views from the same data as `/cache-check`,
     3. Draw the prefix map: one bar per recent main request, split into layers, patterned by read, written and uncached, with rebuild rows labelled by cause.
     4. Test that a five-request fixture with one compaction shows five bars and labels the rebuild "compaction", at 80 and 120 columns.
 
-- [ ] **TASK-33: Build the expiry runway and the context composition view**
+- [x] **TASK-33: Build the expiry runway and the context composition view**
   - **Associated Acceptance Criteria**: `13.2`, `13.4`
   - **Concrete Steps**:
     1. Draw the runway: time axis, `▲now`, warn window, expiry and margin, and the before and after costs. Refresh it on a `$.clock.every` while visible.
