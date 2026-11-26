@@ -4,11 +4,12 @@ import type { Fact } from '../core/model/types'
 import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
+import { gateSubmit, resetGate } from './actions/gate'
 import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
 import { flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
-import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
+import { applyFacts, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
 import { answerCacheCheck, drawLeverBar, drawPane } from './ui/check'
 
@@ -36,6 +37,7 @@ export const register: Register = (on, options) => {
     const started = await next(e)
     resetModel()
     resetPublishing()
+    resetGate()
     resetHistory()
     resetSnapshotReader()
     const h = await startHost($, options)
@@ -102,9 +104,12 @@ export const register: Register = (on, options) => {
 
   // The submit gate (TASK-22) decides from the cached evaluation; until then
   // the hook only keeps it current, and passes every prompt.
+  // The submit gate (D9): only a prompt the person typed is weighed; a hold
+  // answers the drop reason, everything else goes on exactly as it came.
   on('prompt.submit', async ($, e, next) => {
-    if (!e.command && !e.isMeta) await currentEvaluation($)
-    return next(e)
+    if (e.command || e.isMeta || e.origin.kind !== 'composer') return next(e)
+    const drop = await gateSubmit($, e.text)
+    return drop === null ? next(e) : { drop }
   }).catch(($, e, next) => {
     reportFailure($, 'prompt.submit', next.error)
     return next(e)

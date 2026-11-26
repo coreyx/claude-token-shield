@@ -917,6 +917,18 @@
     "command.ttl_usage": {
       "text": "Token Shield: /cache-check ttl 5m|1h [--subagent] sets the TTL after you confirm; the advisor comes in a later build.",
       "tense": "none"
+    },
+    "detail.COLD": {
+      "text": "expired at {time}",
+      "tense": "past"
+    },
+    "detail.COLD_untimed": {
+      "text": "idle past its TTL",
+      "tense": "past"
+    },
+    "detail.INVALIDATED": {
+      "text": "{cause} invalidated it",
+      "tense": "past"
     }
   }
 }

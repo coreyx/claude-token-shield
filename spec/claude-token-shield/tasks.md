@@ -212,7 +212,7 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
     3. Implement the band's confirm mode and `SettingsWriter`: show key, scope file and value; write on confirmation through `$.config.set` where a row exists, otherwise read-compare-write the user settings; show the JSON to paste if refused.
     4. Test: a compact press equals typing `/compact` with no confirmation; one clear press runs nothing, two within 3 s run `/clear`, and after 3 s the label resets and the next press arms again; a TTL lever leaves the settings file unchanged until confirmed; no control is offered for a subagent; a default-config session triggers no compaction, clear, rewind, settings change or API request by itself.
 
-- [ ] **TASK-22: Build the submit gate**
+- [x] **TASK-22: Build the submit gate**
   - **Associated Acceptance Criteria**: `12.1`, `12.2`, `12.3`, `12.4`, `12.5`, `21.2`
   - **Concrete Steps**:
     1. Implement the `prompt.submit` hook per design D9: pass commands, meta prompts and non-composer origins; read the cached assessment; hold with a Token Shield drop reason, without calling `$.prompt.fill` (Claude Code restores the dropped prompt itself; see spikes.md §3); pass the resubmitted identical prompt within 60 s.
