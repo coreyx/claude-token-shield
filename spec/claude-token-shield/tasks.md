@@ -164,7 +164,7 @@ The Go companions produce the same assessment, costs and text as the core, write
 
 With the mod loaded, the status segment, band, toasts and `/cache-check` work from live engine events and the bridge snapshot, without writing anything to the conversation.
 
-- [ ] **TASK-17: Build the mod host: error boundary, configuration and binary resolution**
+- [x] **TASK-17: Build the mod host: error boundary, configuration and binary resolution**
   - **Associated Acceptance Criteria**: `1.4`, `21.3`, `22.2`
   - **Concrete Steps**:
     1. Wrap every hook registration so an exception returns `next(e)` (or the default render) and logs once per error kind through `$.ui.log`.

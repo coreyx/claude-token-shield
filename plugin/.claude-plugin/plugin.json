@@ -6,5 +6,82 @@
   "homepage": "https://github.com/coreyx/claude-token-shield",
   "repository": "https://github.com/coreyx/claude-token-shield",
   "license": "MIT",
-  "types": "./types/index.d.ts"
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "thresholdUsd": {
+      "type": "number",
+      "title": "Rebuild threshold (dollars)",
+      "description": "Hold or warn before a prompt whose cache rebuild costs more than this many API-equivalent dollars. Ignored on a subscription, where only the token threshold applies.",
+      "default": 2
+    },
+    "thresholdTokens": {
+      "type": "number",
+      "title": "Rebuild threshold (tokens)",
+      "description": "Hold or warn before a prompt that re-caches more than this many tokens.",
+      "default": 250000
+    },
+    "warnWindow1h": {
+      "type": "string",
+      "title": "Expiry warning (1-hour cache)",
+      "description": "How long before a 1-hour cache expires to warn, such as 10m.",
+      "default": "10m"
+    },
+    "warnWindow5m": {
+      "type": "string",
+      "title": "Expiry warning (5-minute cache)",
+      "description": "How long before a 5-minute cache expires to warn, such as 1m.",
+      "default": "1m"
+    },
+    "gate": {
+      "type": "string",
+      "title": "Submit gate",
+      "description": "hold: hold an expensive prompt until you send it again. warn: show a warning instead. off: neither.",
+      "options": ["hold", "warn", "off"],
+      "default": "hold"
+    },
+    "switchConfirm": {
+      "type": "string",
+      "title": "Confirm costly model switches",
+      "description": "on: put the rebuild cost inside Claude Code's confirmation before a warm model switch over the threshold.",
+      "options": ["off", "on"],
+      "default": "off"
+    },
+    "mutedLevels": {
+      "type": "string",
+      "title": "Muted notification levels",
+      "description": "Comma-separated levels to silence: info, warning, critical.",
+      "default": ""
+    },
+    "glyphs": {
+      "type": "string",
+      "title": "Glyphs",
+      "description": "unicode, or ascii for terminals that can't draw the symbols.",
+      "options": ["unicode", "ascii"],
+      "default": "unicode"
+    },
+    "keepAliveDefaultBudgetUsd": {
+      "type": "number",
+      "title": "Keep-alive budget (dollars)",
+      "description": "The budget a keep-alive starts with unless you give one.",
+      "default": 1
+    },
+    "keepAliveDefaultMinutes": {
+      "type": "number",
+      "title": "Keep-alive length (minutes)",
+      "description": "How long a keep-alive runs unless you give an end time.",
+      "default": 60
+    },
+    "historyDays": {
+      "type": "number",
+      "title": "History kept (days)",
+      "description": "Days of cache history kept for calibration and the history views.",
+      "default": 90
+    },
+    "priceOverridesPath": {
+      "type": "string",
+      "title": "Price overrides file",
+      "description": "A JSON file of your own prices, merged over the bundled table. Empty for <data>/prices.override.json.",
+      "default": ""
+    }
+  }
 }
