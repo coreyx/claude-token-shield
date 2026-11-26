@@ -191,7 +191,7 @@ With the mod loaded, the status segment, band, toasts and `/cache-check` work fr
     4. Re-arm one `$.clock.after` at the next boundary after each assessment, and re-assess on a late tick (clock jumps).
     5. Test: the band is present in `COLD` and absent in `HOT`; an idle `EXPIRING` boundary toasts within 5 s with no input; the transition and mute cases from TASK-10 hold end to end.
 
-- [ ] **TASK-20: Build the `/cache-check` command and the lever bar**
+- [x] **TASK-20: Build the `/cache-check` command and the lever bar**
   - **Associated Acceptance Criteria**: `2.2`, `6.1`, `6.2`, `6.3`, `6.4`
   - **Concrete Steps**:
     1. Register `/cache-check` and parse its arguments (`--verbose`, `--diff`, `--probe`, `--force`, `history …`, `setup`, `keepalive …`, `ttl`, `forget`), dispatching subcommands built in later tasks.

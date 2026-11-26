@@ -825,6 +825,66 @@
     "band.advice": {
       "text": "  {arrow} {text}",
       "tense": "none"
+    },
+    "command.description": {
+      "text": "Token Shield: the prompt cache's state, costs and levers (--verbose, --diff, setup)",
+      "tense": "none"
+    },
+    "command.unknown_option": {
+      "text": "Token Shield: unknown /cache-check option {option}. Try --verbose, --diff or setup.",
+      "tense": "none"
+    },
+    "command.not_yet": {
+      "text": "Token Shield: /cache-check {option} isn't available in this build yet.",
+      "tense": "none"
+    },
+    "command.off": {
+      "text": "Token Shield: cache features are off ({reason}).",
+      "tense": "none"
+    },
+    "command.mid_turn": {
+      "text": "Token Shield: the cache check is in the Token Shield pane while the turn runs.",
+      "tense": "none"
+    },
+    "pane.title": {
+      "text": "Token Shield",
+      "tense": "none"
+    },
+    "levers.title": {
+      "text": "Token Shield levers:",
+      "tense": "none"
+    },
+    "levers.fill": {
+      "text": "Puts {command} in the prompt; press Enter to run it.",
+      "tense": "none"
+    },
+    "setup.confirm": {
+      "text": "Token Shield {dot} set up the statusline bridge? It keeps your current statusline and shows the cache segment beside it.",
+      "tense": "none"
+    },
+    "setup.no_binary": {
+      "text": "Token Shield: the tshield binary isn't available on this machine, so the bridge can't be set up here.",
+      "tense": "none"
+    },
+    "setup.done": {
+      "text": "Token Shield: the statusline bridge is set up.",
+      "tense": "none"
+    },
+    "setup.failed": {
+      "text": "Token Shield: setup didn't complete: {reason}",
+      "tense": "none"
+    },
+    "setup.cancelled": {
+      "text": "Token Shield: setup cancelled; nothing was changed.",
+      "tense": "none"
+    },
+    "button.confirm": {
+      "text": "Confirm",
+      "tense": "none"
+    },
+    "button.cancel": {
+      "text": "Cancel",
+      "tense": "none"
     }
   }
 }

@@ -25,6 +25,14 @@ export type TokenShieldBand = {
   lever: string | null
 } | null
 
+/** The last check rendered for the Token Shield pane. */
+export type TokenShieldPane = {
+  text: string
+} | null
+
+/** The command levers the last /cache-check found applicable, in its order. */
+export type TokenShieldLevers = string[]
+
 /** Contract version of the values below. */
 export type TokenShieldContractVersion = 1
 
@@ -33,6 +41,8 @@ declare module 'claude-code' {
     'token-shield': {
       status: TokenShieldStatus
       band: TokenShieldBand
+      pane: TokenShieldPane
+      levers: TokenShieldLevers
     }
   }
 }

@@ -3,12 +3,14 @@ import type { EngineInterface, Register } from 'claude-code'
 import type { Fact } from '../core/model/types'
 import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
+import { formatString } from '../core/data/load'
 import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
 import { flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
-import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing } from './session/model'
+import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
+import { answerCacheCheck, drawLeverBar, drawPane } from './ui/check'
 
 /**
  * Token Shield's hooks module: the only entry point the engine loads. It only
@@ -36,7 +38,15 @@ export const register: Register = (on, options) => {
     resetPublishing()
     resetHistory()
     resetSnapshotReader()
-    await startHost($, options)
+    const h = await startHost($, options)
+    // Registration fails on its own: the segment, band and history still start.
+    if (h.data !== null) {
+      try {
+        await $.command.register({ name: 'cache-check', description: formatString(h.data.strings, 'command.description') })
+      } catch (err) {
+        reportFailure($, 'command.register', err)
+      }
+    }
     await pollSnapshot($)
     await publish($)
     timers.push($.clock.every(SNAPSHOT_POLL_MS, () => void tick($)))
@@ -63,6 +73,7 @@ export const register: Register = (on, options) => {
 
   // Each model request: its usage, start and lane become a request record.
   on('turn.step', async function* ($, e, next) {
+    if (e.agentId === undefined) setTurnRunning(true)
     const startedAt = await $.clock.now()
     const result = yield* next(e)
     try {
@@ -78,6 +89,7 @@ export const register: Register = (on, options) => {
   })
 
   on('turn.complete', async ($, e, next) => {
+    if (e.agentId === undefined) setTurnRunning(false)
     const h = host()
     await pollSnapshot($)
     if (h !== null) await flushHistory($, h.companions.dataDir, h.sessionId)
@@ -131,6 +143,22 @@ export const register: Register = (on, options) => {
     return next(e)
   }).catch(($, e, next) => {
     reportFailure($, 'classic.PostModelSwitch', next.error)
+    return next(e)
+  })
+
+  // /cache-check answers itself: no next(e), no model call, nothing sent (D7).
+  on('command.run', { command: 'cache-check' }, async ($, e) => answerCacheCheck($, e.args, e.presentation.columns)).catch(($, _e, next) => {
+    reportFailure($, 'cache-check', next.error)
+    return { text: 'Token Shield: the cache check failed; details are in the debug log.', isTextDisplayOnly: true as const }
+  })
+
+  on('ui.render', { component: 'Pane' }, async ($, e, next) => (await drawPane($, e)) ?? next(e)).catch(($, e, next) => {
+    reportFailure($, 'pane', next.error)
+    return next(e)
+  })
+
+  on('ui.render', { component: 'Placed' }, async ($, e, next) => (await drawLeverBar($, e)) ?? next(e)).catch(($, e, next) => {
+    reportFailure($, 'lever bar', next.error)
     return next(e)
   })
 

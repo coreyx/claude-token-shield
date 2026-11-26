@@ -52,6 +52,41 @@ export function applyFacts(...facts: readonly Fact[]): void {
   cached = null
 }
 
+/** Whether a main turn is running: set by its first step, cleared when it completes. */
+let turnRunning = false
+
+/** Marks a main turn as running or done (design D7 answers a mid-turn /cache-check differently). */
+export function setTurnRunning(running: boolean): void {
+  turnRunning = running
+}
+
+/** Whether a main turn is running now. */
+export function isTurnRunning(): boolean {
+  return turnRunning
+}
+
+/**
+ * A fresh evaluation in a given check mode (verbose adds the timeline, diff
+ * the changes), for /cache-check; it doesn't replace the cached one.
+ *
+ * @param $ the engine interface
+ * @param mode the check view's mode
+ */
+export async function evaluateFor($: EngineInterface, mode: 'default' | 'verbose' | 'diff'): Promise<Evaluation | null> {
+  const h = host()
+  if (h === null || !h.enabled) return null
+  if (h.data === null) throw new Error('shared data unavailable')
+  return evaluate(state, await $.clock.now(), {
+    rules: h.data.rules,
+    prices: h.data.prices,
+    env: h.env,
+    ccVersion: h.ccVersion,
+    warnWindowsSec: { '1h': h.config.warnWindow1hSec, '5m': h.config.warnWindow5mSec },
+    defaultModel: await $.session.model(),
+    mode,
+  })
+}
+
 /** How long a cached evaluation serves reads. */
 const FRESH_MS = 1000
 
@@ -111,7 +146,10 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
   $.ui.status(renderSegment(ev.a, ev.cost, { ...text, billing: ev.billing }))
 
   const band = bandText(ev.view, text)
-  await update($, bandAtom, () => (band === null ? null : { mode: 'state' as const, text: band, lever: ev.rec.lever === 'none' ? null : ev.rec.lever }))
+  // A confirmation the person hasn't answered stays; only the state band follows the cache.
+  await update($, bandAtom, current =>
+    current !== null && current.mode === 'confirm' ? current : band === null ? null : { mode: 'state' as const, text: band, lever: ev.rec.lever === 'none' ? null : ev.rec.lever },
+  )
 
   const now = ev.a.at
   const n = notify(previous, ev.a, toastLog, h.config, now)

@@ -95,6 +95,7 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
     seen.statuses.push(e.text)
     return { value: undefined }
   })
+  on('command.register', (_, e) => ({ value: { command: e.name } }))
   on('session.start', (_, e) => ({ cwd: e.cwd }))
   on('session.end', () => ({ sessionId: SESSION }))
   on('prompt.submit', (_, e) => ({ text: e.text }))
