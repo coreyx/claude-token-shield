@@ -13,6 +13,8 @@ import { parseSnapshot } from '../../../plugin/core/model/snapshot'
 import type { Fact, SessionState } from '../../../plugin/core/model/types'
 import { quoteLevers } from '../../../plugin/core/recommend/levers'
 import { recommend } from '../../../plugin/core/recommend/recommend'
+import type { LeverQuote } from '../../../plugin/core/recommend/levers'
+import type { Recommendation } from '../../../plugin/core/recommend/recommend'
 import type { CheckMode, CheckView } from '../../../plugin/core/view/view'
 import { checkView } from '../../../plugin/core/view/view'
 import { payload, request } from '../model/fixtures'
@@ -63,6 +65,8 @@ export interface Built {
   readonly state: SessionState
   readonly a: Assessment
   readonly cost: NextTurnCost
+  readonly quotes: readonly LeverQuote[]
+  readonly rec: Recommendation
   readonly view: (mode: CheckMode, billing?: BillingMode) => CheckView
 }
 
@@ -89,6 +93,8 @@ export function build(which: CacheState): Built {
     state,
     a,
     cost,
+    quotes,
+    rec,
     view: (mode, billing = 'api') => checkView({ a, s: state, quotes, rec, cost: a.state === 'UNKNOWN' ? null : cost, billing, mode }),
   }
 }

@@ -315,7 +315,7 @@ The Token Shield pane draws all five views from the same data as `/cache-check`,
     2. Draw context composition from `$.session.usage({ breakdown: "summary" })`, marking each category stable or changing each turn.
     3. Test that an `EXPIRING` fixture places now inside the warn window and shows both costs.
 
-- [ ] **TASK-34: Build the lever comparator**
+- [x] **TASK-34: Build the lever comparator**
   - **Associated Acceptance Criteria**: `4.1`, `13.3`, `17.5`
   - **Concrete Steps**:
     1. Draw the lever table (cost now, effect later, tier, recommended mark), with `LeverButton`s for the command levers and the compact and clear controls carrying their cost, effect and recommended mark.

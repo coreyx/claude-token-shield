@@ -26,10 +26,12 @@ type ButtonSurface = RenderInput<'Placed'> | RenderInput<'AbovePrompt'> | Render
  * @param e the render request the button is drawn in
  * @param lever the lever
  * @param instance an id unique to this button on its surface
+ * @param detail what the label carries after the command, such as its cost and the recommended mark (AC 17.5)
  */
-export async function LeverButton($: EngineInterface, e: ButtonSurface, lever: string, instance: string): Promise<RenderElement> {
+export async function LeverButton($: EngineInterface, e: ButtonSurface, lever: string, instance: string, detail = ''): Promise<RenderElement> {
   const { Button, Text } = $.ui.resolve(e)
-  if (lever !== 'clear') return <Button key={lever} label={`/${lever}`} onPress={() => runCommandLever($, lever)} />
+  const label = `/${lever}${detail === '' ? '' : ` ${detail}`}`
+  if (lever !== 'clear') return <Button key={lever} label={label} onPress={() => runCommandLever($, lever)} />
   const armedAt = (await read($, armedAtom))[instance]
   const now = await $.clock.now()
   if (armedAt !== undefined && now - armedAt < ARM_MS) {
@@ -42,7 +44,7 @@ export async function LeverButton($: EngineInterface, e: ButtonSurface, lever: s
       </Button>
     )
   }
-  return <Button key={lever} label="/clear" onPress={() => pressClear($, instance)} />
+  return <Button key={lever} label={label} onPress={() => pressClear($, instance)} />
 }
 
 /**

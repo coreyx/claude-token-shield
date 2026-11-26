@@ -137,3 +137,34 @@ test('the context view counts the prefix off the render path, and the map gains 
   expect(await pane.find({ type: 'Text', text: /s system\+tools 18k {2}p project 4k {2}c conversation 780k/ })).toBeDefined()
   await pane.unmount()
 })
+
+test('the comparator shows every lever with one recommended, and its /compact runs as the lever bar’s does (AC 13.3, 17.5)', async ($, on) => {
+  const seen = engine(on)
+  beneath(on, [])
+  const commands: string[] = []
+  on('command.run', (_, e) => {
+    commands.push(e.command)
+    return { text: '' }
+  })
+  on('ui.place', (_, e) => ({ value: { isPlaced: true as const, requestId: e.id } }))
+  // Cold on an 812k prefix.
+  const payload = { session_id: SESSION, model: { id: 'claude-opus-5-5' }, version: '2.1.332', prompt_cache: { warm: false, caching_observed: true, ttl: '1h', expires_at: null, recache_tokens_if_cold: 812470 } }
+  seen.files.set(`/plugin-data/sessions/${SESSION}/snapshot.json`, { text: JSON.stringify({ v: 1, receivedAt: T0, payload }), mtimeMs: T0 })
+  await $.session.start(START)
+  await $.command.run(view('levers'))
+  const pane = await $.ui.mount(PANE(100))
+  expect(await pane.find({ type: 'Text', text: /^Lever comparator/ })).toBeDefined()
+  for (const lever of ['continue', '/compact', '/clear']) expect(await pane.find({ type: 'Text', text: new RegExp(`^[▶ ] ${lever.replace('/', '\/')} `) })).toBeDefined()
+  const compact = await pane.find({ key: 'compact' })
+  // Its cost, or ? while the system layer isn't known yet, and the mark if recommended.
+  expect(compact?.text).toMatch(/^\/compact (\$\d+\.\d\d|\?)( ▶)?$/)
+  await pane.press({ key: 'compact' })
+  expect(commands).toEqual(['compact'])
+  await pane.unmount()
+  // The same lever from /cache-check's lever bar.
+  await $.command.run({ command: 'cache-check', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 100 } })
+  const bar = await $.ui.mount({ plugin: 'token-shield', component: 'Placed', requestId: 'token-shield-levers', surface: 'desktop', props: { id: 'token-shield-levers', plugin: 'token-shield' } })
+  await bar.press({ key: 'compact' })
+  expect(commands).toEqual(['compact', 'compact'])
+  await bar.unmount()
+})

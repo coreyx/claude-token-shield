@@ -2,14 +2,17 @@ import { atom, read, update } from 'claude-code'
 import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 
 import { formatString } from '../../core/data/load'
-import { glyphParams, glyphSet } from '../../core/render/format'
+import { formatUsd, glyphParams, glyphSet } from '../../core/render/format'
 import { renderContext } from '../../core/render/views/context'
+import { renderLevers } from '../../core/render/views/levers'
 import { layersOf, renderPrefixMap } from '../../core/render/views/map'
 import { renderRunway } from '../../core/render/views/runway'
 import type { TokenShieldContext, TokenShieldPane, TokenShieldPaneTab, TokenShieldTick } from '../../types'
+import { isCommandLever } from '../actions/levers'
 import { host } from '../host/host'
 import { reportFailure } from '../host/failure'
 import { currentEvaluation, modelState } from '../session/model'
+import { LeverButton } from './lever-button'
 
 /** The pane: its tab and the last mid-turn check (design D7). */
 const paneAtom = atom({ plugin: 'token-shield', key: 'pane' } as const, null as TokenShieldPane)
@@ -109,6 +112,7 @@ export async function drawPane($: EngineInterface, e: RenderInput<'Pane'>): Prom
   if (t === null) return <Text>Token Shield: not started.</Text>
   const tabs = [...(pane?.text != null ? (['check'] as const) : []), ...VIEWS]
   const body = await viewText($, tab, pane?.text ?? null, Math.max(40, e.props.bodyColumns))
+  const buttons = tab === 'levers' ? await leverButtons($, e) : []
   return (
     <Box flexDirection="column">
       <Box flexDirection="row" gap={1}>
@@ -127,8 +131,33 @@ export async function drawPane($: EngineInterface, e: RenderInput<'Pane'>): Prom
       {body.split('\n').map((line, i) => (
         <Text key={`l${i}`}>{line}</Text>
       ))}
+      {buttons.length > 0 ? (
+        <Box flexDirection="row" gap={1}>
+          {buttons}
+        </Box>
+      ) : null}
     </Box>
   )
+}
+
+/**
+ * The comparator's run buttons (REQ-13.0.3, AC 13.3, 17.5): a LeverButton per
+ * command lever quoted, the same control as the lever bar's, so a lever run
+ * here behaves exactly as from /cache-check. Each label carries the lever's
+ * cost now and, for the recommended one, the mark.
+ */
+async function leverButtons($: EngineInterface, e: RenderInput<'Pane'>): Promise<RenderElement[]> {
+  const h = host()!
+  const ev = await currentEvaluation($)
+  if (ev === null) return []
+  const pick = glyphSet(h.config.glyphs).pick
+  const out: RenderElement[] = []
+  for (const q of ev.quotes) {
+    if (!isCommandLever(q.lever)) continue
+    const cost = q.now.usd !== null ? formatUsd(q.now.usd) : '?'
+    out.push(await LeverButton($, e, q.lever, `pane:${q.lever}`, q.lever === ev.rec.lever ? `${cost} ${pick}` : cost))
+  }
+  return out
 }
 
 /** A tab's text at a width; views built later say so. */
@@ -146,6 +175,10 @@ async function viewText($: EngineInterface, tab: TokenShieldPaneTab, check: stri
     case 'runway': {
       const ev = await currentEvaluation($)
       return ev === null ? formatString(o.strings, 'view.runway.unknown') : renderRunway(ev.a, ev.cost, width, o)
+    }
+    case 'levers': {
+      const ev = await currentEvaluation($)
+      return ev === null ? formatString(o.strings, 'view.runway.unknown') : renderLevers(ev.quotes, ev.rec, width, o)
     }
     case 'context': {
       const rows = await read($, contextAtom)

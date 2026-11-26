@@ -1358,10 +1358,6 @@
       "text": "Lever comparator {dot} cost of the next request and what it does later",
       "tense": "none"
     },
-    "view.levers.header": {
-      "text": "  Lever           Cost now  Effect on later turns",
-      "tense": "none"
-    },
     "view.levers.none": {
       "text": "No lever is recommended over simply continuing.",
       "tense": "none"
@@ -1432,6 +1428,18 @@
     },
     "view.context.loading": {
       "text": "Context composition: counting the prefix{dash}",
+      "tense": "none"
+    },
+    "view.levers.col.lever": {
+      "text": "Lever",
+      "tense": "none"
+    },
+    "view.levers.col.cost": {
+      "text": "Cost now",
+      "tense": "none"
+    },
+    "view.levers.col.effect": {
+      "text": "Effect on later turns",
       "tense": "none"
     }
   }
