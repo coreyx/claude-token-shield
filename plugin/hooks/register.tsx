@@ -18,7 +18,8 @@ import { continueHistory, flushHistory, recordAssessment, recordLeverTaken, hist
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
 import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
-import { answerCacheCheck, drawLeverBar, drawPane } from './ui/check'
+import { answerCacheCheck, drawLeverBar } from './ui/check'
+import { drawPane, openView } from './ui/pane'
 
 /**
  * Token Shield's hooks module: the only entry point the engine loads. It only
@@ -65,6 +66,7 @@ export const register: Register = (on, options) => {
     if (h.data !== null) {
       try {
         await $.command.register({ name: 'cache-check', description: formatString(h.data.strings, 'command.description') })
+        await $.command.register({ name: 'cache-view', description: formatString(h.data.strings, 'view.description') })
       } catch (err) {
         reportFailure($, 'command.register', err)
       }
@@ -219,6 +221,12 @@ export const register: Register = (on, options) => {
   on('command.run', { command: 'cache-check' }, async ($, e) => answerCacheCheck($, e.args, e.presentation.columns)).catch(($, _e, next) => {
     reportFailure($, 'cache-check', next.error)
     return { text: 'Token Shield: the cache check failed; details are in the debug log.', isTextDisplayOnly: true as const }
+  })
+
+  // /cache-view opens the pane on a view; display-only, like /cache-check (D7).
+  on('command.run', { command: 'cache-view' }, async ($, e) => openView($, e.args)).catch(($, _e, next) => {
+    reportFailure($, 'cache-view', next.error)
+    return { text: 'Token Shield: the view failed to open; details are in the debug log.', isTextDisplayOnly: true as const }
   })
 
   on('ui.render', { component: 'Pane' }, async ($, e, next) => (await drawPane($, e)) ?? next(e)).catch(($, e, next) => {

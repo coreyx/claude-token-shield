@@ -1297,6 +1297,138 @@
     "forget.cancelled": {
       "text": "Token Shield: nothing was deleted.",
       "tense": "none"
+    },
+    "view.tab.map": {
+      "text": "Prefix map",
+      "tense": "none"
+    },
+    "view.tab.runway": {
+      "text": "Runway",
+      "tense": "none"
+    },
+    "view.tab.levers": {
+      "text": "Levers",
+      "tense": "none"
+    },
+    "view.tab.context": {
+      "text": "Context",
+      "tense": "none"
+    },
+    "view.tab.history": {
+      "text": "History",
+      "tense": "none"
+    },
+    "view.tab.check": {
+      "text": "Check",
+      "tense": "none"
+    },
+    "view.map.title": {
+      "text": "Prefix map {dot} the last {n} main requests",
+      "tense": "none"
+    },
+    "view.map.none": {
+      "text": "Prefix map: no main-conversation requests yet.",
+      "tense": "none"
+    },
+    "view.map.legend": {
+      "text": "{read} read from cache   {written} written   {uncached} uncached",
+      "tense": "none"
+    },
+    "view.runway.title": {
+      "text": "Expiry runway {dot} cache {state}",
+      "tense": "none"
+    },
+    "view.runway.now": {
+      "text": "now",
+      "tense": "none"
+    },
+    "view.runway.unknown": {
+      "text": "Expiry runway: the expiry isn't known yet.",
+      "tense": "none"
+    },
+    "view.runway.legend": {
+      "text": "= warn window   ~ {epsilon}{margin}s margin   | expiry",
+      "tense": "none"
+    },
+    "view.runway.costs": {
+      "text": "Act before {time} {approx} {before} {dot} after {approx} {after}",
+      "tense": "none"
+    },
+    "view.levers.title": {
+      "text": "Lever comparator {dot} cost of the next request and what it does later",
+      "tense": "none"
+    },
+    "view.levers.header": {
+      "text": "  Lever           Cost now  Effect on later turns",
+      "tense": "none"
+    },
+    "view.levers.none": {
+      "text": "No lever is recommended over simply continuing.",
+      "tense": "none"
+    },
+    "view.levers.legend": {
+      "text": "{pick} recommended",
+      "tense": "none"
+    },
+    "view.context.title": {
+      "text": "Context composition {dot} {tokens} tokens in the prefix",
+      "tense": "none"
+    },
+    "view.context.none": {
+      "text": "Context composition: not available yet.",
+      "tense": "none"
+    },
+    "view.context.stable": {
+      "text": "stable",
+      "tense": "none"
+    },
+    "view.context.changing": {
+      "text": "changes each turn",
+      "tense": "none"
+    },
+    "view.history.loading": {
+      "text": "History: loading{dash}",
+      "tense": "none"
+    },
+    "view.history.title": {
+      "text": "History dashboard {dot} re-cache spend by cause per day",
+      "tense": "none"
+    },
+    "view.history.legend": {
+      "text": "Causes: {legend}",
+      "tense": "none"
+    },
+    "view.history.gaps": {
+      "text": "Idle gaps between main requests, against the TTL",
+      "tense": "none"
+    },
+    "view.history.ttl_line": {
+      "text": "{dash}{dash} TTL {ttl}",
+      "tense": "none"
+    },
+    "view.history.none": {
+      "text": "No re-caches in this window.",
+      "tense": "none"
+    },
+    "view.map.layers": {
+      "text": "s system+tools {system}  p project {project}  c conversation {conversation}",
+      "tense": "none"
+    },
+    "view.description": {
+      "text": "Token Shield: open a view of the prompt cache (map, runway, levers, context, history)",
+      "tense": "none"
+    },
+    "view.usage": {
+      "text": "Token Shield: /cache-view map|runway|levers|context|history",
+      "tense": "none"
+    },
+    "view.opened": {
+      "text": "Token Shield: the {view} view is open in the Token Shield pane.",
+      "tense": "none"
+    },
+    "view.not_yet": {
+      "text": "The {view} view comes in a later build.",
+      "tense": "none"
     }
   }
 }

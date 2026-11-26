@@ -27,9 +27,14 @@ export type TokenShieldBand = {
   actions?: string[]
 } | null
 
-/** The last check rendered for the Token Shield pane. */
+/** The Token Shield pane's tabs: the five views, and a mid-turn /cache-check. */
+export type TokenShieldPaneTab = 'check' | 'map' | 'runway' | 'levers' | 'context' | 'history'
+
+/** The Token Shield pane: the tab shown, and the last mid-turn check, if any. */
 export type TokenShieldPane = {
-  text: string
+  tab: TokenShieldPaneTab
+  /** The last check rendered while a turn ran, for the Check tab. */
+  text: string | null
 } | null
 
 /** The command levers the last /cache-check found applicable, in its order. */

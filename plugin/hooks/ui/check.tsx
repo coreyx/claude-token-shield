@@ -21,6 +21,7 @@ import { host } from '../host/host'
 import { flushHistory, historySessions, readSessionHistory } from '../persist/history'
 import { evaluateFor, isTurnRunning } from '../session/model'
 import { LeverButton } from './lever-button'
+import { PANE_ID } from './pane'
 
 /** The pane's text (design D7: a mid-turn /cache-check opens the pane instead). */
 const paneAtom = atom({ plugin: 'token-shield', key: 'pane' } as const, null as TokenShieldPane)
@@ -29,8 +30,7 @@ const bandAtom = atom({ plugin: 'token-shield', key: 'band' } as const, null as 
 /** The command levers the lever bar offers (design D7). */
 const leversAtom = atom({ plugin: 'token-shield', key: 'levers' } as const, [] as TokenShieldLevers)
 
-/** The pane's and the lever bar's ids. */
-export const PANE_ID = 'token-shield'
+/** The lever bar's id. */
 export const LEVER_BAR_ID = 'token-shield-levers'
 
 /** A display-only answer: shown to the person, never sent in a request (REQ-6.0.5). */
@@ -121,7 +121,7 @@ async function adviseAndOffer($: EngineInterface, words: readonly string[], t: (
  */
 async function showOrPane($: EngineInterface, text: string, title: string) {
   if (!isTurnRunning()) return shown(text)
-  await update($, paneAtom, () => ({ text }))
+  await update($, paneAtom, () => ({ tab: 'check' as const, text }))
   await $.ui.open({ id: PANE_ID, title })
   return shown('')
 }
@@ -188,26 +188,6 @@ async function answerCalibration($: EngineInterface, words: readonly string[], w
   const p = h.data!.rules.priors
   const cal = calibrate(await recordedAssessments($, range.from), { epsWithin: p.epsWithin, epsAfter: p.epsAfter, minCalibrationN: p.minCalibrationN })
   return renderCalibration(cal, p.minCalibrationN, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin })
-}
-
-/**
- * Draws the Token Shield pane: the last check rendered for it.
- *
- * @param $ the engine interface
- * @param e the Pane render request
- * @returns the pane's content, or `null` for another plugin's pane
- */
-export async function drawPane($: EngineInterface, e: RenderInput<'Pane'>): Promise<RenderElement | null> {
-  if (e.requestId !== PANE_ID) return null
-  const pane = await read($, paneAtom)
-  const { Box, Text } = $.ui.resolve(e)
-  return (
-    <Box flexDirection="column">
-      {(pane?.text ?? '').split('\n').map((line, i) => (
-        <Text key={`l${i}`}>{line}</Text>
-      ))}
-    </Box>
-  )
 }
 
 /**

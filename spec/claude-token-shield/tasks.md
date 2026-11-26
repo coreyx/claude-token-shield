@@ -300,7 +300,7 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
 
 The Token Shield pane draws all five views from the same data as `/cache-check`, at 80 columns and in monochrome.
 
-- [ ] **TASK-32: Build the pane shell and the prefix map**
+- [x] **TASK-32: Build the pane shell and the prefix map**
   - **Associated Acceptance Criteria**: `13.1`, `13.4`
   - **Concrete Steps**:
     1. Register `/cache-view [map|runway|levers|context|history]`, open the `token-shield` pane, and draw a tab row with keyboard and press navigation.
