@@ -94,7 +94,7 @@ describe('price tables by date', () => {
     ...prices,
     tables: [
       { ...prices.tables[0]!, effective: '2026-11-03' },
-      { ...prices.tables[0]!, effective: '2026-06-01', models: { 'claude-opus-5-5': { input: 5, read_mult: 0.1, write_5m_mult: 1.25, write_1h_mult: 2 } } },
+      { ...prices.tables[0]!, effective: '2026-06-01', models: { 'claude-opus-5-5': { input: 5, read_mult: 0.1, write_5m_mult: 1.25, write_1h_mult: 2, output_mult: 5 } } },
     ],
   }
 
@@ -122,10 +122,10 @@ describe('user price override (AC 3.4)', () => {
     )
   })
 
-  it('adds a model only when all four rates are given', () => {
+  it('adds a model only when every required rate is given', () => {
     const merged = mergeOverride(prices, {
       models: {
-        'claude-new': { input: 1, read_mult: 0.1, write_5m_mult: 1.25, write_1h_mult: 2 },
+        'claude-new': { input: 1, read_mult: 0.1, write_5m_mult: 1.25, write_1h_mult: 2, output_mult: 5 },
         'claude-partial': { input: 1 },
       },
     })

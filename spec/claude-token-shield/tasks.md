@@ -86,7 +86,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     3. Implement the merge of `prices.override.json` over the bundled table, and the preference for Claude Code's `estimated_cache_write_usd` when an action supplied one.
     4. Test the 812,470-token Opus 5.5 1h case (cold $6.50 ± $0.01, warm $0.16–$0.18), a subscription fixture with no unlabelled dollars, an override changing costs, and a `PreModelSwitch` estimate replacing the own figure. Nothing in `core/` can reach the network (it has no I/O).
 
-- [ ] **TASK-8: Implement the plan-share estimator**
+- [x] **TASK-8: Implement the plan-share estimator**
   - **Associated Acceptance Criteria**: `3.2`
   - **Concrete Steps**:
     1. Implement `planShare` per design D5: group snapshots by 5-hour window, ratio of percent change to API-equivalent dollars per model family over 14 days, an interval from the per-window spread, and "learning" below 3 windows.

@@ -9,7 +9,7 @@
 
 import type { ModelPrice, Prices, ProviderKey } from '../data/types';
 import { valueOf } from '../model/snapshot';
-import type { NativeSnapshot, Ttl } from '../model/types';
+import type { NativeSnapshot, RequestRecord, Ttl } from '../model/types';
 import { modelPrice, tableAt } from './prices';
 
 /** What to price. */
@@ -99,6 +99,22 @@ function inputRate(price: ModelPrice, promptTokens: number, fast: boolean): numb
     if (promptTokens > tier.above) rate = tier.input;
   }
   return rate;
+}
+
+/**
+ * The API-equivalent dollars of a request that already happened, output
+ * included: what it counted against a plan's usage (D5). Priced at list price
+ * from the table in effect on its date.
+ *
+ * @returns `null` when the table has no price for the request's model
+ */
+export function requestUsd(request: RequestRecord, prices: Prices): number | null {
+  const price = modelPrice(tableAt(prices, request.tsStart), request.model);
+  if (price === undefined) return null;
+  const u = request.usage;
+  const prompt = u.input + u.read + u.write5m + u.write1h;
+  const perToken = inputRate(price, prompt, request.speed === 'fast') * PER_MTOK;
+  return perToken * (u.input + u.read * price.read_mult + u.write5m * price.write_5m_mult + u.write1h * price.write_1h_mult + u.output * price.output_mult);
 }
 
 /** How the session is billed, which decides the units shown (D4). */

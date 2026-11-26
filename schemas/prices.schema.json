@@ -25,13 +25,14 @@
     },
     "model": {
       "type": "object",
-      "required": ["input", "read_mult", "write_5m_mult", "write_1h_mult"],
+      "required": ["input", "read_mult", "write_5m_mult", "write_1h_mult", "output_mult"],
       "additionalProperties": false,
       "properties": {
         "input": { "type": "number", "exclusiveMinimum": 0 },
         "read_mult": { "type": "number", "exclusiveMinimum": 0 },
         "write_5m_mult": { "type": "number", "exclusiveMinimum": 0 },
         "write_1h_mult": { "type": "number", "exclusiveMinimum": 0 },
+        "output_mult": { "type": "number", "exclusiveMinimum": 0 },
         "fast_input": { "type": "number", "exclusiveMinimum": 0 },
         "tiers": {
           "type": "array",

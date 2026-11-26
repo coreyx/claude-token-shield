@@ -78,7 +78,7 @@ function checkTable(c: Checker, value: unknown, path: string): void {
   for (const [id, m] of Object.entries(c.object(table.models, `${path}.models`))) {
     const mp = `${path}.models.${id}`;
     const model = c.object(m, mp) as Partial<Record<keyof ModelPrice, unknown>>;
-    for (const key of ['input', 'read_mult', 'write_5m_mult', 'write_1h_mult'] as const) c.positive(model[key], `${mp}.${key}`);
+    for (const key of ['input', 'read_mult', 'write_5m_mult', 'write_1h_mult', 'output_mult'] as const) c.positive(model[key], `${mp}.${key}`);
     if (model.fast_input !== undefined) c.positive(model.fast_input, `${mp}.fast_input`);
     if (model.tiers !== undefined) {
       c.array(model.tiers, `${mp}.tiers`).forEach((tier, i) => {

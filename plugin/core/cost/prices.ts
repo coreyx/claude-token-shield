@@ -42,7 +42,7 @@ export interface PriceOverride {
 /**
  * Merges the user's override (`prices.override.json`, already parsed) over the
  * bundled prices. A model the bundled table lacks may be added if the override
- * gives all four rates.
+ * gives every required rate.
  *
  * @throws DataError when the override isn't an object of the documented shape
  */
@@ -76,10 +76,10 @@ function mergeEntries<T>(
 
 /** Whether a partial model price has every required rate. */
 function isCompleteModel(m: Partial<ModelPrice>): boolean {
-  return [m.input, m.read_mult, m.write_5m_mult, m.write_1h_mult].every(x => typeof x === 'number');
+  return [m.input, m.read_mult, m.write_5m_mult, m.write_1h_mult, m.output_mult].every(x => typeof x === 'number');
 }
 
-const MODEL_KEYS = new Set(['input', 'read_mult', 'write_5m_mult', 'write_1h_mult', 'fast_input', 'tiers']);
+const MODEL_KEYS = new Set(['input', 'read_mult', 'write_5m_mult', 'write_1h_mult', 'output_mult', 'fast_input', 'tiers']);
 const PROVIDER_KEYS = new Set(['multiplier', 'regional_multiplier', 'data_zone_multiplier', 'basis']);
 
 /** Checks the override's shape; every rate must be a number above 0. */

@@ -14,6 +14,8 @@ export interface ModelPrice {
   readonly write_5m_mult: number;
   /** 1-hour cache write price as a multiple of `input`. */
   readonly write_1h_mult: number;
+  /** Output price as a multiple of `input`; prices past usage for plan share (D5). */
+  readonly output_mult: number;
   /** Base input price in fast mode, when the model offers it. */
   readonly fast_input?: number;
   /**

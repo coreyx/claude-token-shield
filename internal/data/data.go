@@ -27,6 +27,7 @@ type ModelPrice struct {
 	ReadMult    float64     `json:"read_mult"`
 	Write5mMult float64     `json:"write_5m_mult"`
 	Write1hMult float64     `json:"write_1h_mult"`
+	OutputMult  float64     `json:"output_mult"`
 	FastInput   *float64    `json:"fast_input,omitempty"`
 	Tiers       []PriceTier `json:"tiers,omitempty"`
 }
@@ -199,7 +200,7 @@ func (s *Shared) check() error {
 			return fmt.Errorf("%s: tables[%d].effective: must be a YYYY-MM-DD date", PricesFile, i)
 		}
 		for id, m := range t.Models {
-			if m.Input <= 0 || m.ReadMult <= 0 || m.Write5mMult <= 0 || m.Write1hMult <= 0 {
+			if m.Input <= 0 || m.ReadMult <= 0 || m.Write5mMult <= 0 || m.Write1hMult <= 0 || m.OutputMult <= 0 {
 				return fmt.Errorf("%s: tables[%d].models.%s: rates must be above 0", PricesFile, i, id)
 			}
 		}
