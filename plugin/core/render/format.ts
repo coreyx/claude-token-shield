@@ -127,3 +127,15 @@ export function fit(text: string, width: number, ellipsis: string): string {
   if (text.length <= width) return text;
   return width <= ellipsis.length ? text.slice(0, width) : text.slice(0, width - ellipsis.length) + ellipsis;
 }
+
+/**
+ * A date and wall-clock time without the year, `01-29 14:10`, for history
+ * rows that span days.
+ *
+ * @param ms epoch ms
+ * @param tzOffsetMin minutes east of UTC
+ */
+export function formatStamp(ms: number, tzOffsetMin: number): string {
+  const d = new Date(ms + tzOffsetMin * 60_000);
+  return `${two(d.getUTCMonth() + 1)}-${two(d.getUTCDate())} ${two(d.getUTCHours())}:${two(d.getUTCMinutes())}`;
+}

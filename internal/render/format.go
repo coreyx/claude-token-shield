@@ -174,3 +174,18 @@ func FormatProbability(p *float64, display data.Display, s *data.Strings, g Glyp
 	pct := math.Min(jsRound(display.MaxProb*100), math.Max(jsRound(display.MinProb*100), jsRound(*p*100)))
 	return s.Format("prob.about", map[string]string{"pct": num(pct)}), true
 }
+
+// FormatStamp is a date and wall-clock time without the year, `01-29 14:10`,
+// for history rows that span days.
+func FormatStamp(ms float64, tzOffsetMin int) string {
+	t := time.UnixMilli(int64(ms) + int64(tzOffsetMin)*60_000).UTC()
+	return two(int(t.Month())) + "-" + two(t.Day()) + " " + two(t.Hour()) + ":" + two(t.Minute())
+}
+
+// padStart pads s with spaces on the left to w characters.
+func padStart(s string, w int) string {
+	if n := width(s); n < w {
+		return strings.Repeat(" ", w-n) + s
+	}
+	return s
+}

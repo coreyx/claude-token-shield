@@ -1,0 +1,145 @@
+{
+  "now": 1769860800000,
+  "tzOffsetMin": 0,
+  "width": 100,
+  "glyphs": "unicode",
+  "provider": "bedrock",
+  "misses": false,
+  "name": "bedrock-5m",
+  "sessions": [
+    {
+      "sessionId": "11111111-2222-3333-4444-555555555555",
+      "requests": [
+        {
+          "id": "req-1769688000000",
+          "lane": "main",
+          "tsStart": 1769688000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "5m",
+          "usage": {
+            "input": 10,
+            "read": 802500,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769688480000",
+          "lane": "main",
+          "tsStart": 1769688480000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "5m",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769689800000",
+          "lane": "main",
+          "tsStart": 1769689800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "5m",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [],
+      "skipped": 0
+    }
+  ],
+  "expect": {
+    "summary": {
+      "range": {
+        "from": 1767268800000,
+        "to": 1769860800000
+      },
+      "sessions": 1,
+      "requests": 3,
+      "recaches": 2,
+      "recacheTokens": 1608020,
+      "recacheUsd": 7.718496000000001,
+      "unpriced": 0,
+      "byCause": {
+        "ttl_expiry": {
+          "count": 2,
+          "tokens": 1608020,
+          "usd": 7.718496000000001
+        },
+        "switch": {
+          "count": 0,
+          "tokens": 0,
+          "usd": 0
+        },
+        "tools": {
+          "count": 0,
+          "tokens": 0,
+          "usd": 0
+        },
+        "compaction": {
+          "count": 0,
+          "tokens": 0,
+          "usd": 0
+        },
+        "server_side": {
+          "count": 0,
+          "tokens": 0,
+          "usd": 0
+        },
+        "unexplained": {
+          "count": 0,
+          "tokens": 0,
+          "usd": 0
+        }
+      },
+      "avoidableCount": 1,
+      "avoidableUsd": 3.8640480000000004,
+      "rows": [
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769688480000,
+          "model": "claude-opus-5-5",
+          "ttl": "5m",
+          "outcome": "MISS",
+          "cause": "ttl_expiry",
+          "recacheTokens": 805010,
+          "recacheUsd": 3.8640480000000004,
+          "avoidable": true,
+          "gapSec": 480
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769689800000,
+          "model": "claude-opus-5-5",
+          "ttl": "5m",
+          "outcome": "MISS",
+          "cause": "ttl_expiry",
+          "recacheTokens": 803010,
+          "recacheUsd": 3.8544480000000005,
+          "avoidable": false,
+          "gapSec": 1320
+        }
+      ],
+      "skippedChunks": 0
+    },
+    "text": "History  01-01 12:00 – 01-31 12:00 · sessions 1 · requests 3\nRe-cache spend  $7.72 across 2 (1,608,020 tokens)\n  TTL expiry                      $7.72  2\nAvoidable       $3.86 across 1\n\nWhen         Session   Model                Outcome  Cause         Tokens      Cost\n01-29 12:08  11111111  claude-opus-5-5      miss     TTL expiry    805,010     $3.86  avoidable\n01-29 12:30  11111111  claude-opus-5-5      miss     TTL expiry    803,010     $3.85"
+  }
+}

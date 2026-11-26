@@ -2,7 +2,9 @@ import { atom, read, update } from 'claude-code'
 import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 
 import { formatString } from '../../core/data/load'
+import { sinceRange, summarize } from '../../core/history/summarize'
 import { renderCheck } from '../../core/render/check'
+import { renderHistory } from '../../core/render/history'
 import { glyphParams, glyphSet } from '../../core/render/format'
 import type { TokenShieldBand, TokenShieldLevers, TokenShieldPane } from '../../types'
 import { isCommandLever } from '../actions/levers'
@@ -10,6 +12,7 @@ import { cancelKeepAliveOffer, offerKeepAlive } from '../actions/keepalive'
 import { offerProbe } from '../actions/probe'
 import { cancelSetting, offerSetting } from '../actions/settings'
 import { host } from '../host/host'
+import { flushHistory, historySessions, readSessionHistory } from '../persist/history'
 import { evaluateFor, isTurnRunning } from '../session/model'
 import { LeverButton } from './lever-button'
 
@@ -25,7 +28,7 @@ export const PANE_ID = 'token-shield'
 export const LEVER_BAR_ID = 'token-shield-levers'
 
 /** Options built in later tasks; until then they say so. */
-const LATER = new Set(['history', 'forget'])
+const LATER = new Set(['forget'])
 
 /** A display-only answer: shown to the person, never sent in a request (REQ-6.0.5). */
 function shown(text: string) {
@@ -55,6 +58,10 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
   if (option === 'ttl') return shown(await offerTtl($, words.slice(1), t))
   if (option === 'keepalive') return shown(await offerKeepAlive($, words.slice(1)))
   if (option === '--probe' && words.slice(1).every(w => w === '--force')) return shown(await offerProbe($, words.includes('--force')))
+  if (option === 'history') {
+    const text = await answerHistory($, words.slice(1), Math.max(40, columns))
+    return text === null ? shown(t('command.history_usage')) : showOrPane($, text, t('pane.title'))
+  }
   if (option !== undefined && LATER.has(option)) return shown(t('command.not_yet', { option }))
   if (option !== undefined && option !== '--verbose' && option !== '--diff') return shown(t('command.unknown_option', { option }))
 
@@ -67,15 +74,63 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
     display: h.data.rules.display,
     tzOffsetMin: h.tzOffsetMin,
   })
-  if (isTurnRunning()) {
-    await update($, paneAtom, () => ({ text }))
-    await $.ui.open({ id: PANE_ID, title: t('pane.title') })
-    return shown('')
-  }
+  if (isTurnRunning()) return showOrPane($, text, t('pane.title'))
   const levers = ev.quotes.filter(q => q.kind === 'command' && isCommandLever(q.lever)).map(q => q.lever)
   await update($, leversAtom, () => levers)
   if (levers.length > 0) await $.ui.place({ id: LEVER_BAR_ID })
   return shown(text)
+}
+
+/**
+ * Answers display-only, or while a main turn runs puts the text in the Token
+ * Shield pane and answers empty (design D7): a mid-turn answer can stay in
+ * later requests.
+ *
+ * @param $ the engine interface
+ * @param text what to show
+ * @param title the pane's title
+ */
+async function showOrPane($: EngineInterface, text: string, title: string) {
+  if (!isTurnRunning()) return shown(text)
+  await update($, paneAtom, () => ({ text }))
+  await $.ui.open({ id: PANE_ID, title })
+  return shown('')
+}
+
+/**
+ * `/cache-check history [--session <id>|--all] [--since 7d] [--misses]`
+ * (AC 6.5): this session's history unless told otherwise, the same summary
+ * `tshield history` prints. The session's buffered records are flushed
+ * first so its own latest requests are counted.
+ *
+ * @param $ the engine interface
+ * @param words the arguments after `history`
+ * @param width the width to render at
+ * @returns the text, or `null` when the arguments don't parse
+ */
+async function answerHistory($: EngineInterface, words: readonly string[], width: number): Promise<string | null> {
+  const h = host()!
+  let session: string | undefined
+  let since: string | undefined
+  let all = false
+  let misses = false
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i]
+    if (w === '--all') all = true
+    else if (w === '--misses') misses = true
+    else if ((w === '--session' || w === '--since') && words[i + 1] !== undefined) {
+      if (w === '--session') session = words[++i]
+      else since = words[++i]
+    } else return null
+  }
+  const range = sinceRange(since, await $.clock.now())
+  if (range === null || (all && session !== undefined)) return null
+  const dir = h.companions.dataDir
+  await flushHistory($, dir, h.sessionId)
+  const ids = all ? await historySessions($, dir) : [session ?? h.sessionId]
+  const sessions = await Promise.all(ids.map(id => readSessionHistory($, dir, id)))
+  const summary = summarize(sessions, range, { misses }, h.data!.prices, h.env.provider)
+  return renderHistory(summary, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin })
 }
 
 /**

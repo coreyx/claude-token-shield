@@ -105,8 +105,21 @@ func applySnapshot(s State, snap Snapshot) State {
 	if snap.PromptCache != nil && snap.PromptCache.TTL.Known() {
 		to = snap.PromptCache.TTL.V
 	}
+	// Only a change between two known TTLs is an event; an absent TTL on either side says nothing.
 	if from != "" && to != "" && from != to {
-		return addEvent(s, Event{Ts: snap.ReceivedAt, Kind: "ttl_bucket_change", Detail: &EventDetail{From: from, To: to}})
+		s = addEvent(s, Event{Ts: snap.ReceivedAt, Kind: "ttl_bucket_change", Detail: &EventDetail{From: from, To: to}})
+	}
+	// A miss Claude Code diagnosed since the last snapshot becomes a history event
+	// with its first cause, so summaries can attribute the re-cache (REQ-14.0.2).
+	// Only a change between two snapshots: a first snapshot's miss predates the watch.
+	// It describes a request already made, so it goes to the log, never to pending.
+	if prev != nil && snap.PromptCache != nil && snap.PromptCache.LastMissAt.Known() && snap.PromptCache.LastMissCause.Known() && len(snap.PromptCache.LastMissCause.V.Causes) > 0 {
+		at := snap.PromptCache.LastMissAt.V
+		seen := prev.PromptCache != nil && prev.PromptCache.LastMissAt.Known() && prev.PromptCache.LastMissAt.V == at
+		if !seen {
+			e := Event{Ts: at, Kind: "native_miss", Detail: &EventDetail{To: snap.PromptCache.LastMissCause.V.Causes[0]}}
+			s.Events = bounded(append(append([]Event{}, s.Events...), e), EventLogLimit)
+		}
 	}
 	return s
 }

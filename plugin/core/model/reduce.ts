@@ -45,10 +45,19 @@ function applySnapshot(state: SessionState, snapshot: NativeSnapshot): SessionSt
   const from = previous?.promptCache ? valueOf(previous.promptCache.ttl) : undefined;
   const to = snapshot.promptCache ? valueOf(snapshot.promptCache.ttl) : undefined;
   // Only a change between two known TTLs is an event; an absent TTL on either side says nothing.
-  if (from !== undefined && to !== undefined && from !== to) {
-    return addEvent(next, { ts: snapshot.receivedAt, kind: 'ttl_bucket_change', detail: { from, to } });
+  const withTtl =
+    from !== undefined && to !== undefined && from !== to ? addEvent(next, { ts: snapshot.receivedAt, kind: 'ttl_bucket_change', detail: { from, to } }) : next;
+  // A miss Claude Code diagnosed since the last snapshot becomes a history event
+  // with its first cause, so summaries can attribute the re-cache (REQ-14.0.2).
+  const missAt = snapshot.promptCache ? valueOf(snapshot.promptCache.lastMissAt) : undefined;
+  const seenAt = previous?.promptCache ? valueOf(previous.promptCache.lastMissAt) : undefined;
+  const cause = snapshot.promptCache ? valueOf(snapshot.promptCache.lastMissCause)?.causes[0] : undefined;
+  // Only a change between two snapshots: a first snapshot's miss predates the watch.
+  // It describes a request already made, so it goes to the log, never to pending.
+  if (previous !== null && missAt !== undefined && missAt !== seenAt && cause !== undefined) {
+    return { ...withTtl, events: bounded([...withTtl.events, { ts: missAt, kind: 'native_miss', detail: { to: cause } }], EVENT_LOG_LIMIT) };
   }
-  return next;
+  return withTtl;
 }
 
 /**

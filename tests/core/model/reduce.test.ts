@@ -27,6 +27,17 @@ describe('reduce', () => {
     expect(s.pending).toEqual(changes)
   })
 
+  it('logs a miss Claude Code diagnosed between snapshots, with its cause, never as pending (REQ-14.0.2)', () => {
+    const missed = (offsetSec: number, missAt: number, cause: string): Fact => ({
+      kind: 'snapshot',
+      snapshot: parseSnapshot(payload({}, { last_miss_at: missAt, last_miss_cause: { causes: [cause] } }), MS + offsetSec * 1000),
+    })
+    // The first snapshot's miss predates the watch; the same miss again is not new.
+    const s = run([missed(0, T0 - 4000, 'tools_changed'), missed(10, T0 - 4000, 'tools_changed'), missed(20, T0 + 15, 'likely_server_side')])
+    expect(s.events).toEqual([{ ts: MS + 15000, kind: 'native_miss', detail: { to: 'likely_server_side' } }])
+    expect(s.pending).toEqual([])
+  })
+
   it('does not treat an unknown TTL as a change', () => {
     const s = run([snap(0, '1h'), snap(10, null), snap(20, '1h')])
     expect(s.events).toEqual([])

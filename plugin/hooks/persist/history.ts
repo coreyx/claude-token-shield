@@ -1,5 +1,6 @@
 import type { EngineInterface } from 'claude-code'
 
+import type { SessionHistory } from '../../core/history/summarize'
 import type { EventRecord, RequestRecord, Ttl } from '../../core/model/types'
 
 /**
@@ -140,4 +141,54 @@ export async function continueHistory($: EngineInterface, dataDir: string, sessi
 export async function writeHeartbeat($: EngineInterface, dataDir: string, sessionId: string, pluginVersion: string): Promise<void> {
   if (dataDir === '' || sessionId === '') return
   await $.fs.write(`${dataDir}/sessions/${sessionId}/mod-heartbeat.json`, JSON.stringify({ v: 1, ts: await $.clock.now(), pluginVersion }))
+}
+
+/**
+ * Reads one session's history from its chunks, in seq order, as tshield's
+ * reader does: an unreadable chunk or one from a newer format is skipped and
+ * counted, never fatal.
+ *
+ * @param $ the engine interface
+ * @param dataDir the data directory
+ * @param sessionId the session's id
+ */
+export async function readSessionHistory($: EngineInterface, dataDir: string, sessionId: string): Promise<SessionHistory> {
+  const dir = `${dataDir}/history/${sessionId}`
+  const entries = await $.fs.list(dir).catch(() => [])
+  const chunks: { seq: number; records: HistoryRecord[] }[] = []
+  let skipped = 0
+  for (const e of entries) {
+    if (e.kind !== 'file' || !e.name.endsWith('.json')) continue
+    try {
+      const doc = JSON.parse(await $.fs.read(`${dir}/${e.name}`)) as { v?: number; seq?: number; records?: HistoryRecord[] }
+      if (typeof doc.v !== 'number' || doc.v > CHUNK_FORMAT || !Array.isArray(doc.records)) {
+        skipped += 1
+        continue
+      }
+      chunks.push({ seq: doc.seq ?? 0, records: doc.records })
+    } catch {
+      skipped += 1
+    }
+  }
+  chunks.sort((a, b) => a.seq - b.seq)
+  const requests: RequestRecord[] = []
+  const events: EventRecord[] = []
+  for (const c of chunks) {
+    for (const r of c.records) {
+      if (r.type === 'request' && r.request !== undefined) requests.push(r.request)
+      else if (r.type === 'event' && r.event !== undefined) events.push(r.event)
+    }
+  }
+  return { sessionId, requests, events, skipped }
+}
+
+/**
+ * The sessions with history in the data directory.
+ *
+ * @param $ the engine interface
+ * @param dataDir the data directory
+ */
+export async function historySessions($: EngineInterface, dataDir: string): Promise<string[]> {
+  const entries = await $.fs.list(`${dataDir}/history`).catch(() => [])
+  return entries.filter(e => e.kind === 'dir').map(e => e.name)
 }

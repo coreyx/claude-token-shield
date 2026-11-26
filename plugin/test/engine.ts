@@ -60,6 +60,17 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
     if (p.includes('/data/') && name in data) return { value: data[name]! }
     throw new Error(`no file ${p}`)
   })
+  // Lists the stand-in files and the folders their paths imply, one level down.
+  on('fs.list', (_, e) => {
+    const dir = norm(e.path ?? '')
+    const names = new Map<string, 'file' | 'dir'>()
+    for (const p of seen.files.keys()) {
+      if (!p.startsWith(`${dir}/`)) continue
+      const [first, ...rest] = p.slice(dir.length + 1).split('/')
+      names.set(first!, rest.length > 0 ? 'dir' : 'file')
+    }
+    return { value: [...names].map(([name, kind]) => ({ name, kind, size: 0, mtimeMs: T0, isLink: false })) }
+  })
   on('fs.stat', (_, e) => {
     const f = seen.files.get(norm(e.path))
     if (f === undefined) throw new Error(`no file ${norm(e.path)}`)

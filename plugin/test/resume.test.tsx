@@ -25,14 +25,6 @@ function placeHistory(seen: Seen, seq = 0): void {
   })
 }
 
-/** Lists the folders the stand-in file map holds, as `$.fs.list` would. */
-function listFiles(seen: Seen) {
-  return (dir: string) =>
-    [...seen.files.keys()]
-      .filter(p => p.startsWith(`${dir}/`) && !p.slice(dir.length + 1).includes('/'))
-      .map(p => ({ name: p.slice(dir.length + 1), kind: 'file' as const, size: 0, mtimeMs: T0, isLink: false }))
-}
-
 /** A classic SessionStart for a resume, `idleSec` after the last response. */
 const resumed = (idleSec: number, likelyExpired: boolean) => ({
   source: 'resume' as const,
@@ -44,7 +36,6 @@ const resumed = (idleSec: number, likelyExpired: boolean) => ({
 
 test('a session last active 3 hours ago shows the cold cost and the four options before the first prompt (AC 11.1)', async ($, on) => {
   const seen = engine(on)
-  on('fs.list', (_, e) => ({ value: listFiles(seen)(e.path!.replace(/\\/g, '/').replace(/^[A-Za-z]:/, '')) }))
   on('classic.SessionStart', () => ({}))
   on('ui.render', ($, e) => {
     const { Text } = $.ui.resolve(e)
@@ -68,7 +59,6 @@ test('a session last active 3 hours ago shows the cold cost and the four options
 
 test('a session last active 10 minutes ago on a 1h TTL shows "warm until HH:MM" and no warning (AC 11.2)', async ($, on) => {
   const seen = engine(on)
-  on('fs.list', (_, e) => ({ value: listFiles(seen)(e.path!.replace(/\\/g, '/').replace(/^[A-Za-z]:/, '')) }))
   on('classic.SessionStart', () => ({}))
   on('ui.render', ($, e) => {
     const { Text } = $.ui.resolve(e)
@@ -91,7 +81,6 @@ test('a session last active 10 minutes ago on a 1h TTL shows "warm until HH:MM" 
 
 test('the first request after a resume carries no Token Shield text (AC 11.3)', async ($, on) => {
   const seen = engine(on)
-  on('fs.list', () => ({ value: [] }))
   on('classic.SessionStart', () => ({}))
   await $.session.start(START)
   const start = await $.classic.SessionStart(resumed(3 * 3600, true))
@@ -105,7 +94,6 @@ test('the first request after a resume carries no Token Shield text (AC 11.3)', 
 
 test('a resumed session keeps its earlier history: new records start the next chunk', async ($, on) => {
   const seen = engine(on)
-  on('fs.list', (_, e) => ({ value: listFiles(seen)(e.path!.replace(/\\/g, '/').replace(/^[A-Za-z]:/, '')) }))
   on('classic.SessionStart', () => ({}))
   on('command.run', () => ({ text: '' }))
   placeHistory(seen, 0)

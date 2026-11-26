@@ -42,6 +42,7 @@
     { "kind": "image_batch_removal", "impact": "WILL", "basis": "documented", "note": "From the oldest removed image onward." },
     { "kind": "upgrade_first_conversation", "impact": "WILL", "basis": "documented" },
     { "kind": "ttl_bucket_change", "impact": "NO_EFFECT", "basis": "documented", "note": "Later writes use the new TTL; the current entry keeps its own." },
+    { "kind": "native_miss", "impact": "NO_EFFECT", "basis": "documented", "note": "A miss Claude Code reports after the request; recorded for history, it changes nothing ahead." },
     { "kind": "long_turn", "impact": "MAY", "basis": "learned", "note": "A single turn past 20 non-collapsed positions can miss inside the TTL." },
     { "kind": "mcp_connect", "impact": "NO_EFFECT", "basis": "documented", "cases": [{ "when": { "toolSearch": false }, "impact": "WILL" }] },
     { "kind": "mcp_config_edit", "impact": "NO_EFFECT", "basis": "documented", "note": "Applied only at restart." },

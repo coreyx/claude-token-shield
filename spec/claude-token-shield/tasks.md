@@ -257,7 +257,7 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
 
 History, calibration, the advice report, the TTL advisor and the baseline work in the mod and in `tshield`, with identical numbers in both.
 
-- [ ] **TASK-27: Build history summaries and the history views**
+- [x] **TASK-27: Build history summaries and the history views**
   - **Associated Acceptance Criteria**: `6.5`, `14.1`, `14.2`
   - **Concrete Steps**:
     1. Implement `summarize` in TypeScript and Go: per-turn rows, spend by cause (TTL expiry, model/effort/speed switch, tools, compaction, server-side per Claude Code, unexplained), avoidable spend (expiry re-caches with a return within 2× TTL, invalidating actions taken while warm), and the filters (`--session`, `--all`, `--since`, `--misses`).

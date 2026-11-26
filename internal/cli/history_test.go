@@ -1,0 +1,132 @@
+package cli
+
+import (
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+
+	"github.com/coreyx/claude-token-shield/internal/history"
+	"github.com/coreyx/claude-token-shield/internal/summary"
+)
+
+// historyFixture is one fixtures/history/*.json file.
+type historyFixture struct {
+	Name     string                   `json:"name"`
+	Now      float64                  `json:"now"`
+	Since    string                   `json:"since"`
+	Session  string                   `json:"session"`
+	Misses   bool                     `json:"misses"`
+	Provider string                   `json:"provider"`
+	Sessions []summary.SessionHistory `json:"sessions"`
+	Expect   struct {
+		Summary any `json:"summary"`
+	} `json:"expect"`
+}
+
+// layHistory writes each fixture session as a chunk, as the mod would.
+func layHistory(t *testing.T, home string, f historyFixture) {
+	t.Helper()
+	for _, s := range f.Sessions {
+		c := history.Chunk{V: history.Version, SessionID: s.SessionID}
+		for i := range s.Requests {
+			c.Records = append(c.Records, history.Record{Type: "request", Request: &s.Requests[i]})
+		}
+		for i := range s.Events {
+			c.Records = append(c.Records, history.Record{Type: "event", Event: &s.Events[i]})
+		}
+		if err := history.WriteChunk(filepath.Join(home, "history"), c); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+// TestHistoryMatchesFixtures runs tshield history --json over every history
+// fixture's chunks on disk: the same summary as the core (AC 14.1, 14.2, 6.5).
+func TestHistoryMatchesFixtures(t *testing.T) {
+	files, _ := filepath.Glob("../../fixtures/history/*.json")
+	if len(files) == 0 {
+		t.Fatal("no history fixtures")
+	}
+	for _, file := range files {
+		raw, _ := os.ReadFile(file)
+		var f historyFixture
+		if err := json.Unmarshal(raw, &f); err != nil {
+			t.Fatal(err)
+		}
+		t.Run(f.Name, func(t *testing.T) {
+			// Skipped chunks are a property of reading; these fixtures lay readable ones only.
+			for i := range f.Sessions {
+				if f.Sessions[i].Skipped > 0 {
+					t.Skip("skipped-chunk counts are tested on their own")
+				}
+			}
+			home := t.TempDir()
+			layHistory(t, home, f)
+			vars := map[string]string{"TOKEN_SHIELD_HOME": home}
+			if f.Provider == "bedrock" {
+				vars["CLAUDE_CODE_USE_BEDROCK"] = "1"
+			}
+			env, out, errOut := testEnv(vars)
+			env.Now = func() time.Time { return time.UnixMilli(int64(f.Now)) }
+			args := []string{"history", "--json"}
+			if f.Session != "" {
+				args = append(args, "--session", f.Session)
+			} else {
+				args = append(args, "--all")
+			}
+			if f.Since != "" {
+				args = append(args, "--since", f.Since)
+			}
+			if f.Misses {
+				args = append(args, "--misses")
+			}
+			if code := Run(args, env); code != ExitOK {
+				t.Fatalf("exit %d: %s", code, errOut.String())
+			}
+			var got any
+			_ = json.Unmarshal(out.Bytes(), &got)
+			if d := diffJSON("summary", f.Expect.Summary, got); d != "" {
+				t.Errorf("summary differs from the core's: %s", d)
+			}
+		})
+	}
+}
+
+// TestHistoryText prints the summary, counts unreadable and newer-format
+// chunks in the footer, and rejects bad options.
+func TestHistoryText(t *testing.T) {
+	raw, _ := os.ReadFile("../../fixtures/history/gap-70m-avoidable.json")
+	var f historyFixture
+	_ = json.Unmarshal(raw, &f)
+	home := t.TempDir()
+	layHistory(t, home, f)
+	dir := filepath.Join(home, "history", f.Sessions[0].SessionID)
+	_ = os.WriteFile(filepath.Join(dir, "000001.json"), []byte("{not json"), 0o644)
+	_ = os.WriteFile(filepath.Join(dir, "000002.json"), []byte(`{"v":99,"records":[]}`), 0o644)
+	env, out, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home, "COLUMNS": "100"})
+	env.Now = func() time.Time { return time.UnixMilli(int64(f.Now)) }
+	env.TzOffsetMin = func() int { return 0 }
+	if code := Run([]string{"history"}, env); code != ExitOK {
+		t.Fatalf("exit %d", code)
+	}
+	text := out.String()
+	for _, want := range []string{"History  ", "TTL expiry", "avoidable", "2 history chunks skipped"} {
+		if !strings.Contains(text, want) {
+			t.Errorf("missing %q in:\n%s", want, text)
+		}
+	}
+	for _, bad := range [][]string{{"history", "--since", "soon"}, {"history", "--all", "--session", "x"}, {"history", "--since"}, {"history", "--bogus"}} {
+		env, _, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home})
+		if code := Run(bad, env); code != ExitUsage {
+			t.Errorf("%v: exit %d, want %d", bad, code, ExitUsage)
+		}
+	}
+	// No history at all is a summary of nothing, not an error.
+	empty, out2, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": t.TempDir()})
+	if code := Run([]string{"history"}, empty); code != ExitOK || !strings.Contains(out2.String(), "No main-conversation requests") {
+		t.Errorf("empty: exit %d\n%s", code, out2.String())
+	}
+}

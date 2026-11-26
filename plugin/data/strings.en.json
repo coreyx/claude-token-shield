@@ -827,7 +827,7 @@
       "tense": "none"
     },
     "command.description": {
-      "text": "Token Shield: the prompt cache's state, costs and levers (--verbose, --diff, setup)",
+      "text": "Token Shield: the prompt cache's state, costs and levers (--verbose, --diff, --probe, history, keepalive, ttl, setup)",
       "tense": "none"
     },
     "command.unknown_option": {
@@ -1036,6 +1036,110 @@
     },
     "button.stop": {
       "text": "Stop",
+      "tense": "none"
+    },
+    "history.title": {
+      "text": "History  {from} {dash} {to} {dot} sessions {sessions} {dot} requests {requests}",
+      "tense": "none"
+    },
+    "history.none": {
+      "text": "No main-conversation requests in this window.",
+      "tense": "none"
+    },
+    "history.recache": {
+      "text": "Re-cache spend  {usd} across {count} ({tokens} tokens)",
+      "tense": "none"
+    },
+    "history.cause_row": {
+      "text": "  {cause}{usd}  {count}",
+      "tense": "none"
+    },
+    "history.avoidable": {
+      "text": "Avoidable       {usd} across {count}",
+      "tense": "none"
+    },
+    "history.unpriced": {
+      "text": "{count} re-caches have no price and are left out of the dollar figures.",
+      "tense": "none"
+    },
+    "history.rows_header": {
+      "text": "When         Session   Model                Outcome  Cause         Tokens      Cost",
+      "tense": "none"
+    },
+    "history.earlier": {
+      "text": "{dash} {count} earlier rows not shown",
+      "tense": "none"
+    },
+    "history.skipped": {
+      "text": "{count} history chunks skipped (unreadable, or from a newer version).",
+      "tense": "none"
+    },
+    "history.avoidable_mark": {
+      "text": "avoidable",
+      "tense": "none"
+    },
+    "history.cause.ttl_expiry": {
+      "text": "TTL expiry",
+      "tense": "none"
+    },
+    "history.cause.switch": {
+      "text": "model, effort or speed switch",
+      "tense": "none"
+    },
+    "history.cause.tools": {
+      "text": "tool change",
+      "tense": "none"
+    },
+    "history.cause.compaction": {
+      "text": "compaction",
+      "tense": "none"
+    },
+    "history.cause.server_side": {
+      "text": "server-side (per Claude Code)",
+      "tense": "none"
+    },
+    "history.cause.unexplained": {
+      "text": "unexplained",
+      "tense": "none"
+    },
+    "history.outcome.HIT": {
+      "text": "hit",
+      "tense": "none"
+    },
+    "history.outcome.MISS": {
+      "text": "miss",
+      "tense": "none"
+    },
+    "history.outcome.PARTIAL": {
+      "text": "partial",
+      "tense": "none"
+    },
+    "history.cause_short.ttl_expiry": {
+      "text": "TTL expiry",
+      "tense": "none"
+    },
+    "history.cause_short.switch": {
+      "text": "switch",
+      "tense": "none"
+    },
+    "history.cause_short.tools": {
+      "text": "tools",
+      "tense": "none"
+    },
+    "history.cause_short.compaction": {
+      "text": "compaction",
+      "tense": "none"
+    },
+    "history.cause_short.server_side": {
+      "text": "server-side",
+      "tense": "none"
+    },
+    "history.cause_short.unexplained": {
+      "text": "unexplained",
+      "tense": "none"
+    },
+    "command.history_usage": {
+      "text": "Token Shield: /cache-check history [--session <id> | --all] [--since 7d | 12h] [--misses]",
       "tense": "none"
     }
   }

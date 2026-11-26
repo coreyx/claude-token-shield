@@ -100,3 +100,24 @@ func TestIDs(t *testing.T) {
 		t.Error("suffix is ignored")
 	}
 }
+
+// TestNativeMiss logs a miss Claude Code diagnosed between snapshots, never as pending.
+func TestNativeMiss(t *testing.T) {
+	missed := func(received float64, missAt, cause string) Snapshot {
+		raw := `{"session_id":"s","version":"2.1.332","model":{"id":"claude-opus-5-5"},"prompt_cache":{"warm":true,"caching_observed":true,"ttl":"1h","last_miss_at":` +
+			missAt + `,"last_miss_cause":{"causes":["` + cause + `"]}}}`
+		return ParseSnapshot([]byte(raw), received)
+	}
+	s := State{}
+	// The first snapshot's miss predates the watch; the same miss again is not new.
+	for _, snap := range []Snapshot{missed(1000, "1", "tools_changed"), missed(2000, "1", "tools_changed"), missed(3000, "2", "likely_server_side")} {
+		snap := snap
+		s = Reduce(s, Fact{Snapshot: &snap})
+	}
+	if len(s.Events) != 1 || s.Events[0].Kind != "native_miss" || s.Events[0].Ts != 2000 || s.Events[0].Detail.To != "likely_server_side" {
+		t.Errorf("events %+v", s.Events)
+	}
+	if len(s.Pending) != 0 {
+		t.Errorf("pending %+v", s.Pending)
+	}
+}

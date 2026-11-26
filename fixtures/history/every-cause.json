@@ -1,0 +1,314 @@
+{
+  "now": 1769860800000,
+  "tzOffsetMin": 0,
+  "width": 100,
+  "glyphs": "unicode",
+  "provider": "firstParty",
+  "misses": false,
+  "name": "every-cause",
+  "sessions": [
+    {
+      "sessionId": "11111111-2222-3333-4444-555555555555",
+      "requests": [
+        {
+          "id": "req-1769688000000",
+          "lane": "main",
+          "tsStart": 1769688000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 802500,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769692200000",
+          "lane": "main",
+          "tsStart": 1769692200000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769692800000",
+          "lane": "main",
+          "tsStart": 1769692800000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769693400000",
+          "lane": "main",
+          "tsStart": 1769693400000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769694000000",
+          "lane": "main",
+          "tsStart": 1769694000000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769694060000",
+          "lane": "main",
+          "tsStart": 1769694060000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 400000,
+            "write1h": 402500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769694360000",
+          "lane": "main",
+          "tsStart": 1769694360000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 0,
+            "write1h": 802500,
+            "write5m": 0,
+            "output": 500
+          },
+          "source": "mod"
+        },
+        {
+          "id": "req-1769694420000",
+          "lane": "main",
+          "tsStart": 1769694420000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 10,
+            "read": 802500,
+            "write5m": 0,
+            "write1h": 2000,
+            "output": 500
+          },
+          "source": "mod"
+        }
+      ],
+      "events": [
+        {
+          "ts": 1769692740000,
+          "kind": "model_switch",
+          "detail": {
+            "from": "claude-opus-5-5",
+            "to": "claude-sonnet-5-5"
+          }
+        },
+        {
+          "ts": 1769693340000,
+          "kind": "compaction"
+        },
+        {
+          "ts": 1769694002000,
+          "kind": "native_miss",
+          "detail": {
+            "to": "likely_server_side"
+          }
+        },
+        {
+          "ts": 1769694300000,
+          "kind": "reload_plugins"
+        }
+      ],
+      "skipped": 0
+    }
+  ],
+  "expect": {
+    "summary": {
+      "range": {
+        "from": 1767268800000,
+        "to": 1769860800000
+      },
+      "sessions": 1,
+      "requests": 8,
+      "recaches": 6,
+      "recacheTokens": 4420060,
+      "recacheUsd": 34.476468,
+      "unpriced": 0,
+      "byCause": {
+        "ttl_expiry": {
+          "count": 1,
+          "tokens": 805010,
+          "usd": 6.279078
+        },
+        "switch": {
+          "count": 1,
+          "tokens": 803010,
+          "usd": 6.263478
+        },
+        "tools": {
+          "count": 1,
+          "tokens": 803010,
+          "usd": 6.263478
+        },
+        "compaction": {
+          "count": 1,
+          "tokens": 803010,
+          "usd": 6.263478
+        },
+        "server_side": {
+          "count": 1,
+          "tokens": 803010,
+          "usd": 6.263478
+        },
+        "unexplained": {
+          "count": 1,
+          "tokens": 403010,
+          "usd": 3.143478
+        }
+      },
+      "avoidableCount": 4,
+      "avoidableUsd": 25.069512,
+      "rows": [
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769692200000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "MISS",
+          "cause": "ttl_expiry",
+          "recacheTokens": 805010,
+          "recacheUsd": 6.279078,
+          "avoidable": true,
+          "gapSec": 4200
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769692800000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "MISS",
+          "cause": "switch",
+          "recacheTokens": 803010,
+          "recacheUsd": 6.263478,
+          "avoidable": true,
+          "gapSec": 600
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769693400000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "MISS",
+          "cause": "compaction",
+          "recacheTokens": 803010,
+          "recacheUsd": 6.263478,
+          "avoidable": true,
+          "gapSec": 600
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769694000000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "MISS",
+          "cause": "server_side",
+          "recacheTokens": 803010,
+          "recacheUsd": 6.263478,
+          "avoidable": false,
+          "gapSec": 600
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769694060000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "PARTIAL",
+          "cause": "unexplained",
+          "recacheTokens": 403010,
+          "recacheUsd": 3.143478,
+          "avoidable": false,
+          "gapSec": 60
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769694360000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "MISS",
+          "cause": "tools",
+          "recacheTokens": 803010,
+          "recacheUsd": 6.263478,
+          "avoidable": true,
+          "gapSec": 300
+        },
+        {
+          "session": "11111111-2222-3333-4444-555555555555",
+          "ts": 1769694420000,
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "outcome": "HIT",
+          "cause": null,
+          "recacheTokens": 0,
+          "recacheUsd": 0,
+          "avoidable": false,
+          "gapSec": 60
+        }
+      ],
+      "skippedChunks": 0
+    },
+    "text": "History  01-01 12:00 – 01-31 12:00 · sessions 1 · requests 8\nRe-cache spend  $34.48 across 6 (4,420,060 tokens)\n  TTL expiry                      $6.28  1\n  model, effort or speed switch   $6.26  1\n  tool change                     $6.26  1\n  compaction                      $6.26  1\n  server-side (per Claude Code)   $6.26  1\n  unexplained                     $3.14  1\nAvoidable       $25.07 across 4\n\nWhen         Session   Model                Outcome  Cause         Tokens      Cost\n01-29 13:10  11111111  claude-opus-5-5      miss     TTL expiry    805,010     $6.28  avoidable\n01-29 13:20  11111111  claude-opus-5-5      miss     switch        803,010     $6.26  avoidable\n01-29 13:30  11111111  claude-opus-5-5      miss     compaction    803,010     $6.26  avoidable\n01-29 13:40  11111111  claude-opus-5-5      miss     server-side   803,010     $6.26\n01-29 13:41  11111111  claude-opus-5-5      partial  unexplained   403,010     $3.14\n01-29 13:46  11111111  claude-opus-5-5      miss     tools         803,010     $6.26  avoidable\n01-29 13:47  11111111  claude-opus-5-5      hit                          0     $0.00"
+  }
+}
