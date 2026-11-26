@@ -135,7 +135,7 @@ The Go companions produce the same assessment, costs and text as the core, write
     3. Write the `bin/tshield` (POSIX sh) and `bin/tshield.cmd` launchers that pick `bin/<os>-<arch>/` binaries.
     4. Test atomic writes under concurrent readers, rotation, and self-install over a running binary on Windows.
 
-- [ ] **TASK-14: Build the `tshield-statusline` bridge**
+- [x] **TASK-14: Build the `tshield-statusline` bridge**
   - **Associated Acceptance Criteria**: `8.3`, `18.1`, `18.2`, `21.1`
   - **Concrete Steps**:
     1. Read stdin (≤ 1 MiB), parse the documented fields, write `sessions/<id>/snapshot.json` atomically, and append to `snapshots.jsonl` only when a tracked field changed.

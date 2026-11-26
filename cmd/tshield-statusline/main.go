@@ -1,11 +1,16 @@
 // Command tshield-statusline is Token Shield's statusline bridge: configured as
 // Claude Code's statusLine.command, it records the native prompt-cache data
 // for the mod, runs the user's previous statusline command, and draws the
-// cache segment itself when the mod is absent (design.md, D14).
-//
-// The skeleton exits successfully without output so it is safe to configure;
-// TASK-14 implements the bridge.
+// segment itself when the mod is absent (design.md D14). It always exits 0.
 package main
 
-// main is a placeholder for the bridge's read, record, wrap and render steps.
-func main() {}
+import (
+	"os"
+
+	"github.com/coreyx/claude-token-shield/internal/bridge"
+)
+
+// main runs one statusline invocation.
+func main() {
+	os.Exit(bridge.Run(bridge.RealEnv()))
+}
