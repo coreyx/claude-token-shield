@@ -88,8 +88,7 @@ export const register: Register = (on, options) => {
     timers = []
     resetKeepAlive()
     resetPublishing()
-    const h = host()
-    if (h !== null) await flushHistory($, h.companions.dataDir, h.sessionId)
+    await saveHistory($)
     stopHost()
     return next(e)
   }).catch(($, e, next) => {
@@ -120,9 +119,9 @@ export const register: Register = (on, options) => {
 
   on('turn.complete', async ($, e, next) => {
     if (e.agentId === undefined) setTurnRunning(false)
-    const h = host()
-    await pollSnapshot($)
-    if (h !== null) await flushHistory($, h.companions.dataDir, h.sessionId)
+    // Each step on its own: a failing one is reported, and the rest still run (REQ-21.0.3).
+    await safePoll($)
+    await saveHistory($)
     await publish($)
     return next(e)
   }).catch(($, e, next) => {
@@ -219,13 +218,29 @@ export const register: Register = (on, options) => {
   })
 
   // /cache-check answers itself: no next(e), no model call, nothing sent (D7).
-  on('command.run', { command: 'cache-check' }, async ($, e) => answerCacheCheck($, e.args, e.presentation.columns)).catch(($, _e, next) => {
+  // It also catches its own failures: an error left to propagate would reach
+  // the outer command.run hook, which passes the command on to Claude Code.
+  on('command.run', { command: 'cache-check' }, async ($, e) => {
+    try {
+      return await answerCacheCheck($, e.args, e.presentation.columns)
+    } catch (err) {
+      reportFailure($, 'cache-check', err)
+      return { text: 'Token Shield: the cache check failed; details are in the debug log.', isTextDisplayOnly: true as const }
+    }
+  }).catch(($, _e, next) => {
     reportFailure($, 'cache-check', next.error)
     return { text: 'Token Shield: the cache check failed; details are in the debug log.', isTextDisplayOnly: true as const }
   })
 
   // /cache-view opens the pane on a view; display-only, like /cache-check (D7).
-  on('command.run', { command: 'cache-view' }, async ($, e) => openView($, e.args)).catch(($, _e, next) => {
+  on('command.run', { command: 'cache-view' }, async ($, e) => {
+    try {
+      return await openView($, e.args)
+    } catch (err) {
+      reportFailure($, 'cache-view', err)
+      return { text: 'Token Shield: the view failed to open; details are in the debug log.', isTextDisplayOnly: true as const }
+    }
+  }).catch(($, _e, next) => {
     reportFailure($, 'cache-view', next.error)
     return { text: 'Token Shield: the view failed to open; details are in the debug log.', isTextDisplayOnly: true as const }
   })
@@ -294,10 +309,35 @@ async function pollSnapshot($: EngineInterface): Promise<boolean> {
   return true
 }
 
+/**
+ * Flushes buffered history, reporting a failure once as the history writer
+ * rather than failing whichever hook flushed: a broken store must never stop
+ * the status, prompts or commands (REQ-21.0.3).
+ */
+async function saveHistory($: EngineInterface): Promise<void> {
+  const h = host()
+  if (h === null) return
+  try {
+    await flushHistory($, h.companions.dataDir, h.sessionId)
+  } catch (err) {
+    reportFailure($, 'history writer', err)
+  }
+}
+
+/** Polls the snapshot, reporting a failure once as the snapshot reader. */
+async function safePoll($: EngineInterface): Promise<boolean> {
+  try {
+    return await pollSnapshot($)
+  } catch (err) {
+    reportFailure($, 'snapshot reader', err)
+    return false
+  }
+}
+
 /** The 5-second tick: a changed snapshot redraws. */
 async function tick($: EngineInterface): Promise<void> {
   try {
-    if (await pollSnapshot($)) await publish($)
+    if (await safePoll($)) await publish($)
   } catch (err) {
     reportFailure($, 'snapshot poll', err)
   }
@@ -309,7 +349,7 @@ async function beat($: EngineInterface): Promise<void> {
     const h = host()
     if (h === null) return
     await writeHeartbeat($, h.companions.dataDir, h.sessionId, `core-${CORE_VERSION}`)
-    if (historyDirty()) await flushHistory($, h.companions.dataDir, h.sessionId)
+    if (historyDirty()) await saveHistory($)
   } catch (err) {
     reportFailure($, 'heartbeat', err)
   }

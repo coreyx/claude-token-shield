@@ -33,6 +33,9 @@ export interface EngineOptions {
   env?: Record<string, string>
   model?: string
   now?: number
+  /** Failure injection: paths whose stat or write fails as an unreadable or full disk would. */
+  failStat?: (path: string) => boolean
+  failWrite?: (path: string) => boolean
 }
 
 /** The session id every test session has. */
@@ -82,12 +85,18 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
     }
     return { value: [...names].map(([name, kind]) => ({ name, kind, size: 0, mtimeMs: T0, isLink: false })) }
   })
+  on('fs.exists', (_, e) => {
+    const p = norm(e.path)
+    return { value: seen.files.has(p) || [...seen.files.keys()].some(k => k.startsWith(`${p}/`)) }
+  })
   on('fs.stat', (_, e) => {
+    if (o.failStat?.(norm(e.path)) === true) throw new Error('EACCES: permission denied')
     const f = seen.files.get(norm(e.path))
     if (f === undefined) throw new Error(`no file ${norm(e.path)}`)
     return { value: { kind: 'file', size: f.text.length, mtimeMs: f.mtimeMs, isLink: false } }
   })
   on('fs.write', (_, e) => {
+    if (o.failWrite?.(norm(e.path)) === true) throw new Error('ENOSPC: no space left on device')
     seen.files.set(norm(e.path), { text: e.text, mtimeMs: clock.now() })
     return { value: undefined }
   })

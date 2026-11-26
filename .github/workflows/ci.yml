@@ -69,6 +69,11 @@ jobs:
           go test -coverpkg=./internal/... -coverprofile=coverage.out ./...
           go tool cover -func=coverage.out | tail -1
 
+      # The latency budgets (AC 21.1): each round's p95 is printed so every
+      # platform's figures are on record, not only pass or fail.
+      - name: Bridge latency (p95 per round)
+        run: go test -count=1 -run TestP95 -v ./internal/bridge | grep -E 'round|ok|FAIL'
+
       # Validation reads the manifest and module offline; it needs no sign-in.
       # The hooks module itself is type-checked by validate here: tsc against
       # the engine's types needs files the engine writes when it loads the mod,
@@ -86,7 +91,8 @@ jobs:
       - name: claude plugin test
         run: |
           if find plugin -name '*.test.ts' -o -name '*.test.tsx' | grep -q .; then
-            claude plugin test plugin
+            claude plugin test plugin | tee plugin-test.log
+            grep -E '^p95 submit-hook overhead' plugin-test.log || true
           else
             echo "No plugin tests yet; skipping."
           fi

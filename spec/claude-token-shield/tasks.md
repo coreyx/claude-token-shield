@@ -341,7 +341,7 @@ Privacy, performance and coverage are verified, the manual checks are done, and 
     3. Monitor network connections during that session and confirm none come from Token Shield outside approved actions.
     4. Confirm `claude plugin validate` and the CI check show no forbidden hooks. Record results for the walkthrough.
 
-- [ ] **TASK-37: Verify performance and fail-open behavior**
+- [x] **TASK-37: Verify performance and fail-open behavior**
   - **Associated Acceptance Criteria**: `21.1`, `21.2`, `21.3`
   - **Concrete Steps**:
     1. Run the bridge benchmark and the gate timing harness on all three CI platforms, and record p95 figures.

@@ -125,5 +125,7 @@ test('the submit hook adds at most 20 ms at p95 (AC 21.2)', { timeoutMs: 60_000 
     overhead.sort((a, b) => a - b)
     best = Math.min(best, overhead[Math.floor(overhead.length * 0.95)]!)
   }
+  // On record for each platform (AC 21.2): the test kit's types omit console, the runtime has it.
+  ;(globalThis as { console?: { log: (line: string) => void } }).console?.log(`p95 submit-hook overhead: ${best.toFixed(2)} ms (best of 3 rounds)`)
   expect(best).toBeLessThanOrEqual(20)
 })

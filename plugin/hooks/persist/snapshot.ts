@@ -29,12 +29,10 @@ export function resetSnapshotReader(): void {
 export async function readChangedSnapshot($: EngineInterface, dataDir: string, sessionId: string): Promise<NativeSnapshot | null> {
   if (dataDir === '' || sessionId === '') return null
   const path = `${dataDir}/sessions/${sessionId}/snapshot.json`
-  let mtime: number
-  try {
-    mtime = (await $.fs.stat(path)).mtimeMs
-  } catch {
-    return null // No bridge yet, or not for this session.
-  }
+  // No file is normal (no bridge yet, or not for this session); a file that
+  // exists and can't be read is a real failure, left for the caller to report.
+  if (!(await $.fs.exists(path))) return null
+  const mtime = (await $.fs.stat(path)).mtimeMs
   if (mtime === lastMtime) return null
   lastMtime = mtime
   const file = JSON.parse(await $.fs.read(path)) as { v?: unknown; receivedAt?: unknown; payload?: unknown }
