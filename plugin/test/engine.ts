@@ -14,6 +14,8 @@ import { PRICES_JSON, RULES_JSON, STRINGS_JSON } from './data.generated'
 /** What the stand-ins saw the plugin do, and files the test can place. */
 export interface Seen {
   toasts: string[]
+  /** Each toast's timeoutMs, in the same order. */
+  toastTimeouts: (number | undefined)[]
   logs: { text: string; to?: string }[]
   /** Files by forward-slash path without a drive letter; reads see writes. */
   files: Map<string, { text: string; mtimeMs: number }>
@@ -48,7 +50,7 @@ export function norm(path: string): string {
 export function engine(on: On, o: EngineOptions = {}): Seen {
   const clock = mock.clock(on, { now: o.now ?? T0 })
   mock.env(on, o.env ?? {})
-  const seen: Seen = { toasts: [], logs: [], files: new Map(), runs: [], statuses: [], clock }
+  const seen: Seen = { toasts: [], toastTimeouts: [], logs: [], files: new Map(), runs: [], statuses: [], clock }
   const data: Record<string, string> = { 'prices.json': PRICES_JSON, 'rules.json': o.rules ?? RULES_JSON, 'strings.en.json': STRINGS_JSON }
   on('fs.read', (_, e) => {
     const p = norm(e.path)
@@ -85,6 +87,7 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
   })
   on('ui.toast', (_, e) => {
     seen.toasts.push(e.text)
+    seen.toastTimeouts.push(e.timeoutMs)
     return { value: undefined }
   })
   on('ui.log', (_, e) => {

@@ -193,7 +193,8 @@ test('no control is offered for a subagent (AC 17.4)', async ($, on) => {
   await other.unmount()
 })
 
-test('a default-config session starts no compaction, clear, rewind, setting or API request by itself (AC 5.3)', async ($, on) => {
+// Hours of mock time tick every 5 s: allowed a minute on a slow CI runner.
+test('a default-config session starts no compaction, clear, rewind, setting or API request by itself (AC 5.3)', { timeoutMs: 60_000 }, async ($, on) => {
   const seen = engine(on, { env: { HOME } })
   const did = actions(on)
   placeSnapshot(seen)

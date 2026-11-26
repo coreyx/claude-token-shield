@@ -121,6 +121,17 @@ let previous: Assessment | null = null
 let toastLog: NotifyLog = EMPTY_LOG
 let boundary: { cancel: () => void } | null = null
 
+/**
+ * Counts a toast shown outside the notification policy (a guard or gate
+ * warning) as the latest non-critical toast, so the transition toast its
+ * action causes stays quiet: one toast for one action (REQ-9.0.2, D13).
+ *
+ * @param now epoch ms
+ */
+export function noteToast(now: number): void {
+  toastLog = { lastAt: now }
+}
+
 /** Starts the UI state over for a new session. */
 export function resetPublishing(): void {
   previous = null
@@ -146,10 +157,7 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
   $.ui.status(renderSegment(ev.a, ev.cost, { ...text, billing: ev.billing }))
 
   const band = bandText(ev.view, text)
-  // A confirmation the person hasn't answered stays; only the state band follows the cache.
-  await update($, bandAtom, current =>
-    current !== null && current.mode === 'confirm' ? current : band === null ? null : { mode: 'state' as const, text: band, lever: ev.rec.lever === 'none' ? null : ev.rec.lever },
-  )
+  await update($, bandAtom, current => (keepsBand(current, ev.a.state) ? current : band === null ? null : { mode: 'state' as const, text: band, lever: ev.rec.lever === 'none' ? null : ev.rec.lever }))
 
   const now = ev.a.at
   const n = notify(previous, ev.a, toastLog, h.config, now)
@@ -165,6 +173,18 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
   // A little past the boundary, so the recomputation lands on the new side of it.
   if (at !== null) boundary = $.clock.after(at - now + 50, () => void republish($))
   return ev
+}
+
+/**
+ * Whether a redraw keeps the band as it is. A confirmation stays until it's
+ * answered; the guard's band while the cache is still warm (it has its own
+ * clearing); the gate's hold while the cache is still lost. Everything else
+ * follows the cache state.
+ */
+function keepsBand(current: TokenShieldBand, state: string): boolean {
+  if (current === null) return false
+  const lost = state === 'COLD' || state === 'INVALIDATED'
+  return current.mode === 'confirm' || (current.mode === 'guard' && !lost) || (current.mode === 'gate' && lost)
 }
 
 /** A timer's redraw; a failure is reported, never thrown into the engine. */

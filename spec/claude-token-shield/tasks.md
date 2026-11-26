@@ -220,7 +220,7 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
     3. Show the band with the recommended lever when holding, and a warning toast instead of holding when the gate is set to `warn`.
     4. Test: hold, release, 61-second re-hold, byte-identical release, `UNKNOWN` never held, and a fresh install holding in the `COLD` fixture. Add a timing harness asserting p95 hook overhead ≤ 20 ms.
 
-- [ ] **TASK-23: Build the guard before invalidating actions**
+- [x] **TASK-23: Build the guard before invalidating actions**
   - **Associated Acceptance Criteria**: `10.1`, `10.2`, `10.3`, `10.4`, `10.5`, `10.6`
   - **Concrete Steps**:
     1. In `classic.PreModelSwitch`, while warm, show a Token Shield toast (held 30 s) and the band in guard mode with Claude Code's estimate and the cheaper alternative, then return `next(e)` unchanged. Act on one event per switch burst, the one whose `to_model` matches the request; stay silent when `to_model` equals `from_model`; clear the guard on `classic.PostModelSwitch`, the next submit, or an unchanged model in the snapshot (design D10, spikes.md §1–2).

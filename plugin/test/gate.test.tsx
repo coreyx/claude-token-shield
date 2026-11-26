@@ -98,7 +98,8 @@ test('a hold shows the band with the reason and the recommended lever', async ($
   await band.unmount()
 })
 
-test('the submit hook adds at most 20 ms at p95 (AC 21.2)', async ($, on) => {
+// Three rounds of 400 submits: allowed a minute on a slow CI runner.
+test('the submit hook adds at most 20 ms at p95 (AC 21.2)', { timeoutMs: 60_000 }, async ($, on) => {
   const seen = engine(on)
   placeSnapshot(seen, false)
   await $.session.start(START)

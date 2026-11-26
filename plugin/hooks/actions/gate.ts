@@ -8,7 +8,7 @@ import { gateText, recommendationLine } from '../../core/render/band'
 import { glyphSet } from '../../core/render/format'
 import type { TokenShieldBand } from '../../types'
 import { host } from '../host/host'
-import { currentEvaluation } from '../session/model'
+import { currentEvaluation, noteToast } from '../session/model'
 
 /** The band, set to gate mode while a prompt is held. */
 const bandAtom = atom({ plugin: 'token-shield', key: 'band' } as const, null as TokenShieldBand)
@@ -44,11 +44,16 @@ export async function gateSubmit($: EngineInterface, text: string): Promise<stri
   const canHold = ev.a.state === 'COLD' || ev.a.state === 'INVALIDATED'
   const d = gateDecision(ev.a, ev.cost, ev.billing, h.config, held, canHold ? sha256Hex(text) : '', now)
   held = d.held
-  if (d.action === 'pass') return null
+  if (d.action === 'pass') {
+    // A released or unheld prompt ends any hold the band still shows.
+    await update($, bandAtom, current => (current !== null && current.mode === 'gate' ? null : current))
+    return null
+  }
   const o = { glyphs: glyphSet(h.config.glyphs), strings: h.data.strings, display: h.data.rules.display, tzOffsetMin: h.tzOffsetMin }
   const reason = gateText(d, ev.view, ev.rec.lever, o)
   if (d.action === 'warn') {
     $.ui.toast(reason)
+    noteToast(now)
     return null
   }
   const lever = ev.rec.lever === 'none' ? null : ev.rec.lever

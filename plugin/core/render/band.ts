@@ -103,3 +103,47 @@ export function recommendationLine(view: CheckView, o: CheckRenderOptions): stri
     formatString(o.strings, key, { ...glyphParams(o.glyphs), ...params });
   return t('band.advice', { text: recommendationText(view, t, (ms: number) => formatClock(ms, o.tzOffsetMin)) });
 }
+
+/** Drops the "≈ $x" pair from a catalog string rendered without dollars, and tidies the spacing it leaves. */
+function withoutDollars(text: string): string {
+  return text.replace(/\(\s*\)/g, '').replace(/ {2,}/g, ' ').replace(/[ ,]+([.)])/g, '$1');
+}
+
+/**
+ * The guard's switch texts (design D10): the toast shown while Claude Code's
+ * confirmation is open, with the cheaper alternative, and the reason put
+ * inside that confirmation when switchConfirm asks for one. Both carry
+ * Claude Code's own estimate and the Token Shield label (REQ-10.0.4).
+ *
+ * @param g what the guard decided to show
+ * @param showDollars whether this billing mode shows dollars
+ * @param o glyphs, catalog and time zone
+ */
+export function switchGuardText(
+  g: { readonly model: string; readonly tokens: number; readonly usd: number },
+  showDollars: boolean,
+  o: CheckRenderOptions,
+): { toast: string; reason: string } {
+  const t = (key: string, params: Record<string, string | number> = {}): string =>
+    formatString(o.strings, key, { ...glyphParams(o.glyphs), ...params });
+  const params = { model: g.model, tokens: formatTokensLong(g.tokens), cost: showDollars ? formatUsd(g.usd) : '', ...(showDollars ? {} : { approx: '' }) };
+  const tidy = (s: string) => (showDollars ? s : withoutDollars(s));
+  return {
+    toast: `${tidy(t('guard.switch.toast', params))} ${t('guard.switch.alternative', { model: g.model })}`,
+    reason: tidy(t('guard.switch.confirm_reason', params)),
+  };
+}
+
+/**
+ * The guard's toast for an effort change, a fast-mode toggle or a plugin
+ * reload, with the rebuild's cost where it applies.
+ *
+ * @param key the catalog key the guard chose
+ * @param cost the rebuild in dollars, or `null` where dollars aren't shown
+ * @param tokens the rebuild in tokens, shown when dollars aren't
+ * @param o glyphs, catalog and time zone
+ */
+export function changeGuardText(key: string, cost: number | null, tokens: number, o: CheckRenderOptions): string {
+  const t = (k: string, params: Record<string, string | number> = {}): string => formatString(o.strings, k, { ...glyphParams(o.glyphs), ...params });
+  return t(key, { cost: cost !== null ? formatUsd(cost) : `${formatTokensLong(tokens)} tokens` });
+}

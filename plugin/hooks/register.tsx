@@ -5,6 +5,7 @@ import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
 import { gateSubmit, resetGate } from './actions/gate'
+import { clearGuard, clearGuardIfUnchanged, guardChange, guardSwitch, resetGuard } from './actions/guard'
 import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
 import { flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
@@ -38,6 +39,7 @@ export const register: Register = (on, options) => {
     resetModel()
     resetPublishing()
     resetGate()
+    resetGuard()
     resetHistory()
     resetSnapshotReader()
     const h = await startHost($, options)
@@ -108,6 +110,7 @@ export const register: Register = (on, options) => {
   // answers the drop reason, everything else goes on exactly as it came.
   on('prompt.submit', async ($, e, next) => {
     if (e.command || e.isMeta || e.origin.kind !== 'composer') return next(e)
+    await clearGuard($)
     const drop = await gateSubmit($, e.text)
     return drop === null ? next(e) : { drop }
   }).catch(($, e, next) => {
@@ -117,7 +120,11 @@ export const register: Register = (on, options) => {
 
   on('command.run', async ($, e, next) => {
     const event = commandEvent(e.command, await $.clock.now())
-    if (event !== null) await observe($, { kind: 'event', event })
+    if (event !== null) {
+      // Weighed before it's recorded, so the guard sees the cache as it was (D10).
+      await guardChange($, event.kind)
+      await observe($, { kind: 'event', event })
+    }
     return next(e)
   }).catch(($, e, next) => {
     reportFailure($, 'command.run', next.error)
@@ -126,7 +133,10 @@ export const register: Register = (on, options) => {
 
   on('config.set', async ($, e, next) => {
     const event = configEvent(e.key, await $.clock.now())
-    if (event !== null) await observe($, { kind: 'event', event })
+    if (event !== null) {
+      await guardChange($, event.kind)
+      await observe($, { kind: 'event', event })
+    }
     return next(e)
   }).catch(($, e, next) => {
     reportFailure($, 'config.set', next.error)
@@ -143,7 +153,30 @@ export const register: Register = (on, options) => {
     return next(e)
   })
 
+  // The guard (D10): Claude Code's own confirmation runs as it is; Token Shield
+  // shows its estimate beside it, and asks for confirmation only when the
+  // person turned switchConfirm on. A deny from beneath always stands.
+  on('classic.PreModelSwitch', async ($, e, next) => {
+    const at = await $.clock.now()
+    const ask = await guardSwitch($, {
+      from: e.from_model,
+      to: e.to_model,
+      requested: e.requested_model,
+      warm: e.prompt_cache_warm,
+      contextTokens: e.context_tokens,
+      estimatedUsd: e.estimated_cache_write_usd,
+      at,
+    })
+    const result = await next(e)
+    if (ask === null || result.permissionDecision === 'deny') return result
+    return { ...result, permissionDecision: 'ask' as const, permissionDecisionReason: ask } // tshield-allow: REQ-10.0.6
+  }).catch(($, e, next) => {
+    reportFailure($, 'classic.PreModelSwitch', next.error)
+    return next(e)
+  })
+
   on('classic.PostModelSwitch', async ($, e, next) => {
+    await clearGuard($)
     await observe($, { kind: 'event', event: switchEvent(e.from_model, e.to_model, await $.clock.now()) })
     return next(e)
   }).catch(($, e, next) => {
@@ -209,6 +242,7 @@ async function pollSnapshot($: EngineInterface): Promise<boolean> {
   // A snapshot can produce events of its own (a TTL change); history records them too.
   const before = new Set(modelState().events)
   applyFacts({ kind: 'snapshot', snapshot })
+  await clearGuardIfUnchanged($, snapshot)
   for (const event of modelState().events) if (!before.has(event)) recordEvent(event)
   return true
 }
