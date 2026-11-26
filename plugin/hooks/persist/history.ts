@@ -1,6 +1,6 @@
 import type { EngineInterface } from 'claude-code'
 
-import type { EventRecord, RequestRecord } from '../../core/model/types'
+import type { EventRecord, RequestRecord, Ttl } from '../../core/model/types'
 
 /**
  * The history writer (design D16): records buffered in memory and flushed
@@ -87,6 +87,45 @@ export async function flushHistory($: EngineInterface, dataDir: string, sessionI
     seq += 1
     records = []
   }
+}
+
+/** A chunk's file name for its number. */
+const CHUNK_NAME = /^(\d{6})\.json$/
+
+/**
+ * Picks a session's history up where an earlier run left it, and returns
+ * the TTL of its last recorded main request. A resumed session keeps its
+ * id, so starting again at chunk 0 would overwrite what the earlier run
+ * wrote; the next chunk after the highest on disk is used instead.
+ *
+ * @param $ the engine interface
+ * @param dataDir the data directory
+ * @param sessionId the session's id
+ * @returns the last recorded TTL, if any
+ */
+export async function continueHistory($: EngineInterface, dataDir: string, sessionId: string): Promise<Ttl | undefined> {
+  if (dataDir === '' || sessionId === '') return undefined
+  const dir = `${dataDir}/history/${sessionId}`
+  const entries = await $.fs.list(dir).catch(() => [])
+  const seqs = entries
+    .map(e => (e.kind === 'file' ? CHUNK_NAME.exec(e.name)?.[1] : undefined))
+    .filter((s): s is string => s !== undefined)
+    .map(Number)
+    .sort((a, b) => a - b)
+  if (seqs.length === 0) return undefined
+  seq = Math.max(seq, seqs[seqs.length - 1]! + 1)
+  // The newest chunks first; a few are enough to find the last main request.
+  for (const n of seqs.slice(-3).reverse()) {
+    try {
+      const doc = JSON.parse(await $.fs.read(`${dir}/${String(n).padStart(6, '0')}.json`)) as { records?: HistoryRecord[] }
+      for (const r of [...(doc.records ?? [])].reverse()) {
+        if (r.type === 'request' && r.request.lane === 'main' && (r.request.ttl === '5m' || r.request.ttl === '1h')) return r.request.ttl
+      }
+    } catch {
+      // An unreadable chunk is skipped; tshield's reader reports it.
+    }
+  }
+  return undefined
 }
 
 /**

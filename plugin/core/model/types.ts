@@ -149,6 +149,8 @@ export interface ResumeInfo {
   readonly contextTokens?: number;
   readonly likelyExpired?: boolean;
   readonly estimatedCacheWriteUsd?: number;
+  /** The session's last recorded TTL, which the mod adds; Claude Code's event doesn't carry one. */
+  readonly ttl?: Ttl;
 }
 
 /** The inputs the reducer accepts; adapters turn engine events into these. */

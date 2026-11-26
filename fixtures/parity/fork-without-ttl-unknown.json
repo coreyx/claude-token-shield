@@ -1,0 +1,89 @@
+{
+  "tzOffsetMin": 0,
+  "env": {
+    "provider": "firstParty",
+    "toolSearch": true,
+    "experimentalBetasDisabled": false
+  },
+  "mode": "default",
+  "width": 100,
+  "glyphs": "unicode",
+  "name": "fork-without-ttl-unknown",
+  "now": 1767282722000,
+  "defaultModel": "claude-opus-5-5",
+  "facts": [
+    {
+      "kind": "resume",
+      "resume": {
+        "ts": 1767282720000,
+        "source": "fork",
+        "secondsSinceLastResponse": 600,
+        "contextTokens": 812470,
+        "likelyExpired": false
+      }
+    }
+  ],
+  "expect": {
+    "view": {
+      "v": 1,
+      "mode": "default",
+      "at": 1767282722000,
+      "state": "UNKNOWN",
+      "pHit": null,
+      "interval": null,
+      "confidence": "LOW",
+      "lowEvidence": true,
+      "stale": false,
+      "unknownReason": "no_response",
+      "ttl": {
+        "value": null,
+        "tier": "absent"
+      },
+      "expiresAt": {
+        "value": null,
+        "tier": "absent"
+      },
+      "remainingSec": null,
+      "expiry": {
+        "native": null,
+        "shield": null,
+        "driftSec": null
+      },
+      "prefixTokens": {
+        "value": 812470,
+        "tier": "inferred"
+      },
+      "lastRequest": null,
+      "session": {
+        "requests": null,
+        "hitRatio": null,
+        "misses": null,
+        "lastMiss": null
+      },
+      "pending": [],
+      "cost": null,
+      "billing": "api",
+      "levers": [],
+      "recommendation": {
+        "lever": "none",
+        "reasonKey": "recommend.none.unknown",
+        "params": {
+          "reason": "no_response"
+        },
+        "probeHint": false
+      },
+      "drivers": [
+        {
+          "key": "driver.no_response",
+          "params": {},
+          "tier": "measured"
+        }
+      ],
+      "timeline": null,
+      "diff": null
+    },
+    "segment": "? cache UNKNOWN · no response yet",
+    "check": "Cache  UNKNOWN  · no response yet\n────────────────────────────────────────────────────────────────────────────────────────────────────\n\n→ No recommendation: no response yet.",
+    "exitCode": 50
+  }
+}

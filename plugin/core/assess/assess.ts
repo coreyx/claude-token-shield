@@ -46,8 +46,17 @@ export function assess(state: SessionState, now: number, p: AssessParams): Asses
   const touch = state.lastTouch;
   const drivers: Driver[] = [];
 
-  const ttl = pickTtl(pc?.ttl, touch?.ttl);
+  // A resumed or forked session before its first snapshot or request: its
+  // timing follows from how long ago the last response was and the last
+  // recorded TTL (REQ-11, inferred). Any snapshot or request supersedes it.
+  const resume = snap === null && touch === null ? state.resume : null;
+  const ttl: Tiered<Ttl> = resume?.ttl !== undefined ? { tier: 'inferred', value: resume.ttl } : pickTtl(pc?.ttl, touch?.ttl);
   const ttlValue = valueOf(ttl);
+  const resumeExpiry =
+    resume?.ttl !== undefined && resume.secondsSinceLastResponse !== undefined
+      ? resume.ts - resume.secondsSinceLastResponse * 1000 + TTL_SEC[resume.ttl] * 1000
+      : undefined;
+  const resumeKnown = resume !== null && (resume.likelyExpired === true || resumeExpiry !== undefined);
   const nativeExpiry = pc?.expiresAt;
   const ownExpiry = touch !== null && ttlValue !== undefined ? touch.tsStart + TTL_SEC[ttlValue] * 1000 : undefined;
   const nativeExpiryMs = nativeExpiry !== undefined ? valueOf(nativeExpiry) : undefined;
@@ -56,7 +65,9 @@ export function assess(state: SessionState, now: number, p: AssessParams): Asses
       ? (nativeExpiry as Tiered<number>)
       : ownExpiry !== undefined
         ? { tier: 'inferred', value: ownExpiry }
-        : { tier: 'absent', reason: 'missing' };
+        : resumeExpiry !== undefined
+          ? { tier: 'inferred', value: resumeExpiry }
+          : { tier: 'absent', reason: 'missing' };
 
   // The timing error is small when the expiry or the start time was reported;
   // otherwise it is as large as the request could have run.
@@ -75,7 +86,9 @@ export function assess(state: SessionState, now: number, p: AssessParams): Asses
   const windows = p.warnWindowsSec ?? rules.warnWindowsSec;
   // With the TTL unknown, use the shorter window so a warning is never late.
   const warnWindowSec = ttlValue !== undefined ? windows[ttlValue] : Math.min(windows['1h'], windows['5m']);
-  const prefixTokens = pickPrefix(pc?.recacheTokensIfCold, touch);
+  const picked = pickPrefix(pc?.recacheTokensIfCold, touch);
+  const prefixTokens: Tiered<number> =
+    picked.tier === 'absent' && resume?.contextTokens !== undefined ? { tier: 'inferred', value: resume.contextTokens } : picked;
   const stale = snap !== null && now - snap.receivedAt > rules.timing.staleSnapshotSec * 1000;
   const nativeUnavailable = snap === null;
   const model = (snap !== null ? valueOf(snap.model) : undefined) ?? touch?.model;
@@ -114,7 +127,7 @@ export function assess(state: SessionState, now: number, p: AssessParams): Asses
   if (version !== undefined && compareVersions(version, rules.minClaudeCodeVersion) < 0) {
     return unknown('version', { key: 'driver.version', params: { version, min: rules.minClaudeCodeVersion }, tier: 'measured' });
   }
-  if ((snap !== null && pc === null) || (snap === null && touch === null)) {
+  if ((snap !== null && pc === null) || (snap === null && touch === null && !resumeKnown)) {
     return unknown('no_response', { key: 'driver.no_response', params: {}, tier: 'measured' });
   }
   if (pc !== null && valueOf(pc.cachingObserved) === false) {
@@ -137,6 +150,7 @@ export function assess(state: SessionState, now: number, p: AssessParams): Asses
   if (stale) drivers.push({ key: 'driver.stale', params: { seconds: Math.round((now - snap!.receivedAt) / 1000) }, tier: 'measured' });
   if (driftSec !== null) drivers.push({ key: 'driver.drift', params: { seconds: driftSec }, tier: 'inferred' });
   if (nativeUnavailable) drivers.push({ key: 'driver.native_unavailable', params: {}, tier: 'measured' });
+  if (resume !== null) drivers.push({ key: 'driver.resume', params: {}, tier: 'inferred' });
   if (p.learned?.drift === true) drivers.push({ key: 'driver.calibration_drift', params: {}, tier: 'estimated' });
 
   /** Lowers a confidence to at most `cap`. */
@@ -169,7 +183,9 @@ export function assess(state: SessionState, now: number, p: AssessParams): Asses
   // 3. COLD: Claude Code says the cache is cold, or the expiry is past by more than the margin.
   const warmFalse = pc !== null && valueOf(pc.warm) === false;
   if (warmFalse) drivers.push({ key: 'driver.warm_false', params: {}, tier: 'inferred' });
-  if (warmFalse || (remainingSec !== null && remainingSec < -marginSec)) {
+  // Claude Code judged a resumed session's cache likely expired.
+  const resumeCold = resume !== null && resume.likelyExpired === true;
+  if (warmFalse || resumeCold || (remainingSec !== null && remainingSec < -marginSec)) {
     return known('COLD', epsAfter, nearZero(epsAfter), warmFalse ? 'HIGH' : timingCaps('HIGH'));
   }
 

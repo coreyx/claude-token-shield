@@ -45,6 +45,8 @@ type Resume struct {
 	ContextTokens            *float64 `json:"contextTokens,omitempty"`
 	LikelyExpired            *bool    `json:"likelyExpired,omitempty"`
 	EstimatedCacheWriteUSD   *float64 `json:"estimatedCacheWriteUsd,omitempty"`
+	// TTL is the session's last recorded TTL, which the mod adds.
+	TTL *string `json:"ttl,omitempty"`
 }
 
 // Fact is one input to the reducer; exactly one field is set.

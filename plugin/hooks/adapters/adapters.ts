@@ -106,6 +106,7 @@ export function resumeInfo(
     readonly estimated_cache_write_usd?: number
   },
   at: number,
+  ttl?: Ttl,
 ): ResumeInfo | null {
   if (e.source !== 'resume' && e.source !== 'fork') return null
   const n = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : undefined)
@@ -117,5 +118,6 @@ export function resumeInfo(
   if (tokens !== undefined) info.contextTokens = tokens
   if (typeof e.prompt_cache_likely_expired === 'boolean') info.likelyExpired = e.prompt_cache_likely_expired
   if (usd !== undefined) info.estimatedCacheWriteUsd = usd
+  if (ttl !== undefined) info.ttl = ttl
   return info
 }

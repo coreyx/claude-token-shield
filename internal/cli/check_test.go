@@ -85,6 +85,13 @@ func TestCheckMatchesParity(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Run(f.Name, func(t *testing.T) {
+			// A resume reaches only the mod, through classic.SessionStart; the CLI
+			// reads files and never sees one. The core parity test covers it.
+			for _, fact := range f.Facts {
+				if fact.Kind == "resume" {
+					t.Skip("resume facts reach the mod only")
+				}
+			}
 			home := t.TempDir()
 			lay(t, home, f)
 			env, out, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home, "CLAUDE_CODE_USE_BEDROCK": map[bool]string{true: "1"}[f.Env.Provider == "bedrock"]})

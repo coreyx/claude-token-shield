@@ -1,0 +1,217 @@
+{
+  "tzOffsetMin": 0,
+  "env": {
+    "provider": "firstParty",
+    "toolSearch": true,
+    "experimentalBetasDisabled": false
+  },
+  "mode": "default",
+  "width": 100,
+  "glyphs": "unicode",
+  "name": "resume-cold",
+  "now": 1767282722000,
+  "defaultModel": "claude-opus-5-5",
+  "facts": [
+    {
+      "kind": "resume",
+      "resume": {
+        "ts": 1767282720000,
+        "source": "resume",
+        "secondsSinceLastResponse": 10800,
+        "contextTokens": 812470,
+        "likelyExpired": true,
+        "estimatedCacheWriteUsd": 6.5,
+        "ttl": "1h"
+      }
+    }
+  ],
+  "expect": {
+    "view": {
+      "v": 1,
+      "mode": "default",
+      "at": 1767282722000,
+      "state": "COLD",
+      "pHit": 0.01,
+      "interval": [
+        0.005,
+        0.03
+      ],
+      "confidence": "MEDIUM",
+      "lowEvidence": true,
+      "stale": false,
+      "unknownReason": null,
+      "ttl": {
+        "value": "1h",
+        "tier": "inferred"
+      },
+      "expiresAt": {
+        "value": 1767275520000,
+        "tier": "inferred"
+      },
+      "remainingSec": -7202,
+      "expiry": {
+        "native": null,
+        "shield": null,
+        "driftSec": null
+      },
+      "prefixTokens": {
+        "value": 812470,
+        "tier": "inferred"
+      },
+      "lastRequest": null,
+      "session": {
+        "requests": null,
+        "hitRatio": null,
+        "misses": null,
+        "lastMiss": null
+      },
+      "pending": [],
+      "cost": {
+        "tokens": 812470,
+        "warmUsd": 0.162494,
+        "coldUsd": 6.499759999999999,
+        "showDollars": true,
+        "dollarLabel": "cost.api_equivalent",
+        "priceDate": "2026-11-03",
+        "tailTier": "estimated",
+        "planShare": null
+      },
+      "billing": "api",
+      "levers": [
+        {
+          "lever": "continue",
+          "nowUsd": 6.43638734,
+          "nowTokens": 812470,
+          "horizonUsd": 7.24885734,
+          "effectKey": "effect.unchanged",
+          "whenKey": "lever.continue.when",
+          "tier": "estimated",
+          "recommended": true
+        },
+        {
+          "lever": "compact",
+          "nowUsd": null,
+          "nowTokens": null,
+          "horizonUsd": null,
+          "effectKey": "effect.compact",
+          "whenKey": "lever.compact.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "clear",
+          "nowUsd": null,
+          "nowTokens": null,
+          "horizonUsd": null,
+          "effectKey": "effect.clear",
+          "whenKey": "lever.clear.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "recap",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.none",
+          "whenKey": "lever.recap.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "btw",
+          "nowUsd": null,
+          "nowTokens": 812470,
+          "horizonUsd": null,
+          "effectKey": "effect.none",
+          "whenKey": "lever.btw.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "ttl",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.ttl",
+          "whenKey": "lever.ttl.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "model",
+          "nowUsd": 6.499759999999999,
+          "nowTokens": 812470,
+          "horizonUsd": 6.499759999999999,
+          "effectKey": "effect.rebuild",
+          "whenKey": "lever.model.when",
+          "tier": "estimated",
+          "recommended": false
+        }
+      ],
+      "recommendation": {
+        "lever": "continue",
+        "reasonKey": "recommend.cheapest",
+        "params": {
+          "lever": "continue",
+          "usd": 7.24885734
+        },
+        "probeHint": false
+      },
+      "drivers": [
+        {
+          "key": "driver.ttl",
+          "params": {
+            "ttl": "1h",
+            "source": "request"
+          },
+          "tier": "measured"
+        },
+        {
+          "key": "driver.expiry",
+          "params": {
+            "source": "shield"
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.remaining",
+          "params": {
+            "seconds": -7202,
+            "margin": 45
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.pending_none",
+          "params": {},
+          "tier": "measured"
+        },
+        {
+          "key": "driver.native_unavailable",
+          "params": {},
+          "tier": "measured"
+        },
+        {
+          "key": "driver.resume",
+          "params": {},
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.eps",
+          "params": {
+            "eps": 0.01,
+            "n": 0,
+            "evidence": "low"
+          },
+          "tier": "estimated"
+        }
+      ],
+      "timeline": null,
+      "diff": null
+    },
+    "segment": "○ cache COLD since 13:52 · next prompt re-caches 812k ≈$6.50",
+    "check": "Cache  COLD  · expected read ≤ 1% (0.5%–3.0%) · confidence MEDIUM\n────────────────────────────────────────────────────────────────────────────────────────────────────\nLast request   none yet\nTTL            1 hour → expired 13:52\nPrefix         812,470 tokens\nSession        no native session data\nPending        none\nNext turn      warm ≈ $0.16 · cold ≈ $6.50\n               API-equivalent, prices 2026-11-03\n\nLevers\n               ▶ continue               now $6.44 · next 5 turns $7.25\n                 /compact               now cost unknown\n                 /clear                 now cost unknown\n                 /recap                 now $0.00\n                 /btw                   now cost unknown\n                 TTL setting            now $0.00\n                 model / effort / fast  now $6.50\n\n→ Cheapest over the next 5 turns: continue ($7.25).",
+    "exitCode": 40
+  }
+}

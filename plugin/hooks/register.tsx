@@ -1,14 +1,15 @@
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { Fact } from '../core/model/types'
+import type { Fact, Ttl } from '../core/model/types'
 import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
 import { gateSubmit, resetGate } from './actions/gate'
+import { clearResume, showResume } from './actions/resume'
 import { clearGuard, clearGuardIfUnchanged, guardChange, guardSwitch, resetGuard } from './actions/guard'
 import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
-import { flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
+import { continueHistory, flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
 import { applyFacts, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
@@ -32,6 +33,8 @@ const HEARTBEAT_MS = 30_000
 
 /** The session's timers, cancelled when it ends. */
 let timers: { cancel: () => void }[] = []
+/** The session history's last recorded TTL, read once per session. */
+let historyTtl: Promise<Ttl | undefined> | null = null
 
 export const register: Register = (on, options) => {
   on('session.start', async ($, e, next) => {
@@ -41,8 +44,11 @@ export const register: Register = (on, options) => {
     resetGate()
     resetGuard()
     resetHistory()
+    historyTtl = null
     resetSnapshotReader()
     const h = await startHost($, options)
+    historyTtl = continueHistory($, h.companions.dataDir, h.sessionId)
+    await historyTtl
     // Registration fails on its own: the segment, band and history still start.
     if (h.data !== null) {
       try {
@@ -111,6 +117,7 @@ export const register: Register = (on, options) => {
   on('prompt.submit', async ($, e, next) => {
     if (e.command || e.isMeta || e.origin.kind !== 'composer') return next(e)
     await clearGuard($)
+    await clearResume($)
     const drop = await gateSubmit($, e.text)
     return drop === null ? next(e) : { drop }
   }).catch(($, e, next) => {
@@ -206,8 +213,15 @@ export const register: Register = (on, options) => {
   })
 
   on('classic.SessionStart', async ($, e, next) => {
-    const resume = resumeInfo(e, await $.clock.now())
-    if (resume !== null) applyFacts({ kind: 'resume', resume })
+    const h = host()
+    // The last recorded TTL: what the session's own history says, read once.
+    if (historyTtl === null && h !== null) historyTtl = continueHistory($, h.companions.dataDir, h.sessionId)
+    const resume = resumeInfo(e, await $.clock.now(), (await historyTtl) ?? undefined)
+    if (resume !== null) {
+      applyFacts({ kind: 'resume', resume })
+      await publish($)
+      await showResume($, resume)
+    }
     return next(e)
   }).catch(($, e, next) => {
     reportFailure($, 'classic.SessionStart', next.error)

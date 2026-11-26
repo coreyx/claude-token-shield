@@ -7,7 +7,7 @@
  */
 
 import type { AssessEnv } from '../../plugin/core/assess/types'
-import type { EventRecord, RequestRecord } from '../../plugin/core/model/types'
+import type { EventRecord, RequestRecord, ResumeInfo } from '../../plugin/core/model/types'
 import type { CheckMode } from '../../plugin/core/view/view'
 import { payload, request } from '../core/model/fixtures'
 
@@ -16,6 +16,7 @@ export type CaseFact =
   | { readonly kind: 'snapshot'; readonly receivedAt: number; readonly payload: Record<string, unknown> }
   | { readonly kind: 'request'; readonly request: RequestRecord }
   | { readonly kind: 'event'; readonly event: EventRecord }
+  | { readonly kind: 'resume'; readonly resume: ResumeInfo }
 
 /** A parity case's inputs. */
 export interface CaseInput {
@@ -139,5 +140,28 @@ export const CASES: readonly CaseInput[] = [
   { ...base, name: 'unknown-version', now: at(15, 52, 2), facts: [...requests(), snap(at(15, 52), { expires_at: WARM }, { version: '2.1.259' })] },
   { ...base, name: 'unknown-caching-off', now: at(15, 52, 2), facts: [...requests(), snap(at(15, 52), { caching_observed: false, warm: false, expires_at: null })] },
   { ...base, name: 'stale-snapshot', now: at(15, 52, 2), facts: [...requests(), snap(at(15, 51), { expires_at: WARM })] },
+  // Resumed before any snapshot or request: timing from the last response and its TTL (REQ-11).
+  {
+    ...base,
+    name: 'resume-warm-verbose',
+    now: at(15, 52, 2),
+    mode: 'verbose',
+    defaultModel: 'claude-opus-5-5',
+    facts: [{ kind: 'resume', resume: { ts: at(15, 52), source: 'resume', secondsSinceLastResponse: 600, contextTokens: 812470, likelyExpired: false, estimatedCacheWriteUsd: 6.5, ttl: '1h' } }],
+  },
+  {
+    ...base,
+    name: 'resume-cold',
+    now: at(15, 52, 2),
+    defaultModel: 'claude-opus-5-5',
+    facts: [{ kind: 'resume', resume: { ts: at(15, 52), source: 'resume', secondsSinceLastResponse: 10800, contextTokens: 812470, likelyExpired: true, estimatedCacheWriteUsd: 6.5, ttl: '1h' } }],
+  },
+  {
+    ...base,
+    name: 'fork-without-ttl-unknown',
+    now: at(15, 52, 2),
+    defaultModel: 'claude-opus-5-5',
+    facts: [{ kind: 'resume', resume: { ts: at(15, 52), source: 'fork', secondsSinceLastResponse: 600, contextTokens: 812470, likelyExpired: false } }],
+  },
   { ...base, name: 'no-bridge-verbose', now: at(15, 52, 2), mode: 'verbose', defaultModel: 'claude-opus-5-5', facts: requests() },
 ]

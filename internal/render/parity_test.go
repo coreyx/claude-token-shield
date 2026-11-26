@@ -22,6 +22,7 @@ type rawFact struct {
 	Payload    json.RawMessage `json:"payload"`
 	Request    *native.Request `json:"request"`
 	Event      *native.Event   `json:"event"`
+	Resume     *native.Resume  `json:"resume"`
 }
 
 // parityCase is one fixtures/parity/*.json file.
@@ -57,6 +58,8 @@ func build(t *testing.T, facts []rawFact) native.State {
 			s = native.Reduce(s, native.Fact{Request: f.Request})
 		case "event":
 			s = native.Reduce(s, native.Fact{Event: f.Event})
+		case "resume":
+			s = native.Reduce(s, native.Fact{Resume: f.Resume})
 		default:
 			t.Fatalf("unknown fact kind %q", f.Kind)
 		}

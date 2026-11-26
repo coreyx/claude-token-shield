@@ -87,7 +87,23 @@ func Assess(s native.State, now float64, p Params) Assessment {
 	touch := s.LastTouch
 	drivers := []Driver{}
 
+	// A resumed or forked session before its first snapshot or request: its
+	// timing follows from how long ago the last response was and the last
+	// recorded TTL (REQ-11, inferred). Any snapshot or request supersedes it.
+	var resume *native.Resume
+	if snap == nil && touch == nil {
+		resume = s.Resume
+	}
 	ttl := pickTTL(pc, touch)
+	if resume != nil && resume.TTL != nil {
+		ttl = native.Of(native.Inferred, *resume.TTL)
+	}
+	var resumeExpiry *float64
+	if resume != nil && resume.TTL != nil && resume.SecondsSinceLastResponse != nil {
+		v := resume.Ts - *resume.SecondsSinceLastResponse*1000 + ttlSec[*resume.TTL]*1000
+		resumeExpiry = &v
+	}
+	resumeKnown := resume != nil && ((resume.LikelyExpired != nil && *resume.LikelyExpired) || resumeExpiry != nil)
 	var ownExpiry *float64
 	if touch != nil && ttl.Known() {
 		v := touch.TsStart + ttlSec[ttl.V]*1000
@@ -104,6 +120,8 @@ func Assess(s native.State, now float64, p Params) Assessment {
 		expiresAt = pc.ExpiresAt
 	case ownExpiry != nil:
 		expiresAt = native.Of(native.Inferred, *ownExpiry)
+	case resumeExpiry != nil:
+		expiresAt = native.Of(native.Inferred, *resumeExpiry)
 	default:
 		expiresAt = native.None[float64]("missing")
 	}
@@ -137,6 +155,9 @@ func Assess(s native.State, now float64, p Params) Assessment {
 		warn = float64(windows[ttl.V])
 	}
 	prefix := pickPrefix(pc, touch)
+	if !prefix.Known() && resume != nil && resume.ContextTokens != nil {
+		prefix = native.Of(native.Inferred, *resume.ContextTokens)
+	}
 	stale := snap != nil && now-snap.ReceivedAt > r.Timing.StaleSnapshotSec*1000
 	nativeMissing := snap == nil
 	model := ""
@@ -176,7 +197,7 @@ func Assess(s native.State, now float64, p Params) Assessment {
 			return unknown("version", Driver{"driver.version", map[string]any{"version": ver, "min": r.MinClaudeCodeVersion}, native.Measured})
 		}
 	}
-	if (snap != nil && pc == nil) || (snap == nil && touch == nil) {
+	if (snap != nil && pc == nil) || (snap == nil && touch == nil && !resumeKnown) {
 		return unknown("no_response", Driver{"driver.no_response", map[string]any{}, native.Measured})
 	}
 	if pc != nil && pc.CachingObserved.Known() && !pc.CachingObserved.V {
@@ -214,6 +235,9 @@ func Assess(s native.State, now float64, p Params) Assessment {
 	}
 	if nativeMissing {
 		drivers = append(drivers, Driver{"driver.native_unavailable", map[string]any{}, native.Measured})
+	}
+	if resume != nil {
+		drivers = append(drivers, Driver{"driver.resume", map[string]any{}, native.Inferred})
 	}
 	if p.Learned != nil && p.Learned.Drift {
 		drivers = append(drivers, Driver{"driver.calibration_drift", map[string]any{}, native.Estimated})
@@ -264,7 +288,9 @@ func Assess(s native.State, now float64, p Params) Assessment {
 	if warmFalse {
 		drivers = append(drivers, Driver{"driver.warm_false", map[string]any{}, native.Inferred})
 	}
-	if warmFalse || (remaining != nil && *remaining < -margin) {
+	// Claude Code judged a resumed session's cache likely expired.
+	resumeCold := resume != nil && resume.LikelyExpired != nil && *resume.LikelyExpired
+	if warmFalse || resumeCold || (remaining != nil && *remaining < -margin) {
 		conf := timingCaps("HIGH")
 		if warmFalse {
 			conf = "HIGH"

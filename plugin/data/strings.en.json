@@ -929,6 +929,10 @@
     "detail.INVALIDATED": {
       "text": "{cause} invalidated it",
       "tense": "past"
+    },
+    "driver.resume": {
+      "text": "resumed or forked session: timing from the last response and the last recorded TTL",
+      "tense": "none"
     }
   }
 }

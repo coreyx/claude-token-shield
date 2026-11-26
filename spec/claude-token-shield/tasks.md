@@ -230,7 +230,7 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
     5. Stay silent when the cache is cold or invalidated.
     6. Test: a warm 812k switch shows Claude Code's unchanged confirmation path plus the labelled cost; a cold switch shows nothing; a paired event burst produces one toast; a same-model pick shows nothing; with `switchConfirm` on, a warm over-threshold switch returns `ask` with the labelled reason, and a cold or under-threshold one returns `next(e)` unchanged; with it off, no result carries a `permissionDecision`; effort on Opus 5.5 with a subscription shows nothing, and on Sonnet 5 shows the cost; every guard surface carries the Token Shield name.
 
-- [ ] **TASK-24: Build resume guidance**
+- [x] **TASK-24: Build resume guidance**
   - **Associated Acceptance Criteria**: `11.1`, `11.2`, `11.3`
   - **Concrete Steps**:
     1. On `classic.SessionStart` with `source` `resume` or `fork` and `prompt_cache_likely_expired`, show the band in resume mode before the first prompt: Claude Code's cold estimate and the four options (continue, `/compact`, `/clear` with a handoff, `/recap` first).

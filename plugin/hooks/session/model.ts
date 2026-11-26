@@ -178,13 +178,16 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
 /**
  * Whether a redraw keeps the band as it is. A confirmation stays until it's
  * answered; the guard's band while the cache is still warm (it has its own
- * clearing); the gate's hold while the cache is still lost. Everything else
+ * clearing); the gate's hold while the cache is still lost; resume guidance
+ * until the first prompt while the cache is lost or unknown. Everything else
  * follows the cache state.
  */
 function keepsBand(current: TokenShieldBand, state: string): boolean {
   if (current === null) return false
   const lost = state === 'COLD' || state === 'INVALIDATED'
-  return current.mode === 'confirm' || (current.mode === 'guard' && !lost) || (current.mode === 'gate' && lost)
+  // Resume guidance stays until the first prompt, unless the cache turns out warm.
+  const resumeHolds = current.mode === 'resume' && (lost || state === 'UNKNOWN')
+  return current.mode === 'confirm' || (current.mode === 'guard' && !lost) || (current.mode === 'gate' && lost) || resumeHolds
 }
 
 /** A timer's redraw; a failure is reported, never thrown into the engine. */
