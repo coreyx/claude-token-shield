@@ -111,6 +111,8 @@ export interface RequestRecord {
   /** Request start, epoch ms: the cache lifetime runs from here. */
   readonly tsStart: number;
   readonly tsStartTier: Tier;
+  /** How long the request took, when known; bounds the error in an inferred start time. */
+  readonly durationMs?: number;
   readonly model: string;
   readonly speed: 'standard' | 'fast';
   readonly effort?: string;

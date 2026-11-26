@@ -69,7 +69,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     3. Implement `reduce(state, fact)`: last snapshot, a bounded main-lane request log (200), pending events since the last main request, and a TTL-change event when consecutive snapshots differ in `ttl`.
     4. Test with synthetic payload sequences, including one where `ttl` changes `1h → 5m` (exactly one event) and one with `expires_at` missing.
 
-- [ ] **TASK-6: Implement the assessor**
+- [x] **TASK-6: Implement the assessor**
   - **Associated Acceptance Criteria**: `1.4`, `1.5`, `1.6`, `2.1`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`
   - **Concrete Steps**:
     1. Implement timing (native expiry first, `skew`, `t_err`, `margin`, `remaining`) and the drift event when native and own expiry disagree by more than the margin.
