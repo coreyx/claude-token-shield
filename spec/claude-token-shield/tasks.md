@@ -245,7 +245,7 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
     3. Handle `nothing-to-fork` and API errors without changing state.
     4. Test: an `UNCERTAIN` fixture shows both costs and sends nothing before confirmation; a `COLD`/`HIGH` fixture is declined with a reason, and `--force` reaches confirmation; a fork result reading ≥ 95% of the prefix reports `HIT` and an expiry one TTL later.
 
-- [ ] **TASK-26: Build the keep-alive**
+- [x] **TASK-26: Build the keep-alive**
   - **Associated Acceptance Criteria**: `15.1`, `15.2`
   - **Concrete Steps**:
     1. Implement `/cache-check keepalive until <time> max $<n>` and a band button, with the estimated total shown in confirm mode before it starts.

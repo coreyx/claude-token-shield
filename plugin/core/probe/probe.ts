@@ -79,12 +79,20 @@ export interface ForkUsage {
  * @param durationMs how long it took
  * @param model the session's model
  * @param ttl the session's TTL
+ * @param lane `probe`, or `keepalive` for a keep-alive's refresh
  */
-export function probeRecord(usage: ForkUsage, startedAt: number, durationMs: number, model: string, ttl: Ttl | undefined): RequestRecord {
+export function probeRecord(
+  usage: ForkUsage,
+  startedAt: number,
+  durationMs: number,
+  model: string,
+  ttl: Ttl | undefined,
+  lane: 'probe' | 'keepalive' = 'probe',
+): RequestRecord {
   const write = usage.cache_creation_input_tokens;
   return {
-    id: `probe-${startedAt}`,
-    lane: 'probe',
+    id: `${lane}-${startedAt}`,
+    lane,
     tsStart: startedAt,
     tsStartTier: 'measured',
     durationMs,

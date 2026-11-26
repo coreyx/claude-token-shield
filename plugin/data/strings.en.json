@@ -973,6 +973,70 @@
     "probe.cancelled": {
       "text": "Token Shield: probe cancelled; nothing was sent.",
       "tense": "none"
+    },
+    "keepalive.confirm": {
+      "text": "Token Shield {dot} keep the cache warm until {until}, spending at most {budget}? About {n} refreshes at {approx} {each} each, {approx} {total} in all. Sending a prompt stops it.",
+      "tense": "future"
+    },
+    "keepalive.running": {
+      "text": "Token Shield {dot} keeping the cache warm until {until}: {spent} of {budget} spent, next refresh {next}.",
+      "tense": "none"
+    },
+    "keepalive.stopped.prompt": {
+      "text": "Token Shield: keep-alive stopped because you're back; it spent {spent}.",
+      "tense": "past"
+    },
+    "keepalive.stopped.budget": {
+      "text": "Token Shield: keep-alive stopped: the next refresh could pass the {budget} budget; it spent {spent}.",
+      "tense": "past"
+    },
+    "keepalive.stopped.end": {
+      "text": "Token Shield: keep-alive finished at {until}; it spent {spent}.",
+      "tense": "past"
+    },
+    "keepalive.stopped.miss": {
+      "text": "Token Shield: keep-alive stopped: a refresh found the cache already lost; it spent {spent}.",
+      "tense": "past"
+    },
+    "keepalive.stopped.failed": {
+      "text": "Token Shield: keep-alive stopped: a refresh didn't complete ({reason}); it spent {spent}.",
+      "tense": "past"
+    },
+    "keepalive.stopped.user": {
+      "text": "Token Shield: keep-alive stopped; it spent {spent}.",
+      "tense": "past"
+    },
+    "keepalive.usage": {
+      "text": "Token Shield: /cache-check keepalive [until HH:MM | for <minutes>m] [max $<amount>], or keepalive stop.",
+      "tense": "none"
+    },
+    "keepalive.refused_lost": {
+      "text": "Token Shield: no keep-alive: the cache is already lost, so a refresh would pay the rebuild.",
+      "tense": "none"
+    },
+    "keepalive.refused_unpriced": {
+      "text": "Token Shield: no keep-alive: the refresh price isn't known here, so a budget can't be kept.",
+      "tense": "none"
+    },
+    "keepalive.refused_none": {
+      "text": "Token Shield: no keep-alive: no refresh fits before {until} within {budget}.",
+      "tense": "none"
+    },
+    "keepalive.cancelled": {
+      "text": "Token Shield: keep-alive not started.",
+      "tense": "none"
+    },
+    "keepalive.not_running": {
+      "text": "Token Shield: no keep-alive is running.",
+      "tense": "none"
+    },
+    "button.keepalive": {
+      "text": "Keep warm",
+      "tense": "none"
+    },
+    "button.stop": {
+      "text": "Stop",
+      "tense": "none"
     }
   }
 }

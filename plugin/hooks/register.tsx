@@ -5,6 +5,7 @@ import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
 import { gateSubmit, resetGate } from './actions/gate'
+import { keepAliveOnPrompt, resetKeepAlive } from './actions/keepalive'
 import { clearResume, showResume } from './actions/resume'
 import { clearGuard, clearGuardIfUnchanged, guardChange, guardSwitch, resetGuard } from './actions/guard'
 import { reportFailure } from './host/failure'
@@ -43,6 +44,7 @@ export const register: Register = (on, options) => {
     resetPublishing()
     resetGate()
     resetGuard()
+    resetKeepAlive()
     resetHistory()
     historyTtl = null
     resetSnapshotReader()
@@ -71,6 +73,7 @@ export const register: Register = (on, options) => {
   on('session.end', async ($, e, next) => {
     for (const t of timers) t.cancel()
     timers = []
+    resetKeepAlive()
     resetPublishing()
     const h = host()
     if (h !== null) await flushHistory($, h.companions.dataDir, h.sessionId)
@@ -118,6 +121,8 @@ export const register: Register = (on, options) => {
     if (e.command || e.isMeta || e.origin.kind !== 'composer') return next(e)
     await clearGuard($)
     await clearResume($)
+    // The person is back: a running keep-alive stops before its next refresh.
+    await keepAliveOnPrompt($)
     const drop = await gateSubmit($, e.text)
     return drop === null ? next(e) : { drop }
   }).catch(($, e, next) => {

@@ -157,7 +157,10 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
   $.ui.status(renderSegment(ev.a, ev.cost, { ...text, billing: ev.billing }))
 
   const band = bandText(ev.view, text)
-  await update($, bandAtom, current => (keepsBand(current, ev.a.state) ? current : band === null ? null : { mode: 'state' as const, text: band, lever: ev.rec.lever === 'none' ? null : ev.rec.lever }))
+  const lever = ev.rec.lever === 'none' ? null : ev.rec.lever
+  // While EXPIRING the band offers a keep-alive; it starts only after its own confirmation (REQ-15.0.4).
+  const actions = ev.a.state === 'EXPIRING' ? ['keepalive'] : []
+  await update($, bandAtom, current => (keepsBand(current, ev.a.state) ? current : band === null ? null : { mode: 'state' as const, text: band, lever, actions }))
 
   const now = ev.a.at
   const n = notify(previous, ev.a, toastLog, h.config, now)
@@ -177,7 +180,7 @@ export async function publish($: EngineInterface): Promise<Evaluation | null> {
 
 /**
  * Whether a redraw keeps the band as it is. A confirmation stays until it's
- * answered; the guard's band while the cache is still warm (it has its own
+ * answered; a running keep-alive's (it ends with it); the guard's band while the cache is still warm (it has its own
  * clearing); the gate's hold while the cache is still lost; resume guidance
  * until the first prompt while the cache is lost or unknown. Everything else
  * follows the cache state.
@@ -187,7 +190,7 @@ function keepsBand(current: TokenShieldBand, state: string): boolean {
   const lost = state === 'COLD' || state === 'INVALIDATED'
   // Resume guidance stays until the first prompt, unless the cache turns out warm.
   const resumeHolds = current.mode === 'resume' && (lost || state === 'UNKNOWN')
-  return current.mode === 'confirm' || (current.mode === 'guard' && !lost) || (current.mode === 'gate' && lost) || resumeHolds
+  return current.mode === 'confirm' || current.mode === 'keepalive' || (current.mode === 'guard' && !lost) || (current.mode === 'gate' && lost) || resumeHolds
 }
 
 /** A timer's redraw; a failure is reported, never thrown into the engine. */

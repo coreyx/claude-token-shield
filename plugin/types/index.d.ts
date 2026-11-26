@@ -18,11 +18,13 @@ export type TokenShieldStatus = {
 
 /** What the above-prompt band shows, if anything (design D8, D13). */
 export type TokenShieldBand = {
-  mode: 'state' | 'guard' | 'resume' | 'confirm' | 'gate'
+  mode: 'state' | 'guard' | 'resume' | 'confirm' | 'gate' | 'keepalive'
   /** The band's text, already rendered from the catalog. */
   text: string
-  /** The recommended lever's id, when the band offers one. */
+  /** The recommended lever's id, or in confirm mode the action Confirm runs. */
   lever: string | null
+  /** Buttons the band offers beside its text, by action id. */
+  actions?: string[]
 } | null
 
 /** The last check rendered for the Token Shield pane. */
