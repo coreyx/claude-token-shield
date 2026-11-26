@@ -27,7 +27,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     4. Add `LICENSE` (MIT), a README stub, `.gitignore` (binaries, coverage, `node_modules`), and `.gitattributes` (LF for `bin/tshield`).
     5. Verify: `tsc -p plugin`, `claude plugin validate plugin`, `npx vitest run` and `go build ./...` all succeed.
 
-- [ ] **TASK-2: Confirm the engine assumptions with spikes**
+- [x] **TASK-2: Confirm the engine assumptions with spikes**
   - **Associated Acceptance Criteria**: none (discovery; results decide which fallbacks in design.md "Assumptions to confirm early" apply)
   - **Concrete Steps**:
     1. Build a throwaway spike mod outside the repo, in the session's dev-mods folder, that exercises each of the six assumptions in design.md.
