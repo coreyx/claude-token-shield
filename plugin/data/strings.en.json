@@ -142,6 +142,10 @@
     "notify.ttl_bucket_change": { "text": "Token Shield: now billing usage credits, so new cache writes use the 5-minute TTL.", "tense": "future" },
     "notify.expiring": { "text": "Token Shield: cache expires at {time}.", "tense": "future" },
     "notify.cold": { "text": "Token Shield: cache expired at {time}.", "tense": "past" },
+    "notify.uncertain": { "text": "Token Shield: cache near its expiry; whether the next request reads it is uncertain.", "tense": "future" },
+    "notify.invalidated": { "text": "Token Shield: {cause} invalidated the cache; the next request rebuilds it.", "tense": "future" },
+    "notify.gate_held": { "text": "Token Shield: prompt held before a {usd} rebuild.", "tense": "future" },
+    "notify.calibration_drift": { "text": "Token Shield: recent cache behavior differs from its stated rates; intervals widened.", "tense": "past" },
 
     "past.hit": { "text": "hit", "tense": "past" },
     "past.miss": { "text": "miss", "tense": "past" },

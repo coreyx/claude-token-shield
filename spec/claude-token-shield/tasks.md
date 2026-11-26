@@ -100,7 +100,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     2. Implement `recommend` with the ordered policy, the 5-turn horizon for `COLD`/`INVALIDATED`, the exclusion of unknown costs, and `/clear` never recommended on cost alone.
     3. Test: an 812k `COLD` fixture lists continue, `/compact`, `/clear` and `/recap` with exactly one recommended; `HOT` gives "no action needed"; `/recap`'s text says it neither invalidates nor shrinks; an unknown-cost lever shows "cost unknown" and is never recommended.
 
-- [ ] **TASK-10: Implement the gate decision, notification policy and config validation**
+- [x] **TASK-10: Implement the gate decision, notification policy and config validation**
   - **Associated Acceptance Criteria**: `9.1`, `9.2`, `9.4`, `12.1`, `12.2`, `12.4`, `12.5`, `22.1`, `22.2`
   - **Concrete Steps**:
     1. Implement `gateDecision` per design D9: hold, pass or warn from the assessment, the threshold (dollars or tokens, tokens only on subscription), the held-prompt hash and the 60-second window.
