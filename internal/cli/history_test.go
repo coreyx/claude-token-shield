@@ -130,3 +130,60 @@ func TestHistoryText(t *testing.T) {
 		t.Errorf("empty: exit %d\n%s", code, out2.String())
 	}
 }
+
+// TestCalibrationCommand reads recorded predictions from every session's
+// chunks: the same calibration as the core, with one drift line (AC 14.3, 14.4).
+func TestCalibrationCommand(t *testing.T) {
+	raw, _ := os.ReadFile("../../fixtures/calibration/hot-drift.json")
+	var f struct {
+		Records []summary.AssessmentRecord `json:"records"`
+		Expect  struct {
+			Calibration any `json:"calibration"`
+		} `json:"expect"`
+	}
+	if err := json.Unmarshal(raw, &f); err != nil {
+		t.Fatal(err)
+	}
+	home := t.TempDir()
+	// Split across two sessions: calibration spans them all.
+	for i, id := range []string{"aaaaaaaa-0000-0000-0000-000000000000", "bbbbbbbb-0000-0000-0000-000000000000"} {
+		c := history.Chunk{V: history.Version, SessionID: id}
+		for j := i; j < len(f.Records); j += 2 {
+			c.Records = append(c.Records, history.Record{Type: "assessment", Assessment: &f.Records[j]})
+		}
+		if err := history.WriteChunk(filepath.Join(home, "history"), c); err != nil {
+			t.Fatal(err)
+		}
+	}
+	latest := 0.0
+	for _, r := range f.Records {
+		if r.Ts > latest {
+			latest = r.Ts
+		}
+	}
+	at := time.UnixMilli(int64(latest) + 60_000)
+	env, out, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home})
+	env.Now = func() time.Time { return at }
+	if code := Run([]string{"calibration", "--json"}, env); code != ExitOK {
+		t.Fatalf("exit %d", code)
+	}
+	var got any
+	_ = json.Unmarshal(out.Bytes(), &got)
+	if d := diffJSON("calibration", f.Expect.Calibration, got); d != "" {
+		t.Errorf("calibration differs from the core's: %s", d)
+	}
+	env2, out2, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home, "COLUMNS": "100"})
+	env2.Now = func() time.Time { return at }
+	if code := Run([]string{"history", "--calibration"}, env2); code != ExitOK {
+		t.Fatalf("history --calibration: exit %d", code)
+	}
+	if n := strings.Count(out2.String(), "Drift: HOT misses"); n != 1 {
+		t.Errorf("drift lines %d in:\n%s", n, out2.String())
+	}
+	for _, bad := range [][]string{{"calibration", "--since", "x"}, {"calibration", "--since"}, {"calibration", "--what"}} {
+		env, _, _ := testEnv(map[string]string{"TOKEN_SHIELD_HOME": home})
+		if code := Run(bad, env); code != ExitUsage {
+			t.Errorf("%v: exit %d", bad, code)
+		}
+	}
+}

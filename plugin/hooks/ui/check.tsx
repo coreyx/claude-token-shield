@@ -4,10 +4,12 @@ import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 import { formatString } from '../../core/data/load'
 import { sinceRange, summarize } from '../../core/history/summarize'
 import { renderCheck } from '../../core/render/check'
-import { renderHistory } from '../../core/render/history'
+import { calibrate } from '../../core/history/calibrate'
+import { renderCalibration, renderHistory } from '../../core/render/history'
 import { glyphParams, glyphSet } from '../../core/render/format'
 import type { TokenShieldBand, TokenShieldLevers, TokenShieldPane } from '../../types'
 import { isCommandLever } from '../actions/levers'
+import { recordedAssessments } from '../actions/calibration'
 import { cancelKeepAliveOffer, offerKeepAlive } from '../actions/keepalive'
 import { offerProbe } from '../actions/probe'
 import { cancelSetting, offerSetting } from '../actions/settings'
@@ -110,6 +112,7 @@ async function showOrPane($: EngineInterface, text: string, title: string) {
  */
 async function answerHistory($: EngineInterface, words: readonly string[], width: number): Promise<string | null> {
   const h = host()!
+  if (words.includes('--calibration')) return answerCalibration($, words.filter(w => w !== '--calibration'), width)
   let session: string | undefined
   let since: string | undefined
   let all = false
@@ -131,6 +134,28 @@ async function answerHistory($: EngineInterface, words: readonly string[], width
   const sessions = await Promise.all(ids.map(id => readSessionHistory($, dir, id)))
   const summary = summarize(sessions, range, { misses }, h.data!.prices, h.env.provider)
   return renderHistory(summary, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin })
+}
+
+/**
+ * `/cache-check history --calibration [--since 30d]` (REQ-14.0.5): how well
+ * predictions matched outcomes across every session in the window, the same
+ * table `tshield calibration` prints.
+ *
+ * @param $ the engine interface
+ * @param words the other arguments
+ * @param width the width to render at
+ * @returns the text, or `null` when the arguments don't parse
+ */
+async function answerCalibration($: EngineInterface, words: readonly string[], width: number): Promise<string | null> {
+  const h = host()!
+  if (words.length !== 0 && !(words.length === 2 && words[0] === '--since')) return null
+  const now = await $.clock.now()
+  const range = sinceRange(words[1] ?? `${h.config.historyDays}d`, now)
+  if (range === null) return null
+  await flushHistory($, h.companions.dataDir, h.sessionId)
+  const p = h.data!.rules.priors
+  const cal = calibrate(await recordedAssessments($, range.from), { epsWithin: p.epsWithin, epsAfter: p.epsAfter, minCalibrationN: p.minCalibrationN })
+  return renderCalibration(cal, p.minCalibrationN, width, { glyphs: glyphSet(h.config.glyphs), strings: h.data!.strings, display: h.data!.rules.display, tzOffsetMin: h.tzOffsetMin })
 }
 
 /**

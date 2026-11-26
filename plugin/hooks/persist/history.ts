@@ -1,5 +1,6 @@
 import type { EngineInterface } from 'claude-code'
 
+import type { AssessmentRecord } from '../../core/history/calibrate'
 import type { SessionHistory } from '../../core/history/summarize'
 import type { EventRecord, RequestRecord, Ttl } from '../../core/model/types'
 
@@ -12,7 +13,10 @@ import type { EventRecord, RequestRecord, Ttl } from '../../core/model/types'
  */
 
 /** One history record, as tshield's history reader expects it. */
-export type HistoryRecord = { readonly type: 'request'; readonly request: RequestRecord } | { readonly type: 'event'; readonly event: EventRecord }
+export type HistoryRecord =
+  | { readonly type: 'request'; readonly request: RequestRecord }
+  | { readonly type: 'event'; readonly event: EventRecord }
+  | { readonly type: 'assessment'; readonly assessment: AssessmentRecord }
 
 /** Chunk limits (D16). */
 export const MAX_RECORDS = 500
@@ -53,6 +57,28 @@ function cleanRequest(r: RequestRecord): RequestRecord {
 function cleanEvent(e: EventRecord): EventRecord {
   const detail = e.detail === undefined ? undefined : { ...(e.detail.from !== undefined ? { from: e.detail.from } : {}), ...(e.detail.to !== undefined ? { to: e.detail.to } : {}) }
   return { ts: e.ts, kind: e.kind, ...(detail !== undefined ? { detail } : {}) }
+}
+
+/** Copies an assessment record field by field: numbers, enums and ids only. */
+function cleanAssessment(a: AssessmentRecord): AssessmentRecord {
+  return {
+    ts: a.ts,
+    state: a.state,
+    pHit: a.pHit,
+    interval: [a.interval[0], a.interval[1]],
+    ttl: a.ttl,
+    remainingSec: a.remainingSec,
+    marginSec: a.marginSec,
+    ccVersion: a.ccVersion,
+    model: a.model,
+    outcome: a.outcome,
+  }
+}
+
+/** Buffers the assessment that preceded a main request, with its outcome (REQ-14.0.4). */
+export function recordAssessment(a: AssessmentRecord): void {
+  records.push({ type: 'assessment', assessment: cleanAssessment(a) })
+  dirty = true
 }
 
 /** Buffers a request for the next flush. */
@@ -173,13 +199,15 @@ export async function readSessionHistory($: EngineInterface, dataDir: string, se
   chunks.sort((a, b) => a.seq - b.seq)
   const requests: RequestRecord[] = []
   const events: EventRecord[] = []
+  const assessments: AssessmentRecord[] = []
   for (const c of chunks) {
     for (const r of c.records) {
       if (r.type === 'request' && r.request !== undefined) requests.push(r.request)
       else if (r.type === 'event' && r.event !== undefined) events.push(r.event)
+      else if (r.type === 'assessment' && r.assessment !== undefined) assessments.push(r.assessment)
     }
   }
-  return { sessionId, requests, events, skipped }
+  return { sessionId, requests, events, assessments, skipped }
 }
 
 /**

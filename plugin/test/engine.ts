@@ -60,6 +60,17 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
     if (p.includes('/data/') && name in data) return { value: data[name]! }
     throw new Error(`no file ${p}`)
   })
+  // The cross-session store: kept for the whole test, as $.store keeps it across sessions.
+  const store = new Map<string, unknown>()
+  on('store.get', (_, e) => ({ value: store.get(e.key) }))
+  on('store.set', (_, e) => {
+    store.set(e.key, e.value)
+    return { value: undefined }
+  })
+  on('store.delete', (_, e) => {
+    store.delete(e.key)
+    return { value: undefined }
+  })
   // Lists the stand-in files and the folders their paths imply, one level down.
   on('fs.list', (_, e) => {
     const dir = norm(e.path ?? '')

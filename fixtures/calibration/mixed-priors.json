@@ -1,0 +1,426 @@
+{
+  "name": "mixed-priors",
+  "width": 100,
+  "glyphs": "unicode",
+  "records": [
+    {
+      "ts": 1768910400000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910460000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910520000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910580000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910640000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910700000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910760000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910820000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910880000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910940000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911000000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911060000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910400000,
+      "state": "EXPIRING",
+      "pHit": 0.97,
+      "interval": [
+        0.95,
+        0.99
+      ],
+      "ttl": "1h",
+      "remainingSec": 300,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910460000,
+      "state": "EXPIRING",
+      "pHit": 0.97,
+      "interval": [
+        0.95,
+        0.99
+      ],
+      "ttl": "1h",
+      "remainingSec": 300,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910520000,
+      "state": "EXPIRING",
+      "pHit": 0.97,
+      "interval": [
+        0.95,
+        0.99
+      ],
+      "ttl": "1h",
+      "remainingSec": 300,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910400000,
+      "state": "COLD",
+      "pHit": 0.01,
+      "interval": [
+        0.005,
+        0.03
+      ],
+      "ttl": "1h",
+      "remainingSec": -3000,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910460000,
+      "state": "COLD",
+      "pHit": 0.01,
+      "interval": [
+        0.005,
+        0.03
+      ],
+      "ttl": "1h",
+      "remainingSec": -3000,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910520000,
+      "state": "COLD",
+      "pHit": 0.01,
+      "interval": [
+        0.005,
+        0.03
+      ],
+      "ttl": "1h",
+      "remainingSec": -3000,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910580000,
+      "state": "COLD",
+      "pHit": 0.01,
+      "interval": [
+        0.005,
+        0.03
+      ],
+      "ttl": "1h",
+      "remainingSec": -3000,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910400000,
+      "state": "UNCERTAIN",
+      "pHit": 0.5,
+      "interval": [
+        0.3,
+        0.7
+      ],
+      "ttl": "5m",
+      "remainingSec": 10,
+      "marginSec": 40,
+      "ccVersion": "2.1.330",
+      "model": "claude-sonnet-5-5",
+      "outcome": "PARTIAL"
+    },
+    {
+      "ts": 1768910400000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": null,
+      "remainingSec": null,
+      "marginSec": 40,
+      "ccVersion": null,
+      "model": null,
+      "outcome": "HIT"
+    }
+  ],
+  "expect": {
+    "calibration": {
+      "n": 21,
+      "buckets": [
+        {
+          "state": "HOT",
+          "ttl": null,
+          "band": "unknown",
+          "n": 1,
+          "meanPredicted": 0.99,
+          "observed": 1,
+          "wilson": [
+            0.20654329147389294,
+            1
+          ]
+        },
+        {
+          "state": "HOT",
+          "ttl": "1h",
+          "band": "over_10m",
+          "n": 12,
+          "meanPredicted": 0.9900000000000001,
+          "observed": 1,
+          "wilson": [
+            0.7574992425007574,
+            1
+          ]
+        },
+        {
+          "state": "EXPIRING",
+          "ttl": "1h",
+          "band": "1_10m",
+          "n": 3,
+          "meanPredicted": 0.9700000000000001,
+          "observed": 1,
+          "wilson": [
+            0.43849391955098227,
+            1
+          ]
+        },
+        {
+          "state": "UNCERTAIN",
+          "ttl": "5m",
+          "band": "margin",
+          "n": 1,
+          "meanPredicted": 0.5,
+          "observed": 1,
+          "wilson": [
+            0.20654329147389294,
+            1
+          ]
+        },
+        {
+          "state": "COLD",
+          "ttl": "1h",
+          "band": "past",
+          "n": 4,
+          "meanPredicted": 0.01,
+          "observed": 0,
+          "wilson": [
+            0,
+            0.48990002040399916
+          ]
+        }
+      ],
+      "brier": 0.012114285714285715,
+      "brierBy": [
+        {
+          "ccVersion": "2.1.330",
+          "model": "claude-sonnet-5-5",
+          "ttl": "5m",
+          "n": 1,
+          "brier": 0.25
+        },
+        {
+          "ccVersion": "2.1.332",
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "n": 19,
+          "brier": 0.00022631578947368463
+        },
+        {
+          "ccVersion": null,
+          "model": null,
+          "ttl": null,
+          "n": 1,
+          "brier": 0.00010000000000000018
+        }
+      ],
+      "hot": {
+        "n": 13,
+        "missRate": 0,
+        "statedUpper": 0.015000000000000124
+      },
+      "drift": false,
+      "learned": {
+        "epsWithin": 0.005,
+        "epsAfter": 0.01,
+        "n": 21,
+        "drift": false
+      }
+    },
+    "text": "Calibration  21 predictions · Brier 0.0121\n\nState        TTL  Band          n  Predicted  Observed  Interval\nHOT          -    unknown       1      99.0%    100.0%  20.7%–100.0%\nHOT          1h   > 10 min     12      99.0%    100.0%  75.7%–100.0%\nEXPIRING     1h   1–10 min      3      97.0%    100.0%  43.8%–100.0%\nUNCERTAIN    5m   ε margin      1      50.0%    100.0%  20.7%–100.0%\nCOLD         1h   past          4       1.0%      0.0%  0.0%–49.0%\n\nBrier by Claude Code version, model and TTL\n  2.1.330   claude-sonnet-5-5    5m   n 1     0.2500\n  2.1.332   claude-opus-5-5      1h   n 19    0.0002\n  -         -                    -    n 1     0.0001\n\n13 of 30 HOT predictions so far: the stated rates are still the priors."
+  }
+}

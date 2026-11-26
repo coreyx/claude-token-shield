@@ -19,6 +19,8 @@ type SessionHistory struct {
 	SessionID string           `json:"sessionId"`
 	Requests  []native.Request `json:"requests"`
 	Events    []native.Event   `json:"events"`
+	// Assessments are the calibration pairs recorded before main requests.
+	Assessments []AssessmentRecord `json:"assessments,omitempty"`
 	// Skipped counts chunks that couldn't be read or are from a newer format.
 	Skipped int `json:"skipped"`
 }

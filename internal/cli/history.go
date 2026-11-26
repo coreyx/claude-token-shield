@@ -1,15 +1,18 @@
 package cli
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 
 	"github.com/coreyx/claude-token-shield/internal/bridge"
 	"github.com/coreyx/claude-token-shield/internal/data"
 	"github.com/coreyx/claude-token-shield/internal/history"
 	"github.com/coreyx/claude-token-shield/internal/render"
+	"github.com/coreyx/claude-token-shield/internal/store"
 	"github.com/coreyx/claude-token-shield/internal/summary"
 )
 
@@ -55,6 +58,11 @@ func parseHistory(args []string) (historyArgs, error) {
 // historyCmd summarizes the history of the newest session, a named one, or
 // all of them, in a window (AC 6.5, 14.1, 14.2). It reads files only.
 func historyCmd(args []string, env Env) int {
+	for _, arg := range args {
+		if arg == "--calibration" {
+			return calibrationCmd(args, env)
+		}
+	}
 	a, err := parseHistory(args)
 	if err != nil {
 		fmt.Fprintf(env.Stderr, "tshield history: %v\n", err)
@@ -130,4 +138,76 @@ func historySessions(historyDir string) []string {
 		ids[i] = f.id
 	}
 	return ids
+}
+
+// configuredHistoryDays is the history window from the mirrored config, else 90 days.
+func configuredHistoryDays(path string) int {
+	raw, err := store.ReadFile(path)
+	if err != nil {
+		return 90
+	}
+	var c struct {
+		HistoryDays int `json:"historyDays"`
+	}
+	if json.Unmarshal(raw, &c) != nil || c.HistoryDays <= 0 {
+		return 90
+	}
+	return c.HistoryDays
+}
+
+// calibrationCmd prints calibration across every session's recorded
+// predictions in the window (REQ-14.0.5): `tshield calibration [--since 30d] [--json]`,
+// also reached as `tshield history --calibration`.
+func calibrationCmd(args []string, env Env) int {
+	since, asJSON := "", false
+	for i := 0; i < len(args); i++ {
+		switch args[i] {
+		case "--json":
+			asJSON = true
+		case "--calibration":
+		case "--since":
+			if i+1 >= len(args) {
+				fmt.Fprintln(env.Stderr, "tshield calibration: --since needs a value")
+				return ExitUsage
+			}
+			i++
+			since = args[i]
+		default:
+			fmt.Fprintf(env.Stderr, "tshield calibration: unknown option %q\n", args[i])
+			return ExitUsage
+		}
+	}
+	d, err := data.Load()
+	if err != nil {
+		return fail(env, asJSON, err)
+	}
+	p, err := ResolvePaths(env.Getenv)
+	if err != nil {
+		return fail(env, asJSON, err)
+	}
+	now := float64(env.Now().UnixMilli())
+	if since == "" {
+		since = strconv.Itoa(configuredHistoryDays(p.Config)) + "d"
+	}
+	rng, ok := summary.SinceRange(since, now)
+	if !ok {
+		fmt.Fprintln(env.Stderr, "tshield calibration: --since takes a number of days or hours, such as 30d or 12h")
+		return ExitUsage
+	}
+	records := []summary.AssessmentRecord{}
+	for _, id := range historySessions(p.History) {
+		for _, a := range history.ReadSession(p.History, id).Assessments {
+			if a.Ts >= rng.From && a.Ts <= rng.To {
+				records = append(records, a)
+			}
+		}
+	}
+	sort.SliceStable(records, func(a, b int) bool { return records[a].Ts < records[b].Ts })
+	pr := d.Rules.Priors
+	c := summary.Calibrate(records, summary.Priors{EpsWithin: pr.EpsWithin, EpsAfter: pr.EpsAfter, MinCalibrationN: pr.MinCalibrationN})
+	if asJSON {
+		return emit(env, true, c, "")
+	}
+	opts := render.Options{Glyphs: render.GlyphSet(configuredGlyphs(p.Config)), Strings: &d.Strings, Display: d.Rules.Display, TzOffsetMin: env.tzOffset()}
+	return emit(env, false, nil, render.RenderCalibration(c, pr.MinCalibrationN, columns(env.Getenv), opts))
 }

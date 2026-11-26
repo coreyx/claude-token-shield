@@ -1,18 +1,20 @@
 import type { EngineInterface, Register } from 'claude-code'
 
+import { calibrationPair } from '../core/history/calibrate'
 import type { Fact, Ttl } from '../core/model/types'
 import { CORE_VERSION } from '../core/version'
 import { commandEvent, compactionEvent, configEvent, resumeInfo, stepRequest, switchEvent } from './adapters/adapters'
 import { formatString } from '../core/data/load'
+import { calibrateInBackground } from './actions/calibration'
 import { gateSubmit, resetGate } from './actions/gate'
 import { keepAliveOnPrompt, resetKeepAlive } from './actions/keepalive'
 import { clearResume, showResume } from './actions/resume'
 import { clearGuard, clearGuardIfUnchanged, guardChange, guardSwitch, resetGuard } from './actions/guard'
 import { reportFailure } from './host/failure'
 import { host, startHost, stopHost } from './host/host'
-import { continueHistory, flushHistory, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
+import { continueHistory, flushHistory, recordAssessment, historyDirty, recordEvent, recordRequest, resetHistory, writeHeartbeat } from './persist/history'
 import { readChangedSnapshot, resetSnapshotReader } from './persist/snapshot'
-import { applyFacts, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
+import { applyFacts, currentEvaluation, modelState, publish, resetModel, resetPublishing, setTurnRunning } from './session/model'
 import { drawBand } from './ui/band'
 import { answerCacheCheck, drawLeverBar, drawPane } from './ui/check'
 
@@ -51,6 +53,8 @@ export const register: Register = (on, options) => {
     const h = await startHost($, options)
     historyTtl = continueHistory($, h.companions.dataDir, h.sessionId)
     await historyTtl
+    // Calibration reads every session's history: in the background, off the render path (D19).
+    void calibrateInBackground($)
     // Registration fails on its own: the segment, band and history still start.
     if (h.data !== null) {
       try {
@@ -88,12 +92,16 @@ export const register: Register = (on, options) => {
   on('turn.step', async function* ($, e, next) {
     if (e.agentId === undefined) setTurnRunning(true)
     const startedAt = await $.clock.now()
+    // The assessment this request will test, taken before it goes out (REQ-14.0.4).
+    const before = e.agentId === undefined ? await currentEvaluation($).catch(() => null) : null
     const result = yield* next(e)
     try {
       const request = stepRequest(e, result.usage, startedAt, await $.clock.now())
       if (request !== null) {
         applyFacts({ kind: 'request', request })
         recordRequest(request)
+        const pair = before !== null ? calibrationPair(before.a, request, host()?.ccVersion ?? null) : null
+        if (pair !== null) recordAssessment(pair)
       }
     } catch (err) {
       reportFailure($, 'turn.step', err)
@@ -113,8 +121,6 @@ export const register: Register = (on, options) => {
     return next(e)
   })
 
-  // The submit gate (TASK-22) decides from the cached evaluation; until then
-  // the hook only keeps it current, and passes every prompt.
   // The submit gate (D9): only a prompt the person typed is weighed; a hold
   // answers the drop reason, everything else goes on exactly as it came.
   on('prompt.submit', async ($, e, next) => {

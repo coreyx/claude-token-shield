@@ -1,7 +1,7 @@
 import { atom, update } from 'claude-code'
 import type { EngineInterface } from 'claude-code'
 
-import type { Assessment } from '../../core/assess/types'
+import type { Assessment, LearnedRates } from '../../core/assess/types'
 import { initialState, reduce } from '../../core/model/reduce'
 import type { Fact, SessionState } from '../../core/model/types'
 import { EMPTY_LOG, logNotification, nextBoundary, notify } from '../../core/notify/notify'
@@ -35,6 +35,7 @@ let cached: { readonly ev: Evaluation; readonly at: number } | null = null
 export function resetModel(): void {
   state = initialState()
   cached = null
+  learned = undefined
 }
 
 /** The current reducer state. */
@@ -84,7 +85,21 @@ export async function evaluateFor($: EngineInterface, mode: 'default' | 'verbose
     warnWindowsSec: { '1h': h.config.warnWindow1hSec, '5m': h.config.warnWindow5mSec },
     defaultModel: await $.session.model(),
     mode,
+    ...(learned !== undefined ? { learned } : {}),
   })
+}
+
+/** Rates learned from the user's history at session start (D19); the priors until then. */
+let learned: LearnedRates | undefined
+
+/**
+ * Hands the assessor the rates calibration learned; the next read recomputes.
+ *
+ * @param rates the learned rates, or `undefined` to use the priors
+ */
+export function setLearned(rates: LearnedRates | undefined): void {
+  learned = rates
+  cached = null
 }
 
 /** How long a cached evaluation serves reads. */
@@ -111,6 +126,7 @@ export async function currentEvaluation($: EngineInterface, force = false): Prom
     warnWindowsSec: { '1h': h.config.warnWindow1hSec, '5m': h.config.warnWindow5mSec },
     defaultModel: await $.session.model(),
     mode: 'default',
+    ...(learned !== undefined ? { learned } : {}),
   })
   cached = { ev, at: now }
   return ev

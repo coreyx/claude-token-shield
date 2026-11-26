@@ -1,0 +1,649 @@
+{
+  "name": "hot-drift",
+  "width": 100,
+  "glyphs": "unicode",
+  "records": [
+    {
+      "ts": 1768910400000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910460000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910520000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910580000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910640000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910700000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910760000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910820000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910880000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910940000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911000000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911060000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911120000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911180000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911240000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911300000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911360000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911420000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911480000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911540000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911600000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911660000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911720000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911780000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911840000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911900000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768911960000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912020000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912080000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912140000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912200000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912260000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912320000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912380000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912440000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768912500000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "HIT"
+    },
+    {
+      "ts": 1768910400000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910460000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910520000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    },
+    {
+      "ts": 1768910580000,
+      "state": "HOT",
+      "pHit": 0.99,
+      "interval": [
+        0.985,
+        0.998
+      ],
+      "ttl": "1h",
+      "remainingSec": 2400,
+      "marginSec": 40,
+      "ccVersion": "2.1.332",
+      "model": "claude-opus-5-5",
+      "outcome": "MISS"
+    }
+  ],
+  "expect": {
+    "calibration": {
+      "n": 40,
+      "buckets": [
+        {
+          "state": "HOT",
+          "ttl": "1h",
+          "band": "over_10m",
+          "n": 40,
+          "meanPredicted": 0.9899999999999999,
+          "observed": 0.9,
+          "wilson": [
+            0.7694792561952611,
+            0.9604211124044252
+          ]
+        }
+      ],
+      "brier": 0.0981,
+      "brierBy": [
+        {
+          "ccVersion": "2.1.332",
+          "model": "claude-opus-5-5",
+          "ttl": "1h",
+          "n": 40,
+          "brier": 0.0981
+        }
+      ],
+      "hot": {
+        "n": 40,
+        "missRate": 0.1,
+        "statedUpper": 0.015000000000000346
+      },
+      "drift": true,
+      "learned": {
+        "epsWithin": 0.23052074380473897,
+        "epsAfter": 0.01,
+        "n": 40,
+        "drift": true
+      }
+    },
+    "text": "Calibration  40 predictions · Brier 0.0981\n\nState        TTL  Band          n  Predicted  Observed  Interval\nHOT          1h   > 10 min     40      99.0%     90.0%  76.9%–96.0%\n\nBrier by Claude Code version, model and TTL\n  2.1.332   claude-opus-5-5      1h   n 40    0.0981\n\nDrift: HOT misses at 10.0% exceed the stated 1.5%; intervals widened until they are back inside."
+  }
+}

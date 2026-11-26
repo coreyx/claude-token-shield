@@ -264,7 +264,7 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
     2. Add `/cache-check history` and `tshield history` with `--json`, reading chunks within the window and skipping unreadable or newer-schema chunks with a count in the footer.
     3. Add parity cases. Test that per-cause spend sums to the total, that a 70-minute gap on a 1h TTL is avoidable while a 3-hour gap is not, and that `--since 7d --misses` lists only misses from the last 7 days.
 
-- [ ] **TASK-28: Build calibration and the drift alarm**
+- [x] **TASK-28: Build calibration and the drift alarm**
   - **Associated Acceptance Criteria**: `14.3`, `14.4`
   - **Concrete Steps**:
     1. Record the assessment that preceded each main request, and fill its actual outcome when the request lands.

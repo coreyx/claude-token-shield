@@ -13,6 +13,7 @@ import (
 
 	"github.com/coreyx/claude-token-shield/internal/native"
 	"github.com/coreyx/claude-token-shield/internal/store"
+	"github.com/coreyx/claude-token-shield/internal/summary"
 )
 
 // Version is the chunk format this reader understands.
@@ -23,6 +24,8 @@ type Record struct {
 	Type    string          `json:"type"`
 	Request *native.Request `json:"request,omitempty"`
 	Event   *native.Event   `json:"event,omitempty"`
+	// Assessment is the assessment that preceded a main request, with its outcome.
+	Assessment *summary.AssessmentRecord `json:"assessment,omitempty"`
 }
 
 // Chunk is one history file.
@@ -37,6 +40,8 @@ type Chunk struct {
 type Session struct {
 	Requests []native.Request
 	Events   []native.Event
+	// Assessments are the calibration pairs, for calibration.
+	Assessments []summary.AssessmentRecord
 	// Skipped counts chunks that couldn't be read or are from a newer format.
 	Skipped int
 }
@@ -67,6 +72,8 @@ func ReadSession(historyDir, sessionID string) Session {
 				s.Requests = append(s.Requests, *r.Request)
 			case r.Type == "event" && r.Event != nil:
 				s.Events = append(s.Events, *r.Event)
+			case r.Type == "assessment" && r.Assessment != nil:
+				s.Assessments = append(s.Assessments, *r.Assessment)
 			}
 		}
 	}

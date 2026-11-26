@@ -1139,7 +1139,51 @@
       "tense": "none"
     },
     "command.history_usage": {
-      "text": "Token Shield: /cache-check history [--session <id> | --all] [--since 7d | 12h] [--misses]",
+      "text": "Token Shield: /cache-check history [--session <id> | --all] [--since 7d | 12h] [--misses], or history --calibration [--since 30d]",
+      "tense": "none"
+    },
+    "calibration.title": {
+      "text": "Calibration  {n} predictions {dot} Brier {brier}",
+      "tense": "none"
+    },
+    "calibration.none": {
+      "text": "No predictions recorded yet: each main request records the one made before it.",
+      "tense": "none"
+    },
+    "calibration.header": {
+      "text": "State        TTL  Band          n  Predicted  Observed  Interval",
+      "tense": "none"
+    },
+    "calibration.brier_title": {
+      "text": "Brier by Claude Code version, model and TTL",
+      "tense": "none"
+    },
+    "calibration.drift": {
+      "text": "Drift: HOT misses at {observed} exceed the stated {stated}; intervals widened until they are back inside.",
+      "tense": "none"
+    },
+    "calibration.priors": {
+      "text": "{n} of {min} HOT predictions so far: the stated rates are still the priors.",
+      "tense": "none"
+    },
+    "calibration.band.over_10m": {
+      "text": "> 10 min",
+      "tense": "none"
+    },
+    "calibration.band.1_10m": {
+      "text": "1{dash}10 min",
+      "tense": "none"
+    },
+    "calibration.band.margin": {
+      "text": "{epsilon} margin",
+      "tense": "none"
+    },
+    "calibration.band.past": {
+      "text": "past",
+      "tense": "none"
+    },
+    "calibration.band.unknown": {
+      "text": "unknown",
       "tense": "none"
     }
   }

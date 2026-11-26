@@ -56,7 +56,8 @@ const usage = `usage: tshield <command> [--json]
 
 commands:
   check          the cache state of the newest session [--verbose|--diff|--probe] [--session <id>]
-  history        re-cache spend by cause and what was avoidable [--session <id>|--all] [--since 7d] [--misses]
+  history        re-cache spend by cause and what was avoidable [--session <id>|--all] [--since 7d] [--misses] [--calibration]
+  calibration    how well predictions matched outcomes, across sessions [--since 30d]
   version        the companions' version
   paths          where Token Shield keeps its data
   setup          point Claude Code's statusline at the bridge [--undo] [--yes]
@@ -76,6 +77,8 @@ func Run(args []string, env Env) int {
 		return setup(rest, env)
 	case "history":
 		return historyCmd(rest, env)
+	case "calibration":
+		return calibrationCmd(rest, env)
 	}
 	asJSON := false
 	for _, a := range rest {

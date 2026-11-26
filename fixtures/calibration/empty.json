@@ -1,0 +1,27 @@
+{
+  "name": "empty",
+  "width": 100,
+  "glyphs": "unicode",
+  "records": [],
+  "expect": {
+    "calibration": {
+      "n": 0,
+      "buckets": [],
+      "brier": null,
+      "brierBy": [],
+      "hot": {
+        "n": 0,
+        "missRate": null,
+        "statedUpper": null
+      },
+      "drift": false,
+      "learned": {
+        "epsWithin": 0.005,
+        "epsAfter": 0.01,
+        "n": 0,
+        "drift": false
+      }
+    },
+    "text": "No predictions recorded yet: each main request records the one made before it."
+  }
+}

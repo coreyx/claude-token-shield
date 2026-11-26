@@ -7,6 +7,7 @@
 
 import { nextTurnCost } from '../cost/cost';
 import type { Prices, ProviderKey } from '../data/types';
+import type { AssessmentRecord } from './calibrate';
 import type { EventRecord, RequestRecord, Ttl } from '../model/types';
 import { classifyProbe } from '../probe/probe';
 import type { ProbeOutcome } from '../probe/probe';
@@ -16,6 +17,8 @@ export interface SessionHistory {
   readonly sessionId: string;
   readonly requests: readonly RequestRecord[];
   readonly events: readonly EventRecord[];
+  /** The assessments recorded before main requests, for calibration. */
+  readonly assessments?: readonly AssessmentRecord[];
   /** Chunks that couldn't be read or are from a newer format. */
   readonly skipped: number;
 }

@@ -5,10 +5,11 @@
  */
 
 import { formatString } from '../data/load';
+import type { Calibration } from '../history/calibrate';
 import { CAUSES } from '../history/summarize';
 import type { HistorySummary } from '../history/summarize';
 import type { CheckRenderOptions } from './check';
-import { fit, formatStamp, formatTokensLong, formatUsd, glyphParams } from './format';
+import { fit, formatPercent, formatStamp, formatTokensLong, formatUsd, glyphParams } from './format';
 
 /** The most recent rows shown; older ones are counted instead. */
 export const MAX_ROWS = 30;
@@ -60,5 +61,44 @@ export function renderHistory(s: HistorySummary, width: number, o: CheckRenderOp
     }
   }
   if (s.skippedChunks > 0) lines.push('', t('history.skipped', { count: s.skippedChunks }));
+  return lines.map(l => fit(l, width, o.glyphs.ellipsis)).join('\n');
+}
+
+/**
+ * Renders calibration (REQ-14.0.5): the reliability table by state, TTL and
+ * remaining-time band with each bucket's Wilson interval, the Brier score
+ * overall and per version × model × TTL, and drift or how far the priors
+ * still stand.
+ *
+ * @param c the calibration
+ * @param minCalibrationN the HOT predictions needed to leave the priors
+ * @param width terminal columns; lines are fitted to it
+ * @param o glyphs, catalog and time zone
+ */
+export function renderCalibration(c: Calibration, minCalibrationN: number, width: number, o: CheckRenderOptions): string {
+  const t = (key: string, params: Record<string, string | number> = {}): string =>
+    formatString(o.strings, key, { ...glyphParams(o.glyphs), ...params });
+  if (c.n === 0) return fit(t('calibration.none'), width, o.glyphs.ellipsis);
+  const lines = [t('calibration.title', { n: c.n, brier: (c.brier ?? 0).toFixed(4) }), '', t('calibration.header')];
+  for (const b of c.buckets) {
+    lines.push(
+      b.state.padEnd(13) +
+        (b.ttl ?? '-').padEnd(5) +
+        t(`calibration.band.${b.band}`).padEnd(12) +
+        String(b.n).padStart(3) +
+        formatPercent(b.meanPredicted).padStart(11) +
+        formatPercent(b.observed).padStart(10) +
+        `  ${formatPercent(b.wilson[0])}${o.glyphs.dash}${formatPercent(b.wilson[1])}`,
+    );
+  }
+  lines.push('', t('calibration.brier_title'));
+  for (const g of c.brierBy) {
+    lines.push(`  ${(g.ccVersion ?? '-').padEnd(10)}${(g.model ?? '-').padEnd(21)}${(g.ttl ?? '-').padEnd(5)}n ${String(g.n).padEnd(6)}${g.brier.toFixed(4)}`);
+  }
+  if (c.drift) {
+    lines.push('', t('calibration.drift', { observed: formatPercent(c.hot.missRate ?? 0), stated: formatPercent(c.hot.statedUpper ?? 0) }));
+  } else if (c.hot.n < minCalibrationN) {
+    lines.push('', t('calibration.priors', { n: c.hot.n, min: minCalibrationN }));
+  }
   return lines.map(l => fit(l, width, o.glyphs.ellipsis)).join('\n');
 }
