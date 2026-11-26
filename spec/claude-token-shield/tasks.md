@@ -93,7 +93,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     2. Expose the share as `[estimated]` on the cost result for subscription modes.
     3. Test with synthetic window series, including integer-percentage steps and a window reset.
 
-- [ ] **TASK-9: Implement the lever catalog and the recommendation policy**
+- [x] **TASK-9: Implement the lever catalog and the recommendation policy**
   - **Associated Acceptance Criteria**: `4.1`, `4.2`, `4.3`, `4.4`
   - **Concrete Steps**:
     1. Implement the lever descriptors in design D6 (continue, `/compact`, `/clear`, `/rewind`, `/recap`, `/btw`, keep-alive, probe, TTL settings, model/effort/fast choice), each with applicability, quote, effect on later turns, tier and a "when to use" string key.

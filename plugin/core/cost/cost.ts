@@ -117,6 +117,20 @@ export function requestUsd(request: RequestRecord, prices: Prices): number | nul
   return perToken * (u.input + u.read * price.read_mult + u.write5m * price.write_5m_mult + u.write1h * price.write_1h_mult + u.output * price.output_mult);
 }
 
+/**
+ * Dollars for `tokens` of model output at the provider's rate, e.g. a
+ * compaction summary.
+ *
+ * @returns `null` when the model isn't priced
+ */
+export function outputUsd(tokens: number, model: string, provider: ProviderKey, at: number, prices: Prices): number | null {
+  const table = tableAt(prices, at);
+  const price = modelPrice(table, model);
+  if (price === undefined) return null;
+  const mult = table.providers[provider]?.multiplier ?? 1;
+  return tokens * price.input * price.output_mult * PER_MTOK * mult;
+}
+
 /** How the session is billed, which decides the units shown (D4). */
 export type BillingMode = 'subscription' | 'subscription-credits' | 'api' | 'provider';
 
