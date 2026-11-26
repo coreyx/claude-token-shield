@@ -1,0 +1,51 @@
+Cache  HOT  · expected read ≥ 99% (98.5%–99.8%) · confidence HIGH
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Last request   15:40:02 (12m ago)                                                                             [measured]
+TTL            1 hour → warm until 16:40                                                                      [inferred]
+Expiry         Claude Code 16:40:02 · Token Shield 16:40:02 · drift 0s                                        [inferred]
+Prefix         812,470 tokens                                                                                 [inferred]
+Session        214 requests · read ratio 97.2% · misses 1                                                     [measured]
+               last miss 13:53: tools changed                                                                 [inferred]
+Pending        none                                                                                           [measured]
+Next turn      warm ≈ $0.16 · cold ≈ $6.50                                                                   [estimated]
+               API-equivalent, prices 2026-11-03                                                              [measured]
+
+Levers
+                 continue               now $0.19 · next 5 turns $1.01                                       [estimated]
+                   prefix unchanged
+                 /compact               now $5.22 · next 5 turns $5.68                                       [estimated]
+                   prefix shrinks to the system layer plus a summary
+                 /clear                 now $3.22 · next 5 turns $3.62                                       [estimated]
+                   prefix shrinks to the system layer; the conversation is gone
+                 /rewind                now $0.01 · next 5 turns $0.08                                        [inferred]
+                   prefix shrinks to that earlier point
+                 /recap                 now $0.00                                                             [inferred]
+                   no effect on the prefix
+                 /btw                   now $0.16                                                            [estimated]
+                   no effect on the prefix
+                 keep-alive             now $0.16                                                            [estimated]
+                   keeps the cache warm until the end time
+                 probe                  now $0.19                                                            [estimated]
+                   measures the cache and refreshes its expiry
+                 TTL setting            now $0.00                                                            [estimated]
+                   changes the lifetime of later cache writes
+                 model / effort / fast  now $6.50                                                            [estimated]
+                   rebuilds the prefix on the new setting
+
+Timeline (main conversation)
+               start     gap      read     write    input   outcome
+               14:02:11  -        0        402,000  3,000   first write                                       [measured]
+               14:03:40  1m 29s   402,000  6,000    2,000   hit                                               [measured]
+               14:31:05  27m 25s  14,000   396,000  1,000   partial                                           [measured]
+               15:12:47  41m 42s  0        61,000   2,000   miss                                              [measured]
+               15:40:02  27m 15s  61,000   3,000    3,000   hit                                               [measured]
+
+Rationale
+               1. ttl 1h (prompt_cache.ttl)                                                                   [measured]
+               2. expiry from claude-code                                                                     [inferred]
+               3. 2880s remaining, margin 17s                                                                 [inferred]
+               4. no pending events since the last request                                                    [measured]
+               5. ε 0.005 (low evidence, n=0)                                                                [estimated]
+Calibration    priors only (n=0, LOW evidence)                                                               [estimated]
+
+→ No action needed: warm until 16:40.                                                                        [estimated]

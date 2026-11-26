@@ -108,7 +108,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     3. Implement the config schema with defaults (D20) and validation that returns the default plus the name of each invalid key.
     4. Test: a `COLD` $6.50 fixture is held under default config; resubmission at 60 s passes and at 61 s is held; `UNKNOWN` is never held; a $5 threshold passes a $4 rebuild; `HOT → EXPIRING → COLD` gives two toasts; flapping gives at most one non-critical toast; muted warnings suppress `EXPIRING`.
 
-- [ ] **TASK-11: Build the check view model and the text renderers**
+- [x] **TASK-11: Build the check view model and the text renderers**
   - **Associated Acceptance Criteria**: `2.2`, `2.6`, `6.3`, `6.4`, `8.1`, `8.2`, `22.3`
   - **Concrete Steps**:
     1. Implement `checkView` for the default, verbose and diff modes, and publish `schemas/check.schema.json`.

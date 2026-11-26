@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/coreyx/claude-token-shield/schemas/check.schema.json",
+  "title": "Token Shield check view",
+  "description": "The view model behind /cache-check, the panes and tshield check --json (REQ-19.0.1). Times are epoch milliseconds; costs are API-equivalent dollars.",
+  "type": "object",
+  "required": [
+    "v", "mode", "at", "state", "pHit", "interval", "confidence", "lowEvidence", "stale", "unknownReason", "ttl", "expiresAt",
+    "remainingSec", "expiry", "prefixTokens", "lastRequest", "session", "pending", "cost", "billing", "levers", "recommendation",
+    "drivers", "timeline", "diff"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "v": { "type": "integer", "minimum": 1 },
+    "mode": { "type": "string", "enum": ["default", "verbose", "diff"] },
+    "at": { "type": "number" },
+    "state": { "type": "string", "enum": ["HOT", "EXPIRING", "UNCERTAIN", "INVALIDATED", "COLD", "UNKNOWN"] },
+    "pHit": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+    "interval": { "oneOf": [{ "type": "null" }, { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "number" } }] },
+    "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "lowEvidence": { "type": "boolean" },
+    "stale": { "type": "boolean" },
+    "unknownReason": { "type": ["string", "null"], "enum": ["no_response", "caching_off", "version", null] },
+    "ttl": { "$ref": "#/$defs/viewString" },
+    "expiresAt": { "$ref": "#/$defs/viewNumber" },
+    "remainingSec": { "type": ["number", "null"] },
+    "expiry": {
+      "type": "object",
+      "required": ["native", "shield", "driftSec"],
+      "additionalProperties": false,
+      "properties": {
+        "native": { "type": ["number", "null"] },
+        "shield": { "type": ["number", "null"] },
+        "driftSec": { "type": ["number", "null"] }
+      }
+    },
+    "prefixTokens": { "$ref": "#/$defs/viewNumber" },
+    "lastRequest": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["tsStart", "tier"],
+          "additionalProperties": false,
+          "properties": { "tsStart": { "type": "number" }, "tier": { "$ref": "#/$defs/tier" } }
+        }
+      ]
+    },
+    "session": {
+      "type": "object",
+      "required": ["requests", "hitRatio", "misses", "lastMiss"],
+      "additionalProperties": false,
+      "properties": {
+        "requests": { "type": ["number", "null"] },
+        "hitRatio": { "type": ["number", "null"] },
+        "misses": { "type": ["number", "null"] },
+        "lastMiss": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["at", "causes"],
+              "additionalProperties": false,
+              "properties": { "at": { "type": ["number", "null"] }, "causes": { "type": "array", "items": { "type": "string" } } }
+            }
+          ]
+        }
+      }
+    },
+    "pending": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "impact"],
+        "additionalProperties": false,
+        "properties": { "kind": { "type": "string" }, "impact": { "type": "string", "enum": ["WILL", "MAY", "NO_EFFECT"] } }
+      }
+    },
+    "cost": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["tokens", "warmUsd", "coldUsd", "showDollars", "dollarLabel", "priceDate", "tailTier", "planShare"],
+          "additionalProperties": false,
+          "properties": {
+            "tokens": { "type": "number" },
+            "warmUsd": { "type": ["number", "null"] },
+            "coldUsd": { "type": ["number", "null"] },
+            "showDollars": { "type": "boolean" },
+            "dollarLabel": { "type": "string" },
+            "priceDate": { "type": "string" },
+            "tailTier": { "$ref": "#/$defs/tier" },
+            "planShare": {
+              "oneOf": [
+                { "type": "null" },
+                {
+                  "type": "object",
+                  "required": ["warm", "cold"],
+                  "additionalProperties": false,
+                  "properties": { "warm": { "$ref": "#/$defs/planShare" }, "cold": { "$ref": "#/$defs/planShare" } }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "billing": { "type": "string", "enum": ["subscription", "subscription-credits", "api", "provider"] },
+    "levers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["lever", "nowUsd", "nowTokens", "horizonUsd", "effectKey", "whenKey", "tier", "recommended"],
+        "additionalProperties": false,
+        "properties": {
+          "lever": { "type": "string", "enum": ["continue", "compact", "clear", "rewind", "recap", "btw", "keepalive", "probe", "ttl", "model"] },
+          "nowUsd": { "type": ["number", "null"] },
+          "nowTokens": { "type": ["number", "null"] },
+          "horizonUsd": { "type": ["number", "null"] },
+          "effectKey": { "type": "string" },
+          "whenKey": { "type": "string" },
+          "tier": { "$ref": "#/$defs/tier" },
+          "recommended": { "type": "boolean" }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": ["lever", "reasonKey", "params", "probeHint"],
+      "additionalProperties": false,
+      "properties": {
+        "lever": { "type": "string" },
+        "reasonKey": { "type": "string" },
+        "params": { "$ref": "#/$defs/params" },
+        "probeHint": { "type": "boolean" }
+      }
+    },
+    "drivers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "params", "tier"],
+        "additionalProperties": false,
+        "properties": { "key": { "type": "string" }, "params": { "$ref": "#/$defs/params" }, "tier": { "$ref": "#/$defs/tier" } }
+      }
+    },
+    "timeline": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["tsStart", "gapSec", "read", "write", "input", "outcome"],
+            "additionalProperties": false,
+            "properties": {
+              "tsStart": { "type": "number" },
+              "gapSec": { "type": ["number", "null"] },
+              "read": { "type": "number" },
+              "write": { "type": "number" },
+              "input": { "type": "number" },
+              "outcome": { "type": "string", "enum": ["COLD_START", "HIT", "PARTIAL", "MISS"] }
+            }
+          }
+        }
+      ]
+    },
+    "diff": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["changes", "missCauses"],
+          "additionalProperties": false,
+          "properties": {
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["field", "from", "to"],
+                "additionalProperties": false,
+                "properties": {
+                  "field": { "type": "string", "enum": ["model", "effort", "speed", "ttl", "event"] },
+                  "from": { "type": ["string", "null"] },
+                  "to": { "type": ["string", "null"] }
+                }
+              }
+            },
+            "missCauses": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "tier": { "type": "string", "enum": ["measured", "inferred", "estimated", "absent"] },
+    "viewString": {
+      "type": "object",
+      "required": ["value", "tier"],
+      "additionalProperties": false,
+      "properties": { "value": { "type": ["string", "null"] }, "tier": { "$ref": "#/$defs/tier" } }
+    },
+    "viewNumber": {
+      "type": "object",
+      "required": ["value", "tier"],
+      "additionalProperties": false,
+      "properties": { "value": { "type": ["number", "null"] }, "tier": { "$ref": "#/$defs/tier" } }
+    },
+    "params": { "type": "object", "additionalProperties": { "type": ["string", "number"] } },
+    "planShare": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["status", "windows"],
+          "additionalProperties": false,
+          "properties": { "status": { "const": "learning" }, "windows": { "type": "integer", "minimum": 0 } }
+        },
+        {
+          "type": "object",
+          "required": ["status", "pct", "low", "high"],
+          "additionalProperties": false,
+          "properties": {
+            "status": { "const": "estimated" },
+            "pct": { "type": "number" },
+            "low": { "type": "number" },
+            "high": { "type": "number" }
+          }
+        }
+      ]
+    }
+  }
+}

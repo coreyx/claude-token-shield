@@ -2,160 +2,805 @@
   "v": 1,
   "locale": "en",
   "strings": {
-    "brand.name": { "text": "Token Shield", "tense": "none" },
-    "brand.prefix": { "text": "Token Shield: {message}", "tense": "none" },
-
-    "state.HOT.label": { "text": "HOT", "tense": "none" },
-    "state.EXPIRING.label": { "text": "EXPIRING", "tense": "none" },
-    "state.UNCERTAIN.label": { "text": "UNCERTAIN", "tense": "none" },
-    "state.INVALIDATED.label": { "text": "INVALIDATED", "tense": "none" },
-    "state.COLD.label": { "text": "COLD", "tense": "none" },
-    "state.UNKNOWN.label": { "text": "UNKNOWN", "tense": "none" },
-    "state.HOT.summary": { "text": "Sending now is expected to read the cache.", "tense": "future" },
-    "state.EXPIRING.summary": { "text": "Still expected to read the cache if sent before {time}.", "tense": "future" },
-    "state.UNCERTAIN.summary": { "text": "Near the expiry boundary: whether the next request reads the cache is a coin flip.", "tense": "future" },
-    "state.INVALIDATED.summary": { "text": "A rebuild is expected regardless of time: {cause}.", "tense": "future" },
-    "state.COLD.summary": { "text": "The cache expired at {time}; the next prompt is expected to re-cache {tokens} tokens.", "tense": "future" },
-    "state.UNKNOWN.summary": { "text": "Cache state unknown: {reason}.", "tense": "none" },
-
-    "unknown.no_response": { "text": "no response yet", "tense": "none" },
-    "unknown.caching_off": { "text": "caching not observed in this session", "tense": "none" },
-    "unknown.version": { "text": "needs Claude Code v{version} or later", "tense": "none" },
-    "unknown.native_unavailable": { "text": "native cache data unavailable", "tense": "none" },
-
-    "confidence.HIGH": { "text": "confidence HIGH", "tense": "none" },
-    "confidence.MEDIUM": { "text": "confidence MEDIUM", "tense": "none" },
-    "confidence.LOW": { "text": "confidence LOW", "tense": "none" },
-    "confidence.stale": { "text": "stale: last native data {age} ago", "tense": "none" },
-    "confidence.drift": { "text": "expiry drift {seconds}s between Claude Code and Token Shield", "tense": "past" },
-    "confidence.low_evidence": { "text": "LOW evidence (n={n})", "tense": "none" },
-
-    "prob.read": { "text": "expected read {prob}", "tense": "future" },
-    "prob.read_interval": { "text": "expected read {prob} ({low}–{high})", "tense": "future" },
-    "prob.at_least": { "text": "≥ {pct}%", "tense": "none" },
-    "prob.at_most": { "text": "≤ {pct}%", "tense": "none" },
-
-    "driver.version": { "text": "Claude Code v{version} is below the minimum v{min}", "tense": "none" },
-    "driver.no_response": { "text": "no response received yet in this session", "tense": "none" },
-    "driver.caching_off": { "text": "prompt caching appears off or unreported", "tense": "none" },
-    "driver.ttl": { "text": "ttl {ttl} ({source})", "tense": "none" },
-    "driver.expiry": { "text": "expiry from {source}", "tense": "none" },
-    "driver.expiry_unknown": { "text": "expiry unknown", "tense": "none" },
-    "driver.remaining": { "text": "{seconds}s remaining, margin {margin}s", "tense": "none" },
-    "driver.pending_none": { "text": "no pending events since the last request", "tense": "none" },
-    "driver.event": { "text": "pending {kind}: {impact}", "tense": "none" },
-    "driver.warm_false": { "text": "Claude Code reports the cache cold", "tense": "none" },
-    "driver.stale": { "text": "native data {seconds}s old", "tense": "none" },
-    "driver.drift": { "text": "Claude Code's and Token Shield's expiry differ by {seconds}s", "tense": "none" },
-    "driver.native_unavailable": { "text": "native cache data unavailable; using Token Shield's own observations", "tense": "none" },
-    "driver.calibration_drift": { "text": "calibration drift: recent cache behavior differs from the stated rates", "tense": "past" },
-    "driver.eps": { "text": "ε {eps} ({evidence} evidence, n={n})", "tense": "none" },
-
-    "event.model_switch": { "text": "model switch", "tense": "none" },
-    "event.fast_toggle": { "text": "fast-mode toggle", "tense": "none" },
-    "event.effort_change": { "text": "effort change", "tense": "none" },
-    "event.tools_changed": { "text": "tool definitions changed", "tense": "none" },
-    "event.mcp_plugin_toggle": { "text": "MCP plugin enabled or disabled", "tense": "none" },
-    "event.reload_plugins": { "text": "plugins reloaded", "tense": "none" },
-    "event.bare_tool_deny_rule": { "text": "tool deny rule changed", "tense": "none" },
-    "event.compaction": { "text": "compaction", "tense": "none" },
-    "event.image_batch_removal": { "text": "images removed", "tense": "none" },
-    "event.upgrade_first_conversation": { "text": "first conversation after an upgrade", "tense": "none" },
-    "event.ttl_bucket_change": { "text": "TTL changed", "tense": "none" },
-    "event.long_turn": { "text": "very long turn", "tense": "none" },
-    "prob.about": { "text": "~{pct}%", "tense": "none" },
-
-    "tier.measured": { "text": "[measured]", "tense": "none" },
-    "tier.inferred": { "text": "[inferred]", "tense": "none" },
-    "tier.estimated": { "text": "[estimated]", "tense": "none" },
-
-    "cost.next_turn": { "text": "Next turn  warm ≈ {warm} · cold ≈ {cold}", "tense": "future" },
-    "cost.api_equivalent": { "text": "API-equivalent, prices {date}", "tense": "none" },
-    "cost.provider_priced": { "text": "provider-priced, prices {date}", "tense": "none" },
-    "cost.claude_code_estimate": { "text": "Claude Code's estimate", "tense": "none" },
-    "cost.unknown": { "text": "cost unknown", "tense": "none" },
-    "cost.tokens": { "text": "{tokens} tokens", "tense": "none" },
-    "cost.plan_share": { "text": "≈ {pct}% of 5-hour window", "tense": "future" },
-    "cost.plan_share_learning": { "text": "plan share: learning ({n}/3 windows)", "tense": "none" },
-
-    "segment.HOT": { "text": "{glyph} cache HOT · {tokens} · warm until {time}", "tense": "none" },
-    "segment.EXPIRING": { "text": "{glyph} cache EXPIRING · {tokens} · send by {time} or re-cache ≈{cost}", "tense": "future" },
-    "segment.UNCERTAIN": { "text": "{glyph} cache UNCERTAIN · near expiry · read chance {prob}", "tense": "future" },
-    "segment.INVALIDATED": { "text": "{glyph} cache INVALIDATED · {cause} · re-cache {tokens}", "tense": "future" },
-    "segment.COLD": { "text": "{glyph} cache COLD since {time} · next prompt re-caches {tokens} ≈{cost}", "tense": "future" },
-    "segment.UNKNOWN": { "text": "{glyph} cache UNKNOWN · {reason}", "tense": "none" },
-    "segment.ascii": { "text": "[cache {state} {tokens} {detail}]", "tense": "none" },
-
-    "lever.continue.name": { "text": "continue", "tense": "none" },
-    "lever.continue.when": { "text": "Keep going in this conversation; the cost depends on whether the cache is still warm.", "tense": "future" },
-    "lever.compact.name": { "text": "/compact", "tense": "none" },
-    "lever.compact.when": { "text": "Shrinks the prefix to a summary: one rebuild now, cheaper turns after.", "tense": "future" },
-    "lever.clear.name": { "text": "/clear", "tense": "none" },
-    "lever.clear.when": { "text": "Starts fresh when you're changing tasks; throws away the conversation, so it is never recommended on cost alone.", "tense": "none" },
-    "lever.rewind.name": { "text": "/rewind", "tense": "none" },
-    "lever.rewind.when": { "text": "Returns to an earlier point whose cache entry may still be warm.", "tense": "future" },
-    "lever.recap.name": { "text": "/recap", "tense": "none" },
-    "lever.recap.when": { "text": "Cache-safe, not cache-saving: it neither invalidates the cache nor shrinks the prefix.", "tense": "none" },
-    "lever.btw.name": { "text": "/btw", "tense": "none" },
-    "lever.btw.when": { "text": "A side question that never enters history; cheap while the cache is warm.", "tense": "none" },
-    "lever.keepalive.name": { "text": "keep-alive", "tense": "none" },
-    "lever.keepalive.when": { "text": "Refreshes the cache while you're away, up to an end time and a budget.", "tense": "future" },
-    "lever.probe.name": { "text": "probe", "tense": "none" },
-    "lever.probe.when": { "text": "Measures whether the cache is warm, at the price of one request, and leaves it warm either way.", "tense": "none" },
-    "lever.ttl.name": { "text": "TTL setting", "tense": "none" },
-    "lever.ttl.when": { "text": "Changes the cache lifetime for later writes.", "tense": "future" },
-    "lever.model.name": { "text": "model / effort / fast", "tense": "none" },
-    "lever.model.when": { "text": "Switching rebuilds the cache on the target model.", "tense": "future" },
-
-    "recommend.none.hot": { "text": "No action needed: warm until {time}.", "tense": "none" },
-    "recommend.continue.expiring": { "text": "Send before {time} to keep the cache.", "tense": "future" },
-    "recommend.continue.uncertain": { "text": "You're at the expiry boundary.", "tense": "none" },
-    "recommend.probe.hint": { "text": "--probe costs ≈ {warm} if warm, ≈ {cold} if cold, and leaves the cache warm either way.", "tense": "future" },
-    "recommend.cheapest": { "text": "Cheapest over the next {turns} turns: {lever} ({cost}).", "tense": "future" },
-    "recommend.none.unknown": { "text": "No recommendation: {reason}.", "tense": "none" },
-    "recommend.none.unknown_costs": { "text": "No recommendation: none of the options could be priced.", "tense": "none" },
-
-    "effect.unchanged": { "text": "prefix unchanged", "tense": "none" },
-    "effect.compact": { "text": "prefix shrinks to the system layer plus a summary", "tense": "future" },
-    "effect.clear": { "text": "prefix shrinks to the system layer; the conversation is gone", "tense": "future" },
-    "effect.rewind": { "text": "prefix shrinks to that earlier point", "tense": "future" },
-    "effect.none": { "text": "no effect on the prefix", "tense": "none" },
-    "effect.keepalive": { "text": "keeps the cache warm until the end time", "tense": "future" },
-    "effect.probe": { "text": "measures the cache and refreshes its expiry", "tense": "future" },
-    "effect.ttl": { "text": "changes the lifetime of later cache writes", "tense": "future" },
-    "effect.rebuild": { "text": "rebuilds the prefix on the new setting", "tense": "future" },
-
-    "gate.hold": { "text": "Token Shield: cache {state} ({detail}). This prompt is expected to re-cache {tokens} tokens ≈ {cost}. Press Enter again within 60 s to send it anyway, or {lever} first.", "tense": "future" },
-    "gate.warn": { "text": "Token Shield: cache {state}. This prompt is expected to re-cache {tokens} tokens ≈ {cost}.", "tense": "future" },
-
-    "guard.switch.toast": { "text": "Token Shield: switching to {model} rebuilds the cache ({tokens} tokens) ≈ {cost}.", "tense": "future" },
-    "guard.switch.alternative": { "text": "Cheaper for a one-off task: run it in a subagent on {model}.", "tense": "future" },
-    "guard.switch.confirm_reason": { "text": "Token Shield: this switch rebuilds the cache ({tokens} tokens), ≈ {cost}.", "tense": "future" },
-    "guard.effort.toast": { "text": "Token Shield: this effort change rebuilds the cache on the next request ≈ {cost}.", "tense": "future" },
-    "guard.fast.toast": { "text": "Token Shield: toggling fast mode rebuilds the cache on the next request ≈ {cost}.", "tense": "future" },
-    "guard.reload.toast": { "text": "Token Shield: reloading plugins may rebuild the cache if tool definitions change.", "tense": "future" },
-
-    "resume.cold": { "text": "Token Shield: resuming re-caches {tokens} tokens ≈ {cost} (idle {idle}).", "tense": "future" },
-    "resume.warm": { "text": "Token Shield: still warm until {time}.", "tense": "none" },
-    "resume.options": { "text": "Options: continue, /compact, /clear with a handoff, or /recap first.", "tense": "none" },
-
-    "notify.ttl_bucket_change": { "text": "Token Shield: now billing usage credits, so new cache writes use the 5-minute TTL.", "tense": "future" },
-    "notify.expiring": { "text": "Token Shield: cache expires at {time}.", "tense": "future" },
-    "notify.cold": { "text": "Token Shield: cache expired at {time}.", "tense": "past" },
-    "notify.uncertain": { "text": "Token Shield: cache near its expiry; whether the next request reads it is uncertain.", "tense": "future" },
-    "notify.invalidated": { "text": "Token Shield: {cause} invalidated the cache; the next request rebuilds it.", "tense": "future" },
-    "notify.gate_held": { "text": "Token Shield: prompt held before a {usd} rebuild.", "tense": "future" },
-    "notify.calibration_drift": { "text": "Token Shield: recent cache behavior differs from its stated rates; intervals widened.", "tense": "past" },
-
-    "past.hit": { "text": "hit", "tense": "past" },
-    "past.miss": { "text": "miss", "tense": "past" },
-    "past.miss_cause": { "text": "miss ({cause})", "tense": "past" },
-    "past.likely_server_side": { "text": "likely server-side (Claude Code's guess)", "tense": "past" },
-    "past.expected_rebuild": { "text": "expected rebuild", "tense": "past" },
-
-    "error.version": { "text": "Token Shield needs Claude Code v{version} or later; cache features are off.", "tense": "none" },
-    "error.config_invalid": { "text": "Token Shield: setting {key} is invalid; using the default ({default}).", "tense": "none" },
-    "error.bridge_unavailable": { "text": "Token Shield: the statusline bridge isn't set up, so native cache data is unavailable. Run /cache-check setup.", "tense": "none" },
-    "error.probe_needs_mod": { "text": "An exact-prefix probe needs the Token Shield mod inside a session; no request was made.", "tense": "none" }
+    "brand.name": {
+      "text": "Token Shield",
+      "tense": "none"
+    },
+    "brand.prefix": {
+      "text": "Token Shield: {message}",
+      "tense": "none"
+    },
+    "state.HOT.label": {
+      "text": "HOT",
+      "tense": "none"
+    },
+    "state.EXPIRING.label": {
+      "text": "EXPIRING",
+      "tense": "none"
+    },
+    "state.UNCERTAIN.label": {
+      "text": "UNCERTAIN",
+      "tense": "none"
+    },
+    "state.INVALIDATED.label": {
+      "text": "INVALIDATED",
+      "tense": "none"
+    },
+    "state.COLD.label": {
+      "text": "COLD",
+      "tense": "none"
+    },
+    "state.UNKNOWN.label": {
+      "text": "UNKNOWN",
+      "tense": "none"
+    },
+    "state.HOT.summary": {
+      "text": "Sending now is expected to read the cache.",
+      "tense": "future"
+    },
+    "state.EXPIRING.summary": {
+      "text": "Still expected to read the cache if sent before {time}.",
+      "tense": "future"
+    },
+    "state.UNCERTAIN.summary": {
+      "text": "Near the expiry boundary: whether the next request reads the cache is a coin flip.",
+      "tense": "future"
+    },
+    "state.INVALIDATED.summary": {
+      "text": "A rebuild is expected regardless of time: {cause}.",
+      "tense": "future"
+    },
+    "state.COLD.summary": {
+      "text": "The cache expired at {time}; the next prompt is expected to re-cache {tokens} tokens.",
+      "tense": "future"
+    },
+    "state.UNKNOWN.summary": {
+      "text": "Cache state unknown: {reason}.",
+      "tense": "none"
+    },
+    "unknown.no_response": {
+      "text": "no response yet",
+      "tense": "none"
+    },
+    "unknown.caching_off": {
+      "text": "prompt caching appears off or unreported",
+      "tense": "none"
+    },
+    "unknown.version": {
+      "text": "needs Claude Code v{version} or later",
+      "tense": "none"
+    },
+    "unknown.native_unavailable": {
+      "text": "native cache data unavailable",
+      "tense": "none"
+    },
+    "confidence.HIGH": {
+      "text": "confidence HIGH",
+      "tense": "none"
+    },
+    "confidence.MEDIUM": {
+      "text": "confidence MEDIUM",
+      "tense": "none"
+    },
+    "confidence.LOW": {
+      "text": "confidence LOW",
+      "tense": "none"
+    },
+    "confidence.stale": {
+      "text": "stale: last native data {age} ago",
+      "tense": "none"
+    },
+    "confidence.drift": {
+      "text": "expiry drift {seconds}s between Claude Code and Token Shield",
+      "tense": "past"
+    },
+    "confidence.low_evidence": {
+      "text": "LOW evidence (n={n})",
+      "tense": "none"
+    },
+    "prob.read": {
+      "text": "expected read {prob}",
+      "tense": "future"
+    },
+    "prob.at_least": {
+      "text": "{ge} {pct}%",
+      "tense": "none"
+    },
+    "prob.at_most": {
+      "text": "{le} {pct}%",
+      "tense": "none"
+    },
+    "driver.version": {
+      "text": "Claude Code v{version} is below the minimum v{min}",
+      "tense": "none"
+    },
+    "driver.no_response": {
+      "text": "no response received yet in this session",
+      "tense": "none"
+    },
+    "driver.caching_off": {
+      "text": "prompt caching appears off or unreported",
+      "tense": "none"
+    },
+    "driver.ttl": {
+      "text": "ttl {ttl} ({source})",
+      "tense": "none"
+    },
+    "driver.expiry": {
+      "text": "expiry from {source}",
+      "tense": "none"
+    },
+    "driver.expiry_unknown": {
+      "text": "expiry unknown",
+      "tense": "none"
+    },
+    "driver.remaining": {
+      "text": "{seconds}s remaining, margin {margin}s",
+      "tense": "none"
+    },
+    "driver.pending_none": {
+      "text": "no pending events since the last request",
+      "tense": "none"
+    },
+    "driver.event": {
+      "text": "pending {kind}: {impact}",
+      "tense": "none"
+    },
+    "driver.warm_false": {
+      "text": "Claude Code reports the cache cold",
+      "tense": "none"
+    },
+    "driver.stale": {
+      "text": "native data {seconds}s old",
+      "tense": "none"
+    },
+    "driver.drift": {
+      "text": "Claude Code's and Token Shield's expiry differ by {seconds}s",
+      "tense": "none"
+    },
+    "driver.native_unavailable": {
+      "text": "native cache data unavailable; using Token Shield's own observations",
+      "tense": "none"
+    },
+    "driver.calibration_drift": {
+      "text": "calibration drift: recent cache behavior differs from the stated rates",
+      "tense": "past"
+    },
+    "driver.eps": {
+      "text": "{epsilon} {eps} ({evidence} evidence, n={n})",
+      "tense": "none"
+    },
+    "event.model_switch": {
+      "text": "model switch",
+      "tense": "none"
+    },
+    "event.fast_toggle": {
+      "text": "fast-mode toggle",
+      "tense": "none"
+    },
+    "event.effort_change": {
+      "text": "effort change",
+      "tense": "none"
+    },
+    "event.tools_changed": {
+      "text": "tool definitions changed",
+      "tense": "none"
+    },
+    "event.mcp_plugin_toggle": {
+      "text": "MCP plugin enabled or disabled",
+      "tense": "none"
+    },
+    "event.reload_plugins": {
+      "text": "plugins reloaded",
+      "tense": "none"
+    },
+    "event.bare_tool_deny_rule": {
+      "text": "tool deny rule changed",
+      "tense": "none"
+    },
+    "event.compaction": {
+      "text": "compaction",
+      "tense": "none"
+    },
+    "event.image_batch_removal": {
+      "text": "images removed",
+      "tense": "none"
+    },
+    "event.upgrade_first_conversation": {
+      "text": "first conversation after an upgrade",
+      "tense": "none"
+    },
+    "event.ttl_bucket_change": {
+      "text": "TTL changed",
+      "tense": "none"
+    },
+    "event.long_turn": {
+      "text": "very long turn",
+      "tense": "none"
+    },
+    "prob.about": {
+      "text": "~{pct}%",
+      "tense": "none"
+    },
+    "tier.measured": {
+      "text": "[measured]",
+      "tense": "none"
+    },
+    "tier.inferred": {
+      "text": "[inferred]",
+      "tense": "none"
+    },
+    "tier.estimated": {
+      "text": "[estimated]",
+      "tense": "none"
+    },
+    "cost.api_equivalent": {
+      "text": "API-equivalent, prices {date}",
+      "tense": "none"
+    },
+    "cost.provider_priced": {
+      "text": "provider-priced, prices {date}",
+      "tense": "none"
+    },
+    "cost.claude_code_estimate": {
+      "text": "Claude Code's estimate",
+      "tense": "none"
+    },
+    "cost.unknown": {
+      "text": "cost unknown",
+      "tense": "none"
+    },
+    "cost.tokens": {
+      "text": "{tokens} tokens",
+      "tense": "none"
+    },
+    "cost.plan_share_learning": {
+      "text": "plan share: learning ({n}/3 windows)",
+      "tense": "none"
+    },
+    "lever.continue.name": {
+      "text": "continue",
+      "tense": "none"
+    },
+    "lever.continue.when": {
+      "text": "Keep going in this conversation; the cost depends on whether the cache is still warm.",
+      "tense": "future"
+    },
+    "lever.compact.name": {
+      "text": "/compact",
+      "tense": "none"
+    },
+    "lever.compact.when": {
+      "text": "Shrinks the prefix to a summary: one rebuild now, cheaper turns after.",
+      "tense": "future"
+    },
+    "lever.clear.name": {
+      "text": "/clear",
+      "tense": "none"
+    },
+    "lever.clear.when": {
+      "text": "Starts fresh when you're changing tasks; throws away the conversation, so it is never recommended on cost alone.",
+      "tense": "none"
+    },
+    "lever.rewind.name": {
+      "text": "/rewind",
+      "tense": "none"
+    },
+    "lever.rewind.when": {
+      "text": "Returns to an earlier point whose cache entry may still be warm.",
+      "tense": "future"
+    },
+    "lever.recap.name": {
+      "text": "/recap",
+      "tense": "none"
+    },
+    "lever.recap.when": {
+      "text": "Cache-safe, not cache-saving: it neither invalidates the cache nor shrinks the prefix.",
+      "tense": "none"
+    },
+    "lever.btw.name": {
+      "text": "/btw",
+      "tense": "none"
+    },
+    "lever.btw.when": {
+      "text": "A side question that never enters history; cheap while the cache is warm.",
+      "tense": "none"
+    },
+    "lever.keepalive.name": {
+      "text": "keep-alive",
+      "tense": "none"
+    },
+    "lever.keepalive.when": {
+      "text": "Refreshes the cache while you're away, up to an end time and a budget.",
+      "tense": "future"
+    },
+    "lever.probe.name": {
+      "text": "probe",
+      "tense": "none"
+    },
+    "lever.probe.when": {
+      "text": "Measures whether the cache is warm, at the price of one request, and leaves it warm either way.",
+      "tense": "none"
+    },
+    "lever.ttl.name": {
+      "text": "TTL setting",
+      "tense": "none"
+    },
+    "lever.ttl.when": {
+      "text": "Changes the cache lifetime for later writes.",
+      "tense": "future"
+    },
+    "lever.model.name": {
+      "text": "model / effort / fast",
+      "tense": "none"
+    },
+    "lever.model.when": {
+      "text": "Switching rebuilds the cache on the target model.",
+      "tense": "future"
+    },
+    "recommend.none.hot": {
+      "text": "No action needed: warm until {time}.",
+      "tense": "none"
+    },
+    "recommend.continue.expiring": {
+      "text": "Send before {time} to keep the cache.",
+      "tense": "future"
+    },
+    "recommend.continue.uncertain": {
+      "text": "You're at the expiry boundary.",
+      "tense": "none"
+    },
+    "recommend.cheapest": {
+      "text": "Cheapest over the next {turns} turns: {lever} ({cost}).",
+      "tense": "future"
+    },
+    "recommend.none.unknown": {
+      "text": "No recommendation: {reason}.",
+      "tense": "none"
+    },
+    "recommend.none.unknown_costs": {
+      "text": "No recommendation: none of the options could be priced.",
+      "tense": "none"
+    },
+    "effect.unchanged": {
+      "text": "prefix unchanged",
+      "tense": "none"
+    },
+    "effect.compact": {
+      "text": "prefix shrinks to the system layer plus a summary",
+      "tense": "future"
+    },
+    "effect.clear": {
+      "text": "prefix shrinks to the system layer; the conversation is gone",
+      "tense": "future"
+    },
+    "effect.rewind": {
+      "text": "prefix shrinks to that earlier point",
+      "tense": "future"
+    },
+    "effect.none": {
+      "text": "no effect on the prefix",
+      "tense": "none"
+    },
+    "effect.keepalive": {
+      "text": "keeps the cache warm until the end time",
+      "tense": "future"
+    },
+    "effect.probe": {
+      "text": "measures the cache and refreshes its expiry",
+      "tense": "future"
+    },
+    "effect.ttl": {
+      "text": "changes the lifetime of later cache writes",
+      "tense": "future"
+    },
+    "effect.rebuild": {
+      "text": "rebuilds the prefix on the new setting",
+      "tense": "future"
+    },
+    "gate.hold": {
+      "text": "Token Shield: cache {state} ({detail}). This prompt is expected to re-cache {tokens} tokens {approx} {cost}. Press Enter again within 60 s to send it anyway, or {lever} first.",
+      "tense": "future"
+    },
+    "gate.warn": {
+      "text": "Token Shield: cache {state}. This prompt is expected to re-cache {tokens} tokens {approx} {cost}.",
+      "tense": "future"
+    },
+    "guard.switch.toast": {
+      "text": "Token Shield: switching to {model} rebuilds the cache ({tokens} tokens) {approx} {cost}.",
+      "tense": "future"
+    },
+    "guard.switch.alternative": {
+      "text": "Cheaper for a one-off task: run it in a subagent on {model}.",
+      "tense": "future"
+    },
+    "guard.switch.confirm_reason": {
+      "text": "Token Shield: this switch rebuilds the cache ({tokens} tokens), {approx} {cost}.",
+      "tense": "future"
+    },
+    "guard.effort.toast": {
+      "text": "Token Shield: this effort change rebuilds the cache on the next request {approx} {cost}.",
+      "tense": "future"
+    },
+    "guard.fast.toast": {
+      "text": "Token Shield: toggling fast mode rebuilds the cache on the next request {approx} {cost}.",
+      "tense": "future"
+    },
+    "guard.reload.toast": {
+      "text": "Token Shield: reloading plugins may rebuild the cache if tool definitions change.",
+      "tense": "future"
+    },
+    "resume.cold": {
+      "text": "Token Shield: resuming re-caches {tokens} tokens {approx} {cost} (idle {idle}).",
+      "tense": "future"
+    },
+    "resume.warm": {
+      "text": "Token Shield: still warm until {time}.",
+      "tense": "none"
+    },
+    "resume.options": {
+      "text": "Options: continue, /compact, /clear with a handoff, or /recap first.",
+      "tense": "none"
+    },
+    "notify.ttl_bucket_change": {
+      "text": "Token Shield: now billing usage credits, so new cache writes use the 5-minute TTL.",
+      "tense": "future"
+    },
+    "notify.expiring": {
+      "text": "Token Shield: cache expires at {time}.",
+      "tense": "future"
+    },
+    "notify.cold": {
+      "text": "Token Shield: cache expired at {time}.",
+      "tense": "past"
+    },
+    "notify.uncertain": {
+      "text": "Token Shield: cache near its expiry; whether the next request reads it is uncertain.",
+      "tense": "future"
+    },
+    "notify.invalidated": {
+      "text": "Token Shield: {cause} invalidated the cache; the next request rebuilds it.",
+      "tense": "future"
+    },
+    "notify.gate_held": {
+      "text": "Token Shield: prompt held before a {usd} rebuild.",
+      "tense": "future"
+    },
+    "notify.calibration_drift": {
+      "text": "Token Shield: recent cache behavior differs from its stated rates; intervals widened.",
+      "tense": "past"
+    },
+    "past.hit": {
+      "text": "hit",
+      "tense": "past"
+    },
+    "past.miss": {
+      "text": "miss",
+      "tense": "past"
+    },
+    "past.miss_cause": {
+      "text": "miss ({cause})",
+      "tense": "past"
+    },
+    "past.likely_server_side": {
+      "text": "likely server-side (Claude Code's guess)",
+      "tense": "past"
+    },
+    "past.expected_rebuild": {
+      "text": "expected rebuild",
+      "tense": "past"
+    },
+    "error.version": {
+      "text": "Token Shield needs Claude Code v{version} or later; cache features are off.",
+      "tense": "none"
+    },
+    "error.config_invalid": {
+      "text": "Token Shield: setting {key} is invalid; using the default ({default}).",
+      "tense": "none"
+    },
+    "error.bridge_unavailable": {
+      "text": "Token Shield: the statusline bridge isn't set up, so native cache data is unavailable. Run /cache-check setup.",
+      "tense": "none"
+    },
+    "error.probe_needs_mod": {
+      "text": "An exact-prefix probe needs the Token Shield mod inside a session; no request was made.",
+      "tense": "none"
+    },
+    "segment.HOT": {
+      "text": "{glyph} cache HOT {dot} {tokens} {dot} warm until {time}",
+      "tense": "none"
+    },
+    "segment.HOT.notime": {
+      "text": "{glyph} cache HOT {dot} {tokens}",
+      "tense": "none"
+    },
+    "segment.EXPIRING": {
+      "text": "{glyph} cache EXPIRING {dot} {tokens} {dot} send by {time}",
+      "tense": "future"
+    },
+    "segment.EXPIRING.cost": {
+      "text": " or re-cache {approx}{cost}",
+      "tense": "future"
+    },
+    "segment.UNCERTAIN": {
+      "text": "{glyph} cache UNCERTAIN {dot} {reason} {dot} read chance {prob}",
+      "tense": "future"
+    },
+    "segment.INVALIDATED": {
+      "text": "{glyph} cache INVALIDATED {dot} {cause} {dot} re-cache {tokens}",
+      "tense": "future"
+    },
+    "segment.COLD": {
+      "text": "{glyph} cache COLD since {time} {dot} next prompt re-caches {tokens}",
+      "tense": "future"
+    },
+    "segment.COLD.notime": {
+      "text": "{glyph} cache COLD {dot} next prompt re-caches {tokens}",
+      "tense": "future"
+    },
+    "segment.cost": {
+      "text": " {approx}{cost}",
+      "tense": "none"
+    },
+    "segment.UNKNOWN": {
+      "text": "{glyph} cache UNKNOWN {dot} {reason}",
+      "tense": "none"
+    },
+    "segment.stale": {
+      "text": " (stale)",
+      "tense": "none"
+    },
+    "segment.reason.boundary": {
+      "text": "near expiry",
+      "tense": "none"
+    },
+    "segment.reason.event": {
+      "text": "{event} pending",
+      "tense": "none"
+    },
+    "segment.reason.stale": {
+      "text": "data stale",
+      "tense": "none"
+    },
+    "segment.ascii": {
+      "text": "[cache {state}{parts}]",
+      "tense": "none"
+    },
+    "cost.plan_share_short": {
+      "text": "{pct}% of 5h",
+      "tense": "future"
+    },
+    "check.header": {
+      "text": "Cache  {state}  {dot} {prob} {dot} {confidence}",
+      "tense": "future"
+    },
+    "check.header_unknown": {
+      "text": "Cache  UNKNOWN  {dot} {reason}",
+      "tense": "none"
+    },
+    "check.label.last_request": {
+      "text": "Last request",
+      "tense": "none"
+    },
+    "check.label.ttl": {
+      "text": "TTL",
+      "tense": "none"
+    },
+    "check.label.prefix": {
+      "text": "Prefix",
+      "tense": "none"
+    },
+    "check.label.session": {
+      "text": "Session",
+      "tense": "none"
+    },
+    "check.label.pending": {
+      "text": "Pending",
+      "tense": "none"
+    },
+    "check.label.next_turn": {
+      "text": "Next turn",
+      "tense": "none"
+    },
+    "check.label.plan_share": {
+      "text": "Plan share",
+      "tense": "none"
+    },
+    "check.label.expiry": {
+      "text": "Expiry",
+      "tense": "none"
+    },
+    "check.label.levers": {
+      "text": "Levers",
+      "tense": "none"
+    },
+    "check.label.timeline": {
+      "text": "Timeline (main conversation)",
+      "tense": "none"
+    },
+    "check.label.rationale": {
+      "text": "Rationale",
+      "tense": "none"
+    },
+    "check.label.calibration": {
+      "text": "Calibration",
+      "tense": "none"
+    },
+    "check.label.changes": {
+      "text": "Changes",
+      "tense": "none"
+    },
+    "check.last_request": {
+      "text": "{time} ({ago} ago)",
+      "tense": "past"
+    },
+    "check.last_request_none": {
+      "text": "none yet",
+      "tense": "none"
+    },
+    "check.ttl": {
+      "text": "{ttl} {arrow} warm until {time}",
+      "tense": "none"
+    },
+    "check.ttl_expired": {
+      "text": "{ttl} {arrow} expired {time}",
+      "tense": "past"
+    },
+    "check.ttl_no_expiry": {
+      "text": "{ttl} {arrow} expiry unknown",
+      "tense": "none"
+    },
+    "check.ttl_unknown": {
+      "text": "unknown",
+      "tense": "none"
+    },
+    "check.prefix": {
+      "text": "{tokens} tokens",
+      "tense": "none"
+    },
+    "check.session": {
+      "text": "{requests} requests {dot} read ratio {ratio} {dot} misses {misses}",
+      "tense": "past"
+    },
+    "check.session_unknown": {
+      "text": "no native session data",
+      "tense": "none"
+    },
+    "check.last_miss": {
+      "text": "last miss {time}: {causes}",
+      "tense": "past"
+    },
+    "check.pending_none": {
+      "text": "none",
+      "tense": "none"
+    },
+    "check.pending_event": {
+      "text": "{event} ({impact})",
+      "tense": "none"
+    },
+    "check.next_turn_usd": {
+      "text": "warm {approx} {warm} {dot} cold {approx} {cold}",
+      "tense": "future"
+    },
+    "check.next_turn_tokens": {
+      "text": "{tokens} tokens re-cached if cold",
+      "tense": "future"
+    },
+    "check.next_turn_unknown": {
+      "text": "cost unknown for this model; {tokens} tokens re-cached if cold",
+      "tense": "future"
+    },
+    "check.price_note": {
+      "text": "{label}",
+      "tense": "none"
+    },
+    "check.plan_share": {
+      "text": "warm {approx} {warm} {dot} cold {approx} {cold} [estimated]",
+      "tense": "future"
+    },
+    "check.plan_share_learning": {
+      "text": "learning ({n}/3 windows)",
+      "tense": "none"
+    },
+    "check.lever": {
+      "text": "{mark} {name}  now {now} {dot} next {turns} turns {horizon}",
+      "tense": "future"
+    },
+    "check.lever_now_only": {
+      "text": "{mark} {name}  now {now}",
+      "tense": "future"
+    },
+    "check.recommend": {
+      "text": "{arrow} {text}",
+      "tense": "none"
+    },
+    "check.probe_hint": {
+      "text": "--probe costs {approx} {warm} if warm, {approx} {cold} if cold, and leaves the cache warm either way.",
+      "tense": "future"
+    },
+    "check.expiry": {
+      "text": "Claude Code {native} {dot} Token Shield {shield} {dot} drift {drift}",
+      "tense": "none"
+    },
+    "check.timeline_head": {
+      "text": "start     gap      read     write    input   outcome",
+      "tense": "none"
+    },
+    "check.calibration_prior": {
+      "text": "priors only (n={n}, LOW evidence)",
+      "tense": "none"
+    },
+    "check.calibration_learned": {
+      "text": "calibrated on {n} requests",
+      "tense": "none"
+    },
+    "check.change": {
+      "text": "{field}: {from} {arrow} {to}",
+      "tense": "none"
+    },
+    "check.change_event": {
+      "text": "pending: {event}",
+      "tense": "none"
+    },
+    "check.no_changes": {
+      "text": "no changes between the last two requests and nothing pending",
+      "tense": "none"
+    },
+    "check.miss_causes": {
+      "text": "Claude Code's diagnosis of the last miss: {causes}",
+      "tense": "past"
+    },
+    "check.stale": {
+      "text": "stale: native data {seconds}s old",
+      "tense": "none"
+    },
+    "check.unknown_value": {
+      "text": "unknown",
+      "tense": "none"
+    },
+    "past.partial": {
+      "text": "partial",
+      "tense": "past"
+    },
+    "past.cold_start": {
+      "text": "first write",
+      "tense": "past"
+    },
+    "field.model": {
+      "text": "model",
+      "tense": "none"
+    },
+    "field.effort": {
+      "text": "effort",
+      "tense": "none"
+    },
+    "field.speed": {
+      "text": "speed",
+      "tense": "none"
+    },
+    "field.ttl": {
+      "text": "ttl",
+      "tense": "none"
+    },
+    "cause.tools_changed": {
+      "text": "tools changed",
+      "tense": "past"
+    },
+    "cause.system_prompt_changed": {
+      "text": "system prompt changed",
+      "tense": "past"
+    },
+    "cause.ttl_expired_5m": {
+      "text": "5-minute TTL expired",
+      "tense": "past"
+    },
+    "cause.ttl_expired_1h": {
+      "text": "1-hour TTL expired",
+      "tense": "past"
+    },
+    "cause.likely_server_side": {
+      "text": "likely server-side (Claude Code's guess)",
+      "tense": "past"
+    }
   }
 }

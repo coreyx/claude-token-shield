@@ -9,6 +9,7 @@ import type { AssessEnv, AssessParams } from '../../../plugin/core/assess/types'
 import { formatString, parseRules, parseStrings } from '../../../plugin/core/data/load'
 import { initialState, reduce } from '../../../plugin/core/model/reduce'
 import { parseSnapshot } from '../../../plugin/core/model/snapshot'
+import { glyphParams, UNICODE } from '../../../plugin/core/render/format'
 import type { Fact, SessionState } from '../../../plugin/core/model/types'
 import { payload, request, T0 } from '../model/fixtures'
 
@@ -254,7 +255,7 @@ describe('drivers', () => {
       ['driver.pending_none', 'measured'],
       ['driver.eps', 'estimated'],
     ])
-    for (const d of a.drivers) expect(formatString(strings, d.key, d.params)).not.toMatch(/^\[|\{/)
+    for (const d of a.drivers) expect(formatString(strings, d.key, { ...glyphParams(UNICODE), ...d.params })).not.toMatch(/^\[|\{/)
   })
 })
 

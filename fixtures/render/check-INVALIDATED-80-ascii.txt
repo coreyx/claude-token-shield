@@ -1,0 +1,22 @@
+Cache  INVALIDATED  | expected read <= 1% (0.5%-3.0%) | confidence HIGH
+--------------------------------------------------------------------------------
+Last request   15:40:02 (12m ago)
+TTL            1 hour -> warm until 16:40
+Prefix         812,470 tokens
+Session        214 requests | read ratio 97.2% | misses 1
+               last miss 13:53: tools changed
+Pending        model switch (WILL)
+Next turn      warm ~ $0.16 | cold ~ $6.50
+               API-equivalent, prices 2026-11-03
+
+Levers
+                 continue               now $6.44 | next 5 turns $7.25
+                 /compact               now $9.06 | next 5 turns $9.53
+                 /clear                 now $3.22 | next 5 turns $3.62
+               > /rewind                now $0.01 | next 5 turns $0.08
+                 /recap                 now $0.00
+                 /btw                   now cost unknown
+                 TTL setting            now $0.00
+                 model / effort / fast  now $6.50
+
+-> Cheapest over the next 5 turns: /rewind ($0.08).

@@ -1,0 +1,24 @@
+Cache  EXPIRING  | expected read >= 99% (98.5%-99.8%) | confidence HIGH
+--------------------------------------------------------------------------------
+Last request   15:40:02 (52m 58s ago)
+TTL            1 hour -> warm until 16:40
+Prefix         812,470 tokens
+Session        214 requests | read ratio 97.2% | misses 1
+               last miss 13:53: tools changed
+Pending        none
+Next turn      warm ~ $0.16 | cold ~ $6.50
+               API-equivalent, prices 2026-11-03
+
+Levers
+               > continue               now $0.19 | next 5 turns $1.01
+                 /compact               now $5.22 | next 5 turns $5.68
+                 /clear                 now $3.22 | next 5 turns $3.62
+                 /rewind                now cost unknown
+                 /recap                 now $0.00
+                 /btw                   now $0.16
+                 keep-alive             now $0.16
+                 probe                  now $0.19
+                 TTL setting            now $0.00
+                 model / effort / fast  now $6.50
+
+-> Send before 16:40 to keep the cache.
