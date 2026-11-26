@@ -1,5 +1,6 @@
 import type { EngineInterface } from 'claude-code'
 
+import type { AssessEnv } from '../../core/assess/types'
 import type { Config } from '../../core/config/config'
 import { validateConfig } from '../../core/config/config'
 import { formatString } from '../../core/data/load'
@@ -10,6 +11,7 @@ import { readSharedData } from '../persist/data'
 import type { Companions } from './companions'
 import { resolveCompanions } from './companions'
 import { announceInvalid, mirrorConfig } from './config'
+import { readEnv } from './env'
 import { reportFailure } from './failure'
 
 /** Everything the mod's hooks share for the session. */
@@ -20,6 +22,12 @@ export interface Host {
   readonly companions: Companions
   /** Claude Code's version, as the engine reports it. */
   readonly ccVersion: string
+  /** Provider, tool search and betas, which decide how events affect the cache. */
+  readonly env: AssessEnv
+  /** Minutes east of UTC, for wall-clock times. */
+  readonly tzOffsetMin: number
+  /** The session's id, which names its data folders. */
+  readonly sessionId: string
   /** Cache features run only on a supported Claude Code (REQ-1.0.4); missing data fails each feature on its own. */
   readonly enabled: boolean
 }
@@ -73,7 +81,11 @@ export async function startHost($: EngineInterface, options: Readonly<Record<str
   } catch (err) {
     reportFailure($, 'config mirror', err)
   }
-  current = { config, data, companions, ccVersion, enabled: supported }
+  const env = await readEnv($)
+  const sessionId = await $.session.id()
+  // The engine's Date uses the machine's zone; getTimezoneOffset counts minutes west.
+  const tzOffsetMin = -new Date(await $.clock.now()).getTimezoneOffset()
+  current = { config, data, companions, ccVersion, env, tzOffsetMin, sessionId, enabled: supported }
   return current
 }
 

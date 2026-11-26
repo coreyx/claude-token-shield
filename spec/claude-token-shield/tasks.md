@@ -173,7 +173,7 @@ With the mod loaded, the status segment, band, toasts and `/cache-check` work fr
     4. Read the session version and disable cache features below 2.1.260 with a message naming that version.
     5. Write the `$.state` contract in `plugin/types/index.d.ts`. Test that a forced exception in the assessor leaves prompts submitting and writes one debug-log entry, and that an invalid threshold toasts its name and applies the default.
 
-- [ ] **TASK-18: Build the adapters and the history writer**
+- [x] **TASK-18: Build the adapters and the history writer**
   - **Associated Acceptance Criteria**: `1.1`, `1.2`, `1.3`, `2.3`, `2.4`, `2.5`, `20.3`
   - **Concrete Steps**:
     1. Implement the snapshot reader (mtime poll every 5 s and on `turn.complete`), and the `turn.step` adapter (lane by `agentId`, usage, start time, model, effort, TTL).
