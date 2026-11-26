@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/coreyx/claude-token-shield/schemas/prices.schema.json",
+  "title": "Token Shield price table",
+  "description": "Per-model prompt-cache prices, kept by effective date so each request is priced with the table in effect on its date.",
+  "type": "object",
+  "required": ["v", "unit", "tables"],
+  "additionalProperties": false,
+  "properties": {
+    "v": { "type": "integer", "minimum": 1 },
+    "unit": { "type": "string", "enum": ["USD per million tokens"] },
+    "tables": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/table" } }
+  },
+  "$defs": {
+    "table": {
+      "type": "object",
+      "required": ["effective", "models", "providers"],
+      "additionalProperties": false,
+      "properties": {
+        "effective": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "source": { "type": "string" },
+        "models": { "type": "object", "additionalProperties": { "$ref": "#/$defs/model" } },
+        "providers": { "type": "object", "additionalProperties": { "$ref": "#/$defs/provider" } }
+      }
+    },
+    "model": {
+      "type": "object",
+      "required": ["input", "read_mult", "write_5m_mult", "write_1h_mult"],
+      "additionalProperties": false,
+      "properties": {
+        "input": { "type": "number", "exclusiveMinimum": 0 },
+        "read_mult": { "type": "number", "exclusiveMinimum": 0 },
+        "write_5m_mult": { "type": "number", "exclusiveMinimum": 0 },
+        "write_1h_mult": { "type": "number", "exclusiveMinimum": 0 },
+        "fast_input": { "type": "number", "exclusiveMinimum": 0 },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["above", "input"],
+            "additionalProperties": false,
+            "properties": {
+              "above": { "type": "integer", "minimum": 1 },
+              "input": { "type": "number", "exclusiveMinimum": 0 }
+            }
+          }
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "required": ["multiplier", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "multiplier": { "type": "number", "exclusiveMinimum": 0 },
+        "regional_multiplier": { "type": "number", "exclusiveMinimum": 0 },
+        "data_zone_multiplier": { "type": "number", "exclusiveMinimum": 0 },
+        "basis": { "type": "string", "enum": ["list", "estimated"] }
+      }
+    }
+  }
+}

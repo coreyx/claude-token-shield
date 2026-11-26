@@ -1,0 +1,73 @@
+{
+  "v": 1,
+  "minClaudeCodeVersion": "2.1.260",
+  "perMessageEffortModels": [
+    "claude-fable-5-2",
+    "claude-fable-5-1",
+    "claude-opus-5-5",
+    "claude-sonnet-5-5",
+    "claude-haiku-5-5"
+  ],
+  "events": [
+    { "kind": "model_switch", "impact": "WILL", "basis": "documented", "note": "Includes automatic fallback, opusplan toggles and a skill whose model differs." },
+    { "kind": "fast_toggle", "impact": "WILL", "basis": "documented", "note": "Includes automatic fallback to standard speed." },
+    {
+      "kind": "effort_change",
+      "impact": "WILL",
+      "basis": "documented",
+      "cases": [
+        {
+          "when": { "perMessageEffort": true, "provider": ["firstParty"], "experimentalBetasDisabled": false },
+          "impact": "NO_EFFECT"
+        }
+      ],
+      "note": "Kept on models with per-message effort, with an API key or subscription; rebuilt elsewhere."
+    },
+    {
+      "kind": "tools_changed",
+      "impact": "NO_EFFECT",
+      "basis": "documented",
+      "cases": [{ "when": { "toolSearch": false }, "impact": "WILL" }],
+      "note": "Tool-definition changes invalidate only when tools load upfront."
+    },
+    { "kind": "mcp_plugin_toggle", "impact": "WILL", "basis": "documented", "note": "Enabling or disabling a plugin that provides MCP tools." },
+    { "kind": "reload_plugins", "impact": "MAY", "basis": "documented", "note": "Depends on whether a reloaded plugin changes tool definitions; Claude Code warns too." },
+    {
+      "kind": "bare_tool_deny_rule",
+      "impact": "NO_EFFECT",
+      "basis": "documented",
+      "cases": [{ "when": { "toolSearch": false }, "impact": "WILL" }]
+    },
+    { "kind": "compaction", "impact": "WILL", "basis": "documented", "expectedRebuild": true, "note": "Manual, automatic or idle; conversation and project context are rebuilt." },
+    { "kind": "image_batch_removal", "impact": "WILL", "basis": "documented", "note": "From the oldest removed image onward." },
+    { "kind": "upgrade_first_conversation", "impact": "WILL", "basis": "documented" },
+    { "kind": "ttl_bucket_change", "impact": "NO_EFFECT", "basis": "documented", "note": "Later writes use the new TTL; the current entry keeps its own." },
+    { "kind": "long_turn", "impact": "MAY", "basis": "learned", "note": "A single turn past 20 non-collapsed positions can miss inside the TTL." },
+    { "kind": "mcp_connect", "impact": "NO_EFFECT", "basis": "documented", "cases": [{ "when": { "toolSearch": false }, "impact": "WILL" }] },
+    { "kind": "mcp_config_edit", "impact": "NO_EFFECT", "basis": "documented", "note": "Applied only at restart." },
+    { "kind": "claude_md_edit", "impact": "NO_EFFECT", "basis": "documented" },
+    { "kind": "repo_file_edit", "impact": "NO_EFFECT", "basis": "documented" },
+    { "kind": "permission_mode_change", "impact": "NO_EFFECT", "basis": "documented" },
+    { "kind": "output_style_change", "impact": "NO_EFFECT", "basis": "documented" },
+    { "kind": "skill_or_command_added", "impact": "NO_EFFECT", "basis": "documented", "note": "Appended, so the prefix is kept." },
+    { "kind": "plugin_hooks_change", "impact": "NO_EFFECT", "basis": "documented" },
+    { "kind": "recap", "impact": "NO_EFFECT", "basis": "documented" },
+    { "kind": "rewind", "impact": "NO_EFFECT", "basis": "documented", "note": "Reads an earlier entry if it is still within its TTL." },
+    { "kind": "subagent_spawn", "impact": "NO_EFFECT", "basis": "documented" }
+  ],
+  "warnWindowsSec": { "1h": 600, "5m": 60 },
+  "timing": {
+    "skewSec": 5,
+    "baseMarginSec": 10,
+    "nativeTimeErrSec": 2,
+    "staleSnapshotSec": 60,
+    "heartbeatFreshSec": 90
+  },
+  "priors": {
+    "epsWithin": 0.005,
+    "epsAfter": 0.01,
+    "mayEvent": { "alpha": 1, "beta": 1 },
+    "minCalibrationN": 30
+  },
+  "display": { "maxProb": 0.99, "minProb": 0.01 }
+}

@@ -41,7 +41,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     3. Record each result, with the version tested and the fallback chosen if the assumption failed, in `spec/claude-token-shield/spikes.md`. Use structure only: no session content, paths or usernames.
     4. If a result needs a change beyond the design's documented fallback, stop and raise it before continuing.
 
-- [ ] **TASK-3: Add the shared data files and their loaders**
+- [x] **TASK-3: Add the shared data files and their loaders**
   - **Associated Acceptance Criteria**: `2.8`
   - **Concrete Steps**:
     1. Write `plugin/data/prices.json` (2026-11-03 table: per-model input price, read and 5m/1h write multipliers, tiers, and provider sections for Bedrock, Vertex and Foundry), `plugin/data/rules.json` (invalidation table, per-message-effort models, warn windows, timing constants, priors, display caps) and `plugin/data/strings.en.json` (every user-facing string by key).

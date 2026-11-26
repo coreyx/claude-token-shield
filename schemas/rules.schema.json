@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/coreyx/claude-token-shield/schemas/rules.schema.json",
+  "title": "Token Shield assessment rules",
+  "description": "The invalidation table, warn windows, timing constants, priors and display caps the assessor runs on.",
+  "type": "object",
+  "required": ["v", "minClaudeCodeVersion", "perMessageEffortModels", "events", "warnWindowsSec", "timing", "priors", "display"],
+  "additionalProperties": false,
+  "properties": {
+    "v": { "type": "integer", "minimum": 1 },
+    "minClaudeCodeVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "perMessageEffortModels": { "type": "array", "items": { "type": "string" } },
+    "events": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/event" } },
+    "warnWindowsSec": {
+      "type": "object",
+      "required": ["1h", "5m"],
+      "additionalProperties": false,
+      "properties": {
+        "1h": { "type": "integer", "minimum": 0 },
+        "5m": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "required": ["skewSec", "baseMarginSec", "nativeTimeErrSec", "staleSnapshotSec", "heartbeatFreshSec"],
+      "additionalProperties": false,
+      "properties": {
+        "skewSec": { "type": "number", "minimum": 0 },
+        "baseMarginSec": { "type": "number", "minimum": 0 },
+        "nativeTimeErrSec": { "type": "number", "minimum": 0 },
+        "staleSnapshotSec": { "type": "number", "exclusiveMinimum": 0 },
+        "heartbeatFreshSec": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "priors": {
+      "type": "object",
+      "required": ["epsWithin", "epsAfter", "mayEvent", "minCalibrationN"],
+      "additionalProperties": false,
+      "properties": {
+        "epsWithin": { "type": "number", "exclusiveMinimum": 0 },
+        "epsAfter": { "type": "number", "exclusiveMinimum": 0 },
+        "mayEvent": {
+          "type": "object",
+          "required": ["alpha", "beta"],
+          "additionalProperties": false,
+          "properties": {
+            "alpha": { "type": "number", "exclusiveMinimum": 0 },
+            "beta": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "minCalibrationN": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "display": {
+      "type": "object",
+      "required": ["maxProb", "minProb"],
+      "additionalProperties": false,
+      "properties": {
+        "maxProb": { "type": "number", "exclusiveMinimum": 0 },
+        "minProb": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "impact": { "type": "string", "enum": ["WILL", "MAY", "NO_EFFECT"] },
+    "event": {
+      "type": "object",
+      "required": ["kind", "impact", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string" },
+        "impact": { "$ref": "#/$defs/impact" },
+        "basis": { "type": "string", "enum": ["documented", "learned"] },
+        "expectedRebuild": { "type": "boolean" },
+        "note": { "type": "string" },
+        "cases": { "type": "array", "items": { "$ref": "#/$defs/case" } }
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": ["when", "impact"],
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "perMessageEffort": { "type": "boolean" },
+            "toolSearch": { "type": "boolean" },
+            "experimentalBetasDisabled": { "type": "boolean" },
+            "provider": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["firstParty", "claudePlatformAws", "bedrock", "vertex", "foundry", "gateway"] }
+            }
+          }
+        },
+        "impact": { "$ref": "#/$defs/impact" }
+      }
+    }
+  }
+}

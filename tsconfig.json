@@ -1,9 +1,9 @@
 {
-  "//": "Type-checks the engine-independent core and its Vitest tests. The hooks module is checked by plugin/tsconfig.json, which needs the engine's generated types.",
+  "//": "Type-checks the engine-independent core and its Vitest tests, with Node types for the tests. The core itself is also checked without Node by plugin/tsconfig.json (with the engine types), which keeps it free of Node APIs.",
   "compilerOptions": {
     "target": "es2023",
     "lib": ["es2023"],
-    "types": [],
+    "types": ["node"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/coreyx/claude-token-shield/schemas/strings.schema.json",
+  "title": "Token Shield string catalog",
+  "description": "Every user-facing string by key, with {placeholders}. Each string says whether it speaks about a future request, so AC 2.8 can be checked over this one file.",
+  "type": "object",
+  "required": ["v", "locale", "strings"],
+  "additionalProperties": false,
+  "properties": {
+    "v": { "type": "integer", "minimum": 1 },
+    "locale": { "type": "string", "pattern": "^[a-z]{2}(-[A-Z]{2})?$" },
+    "strings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["text", "tense"],
+        "additionalProperties": false,
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "tense": { "type": "string", "enum": ["future", "past", "none"] }
+        }
+      }
+    }
+  }
+}
