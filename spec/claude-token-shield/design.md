@@ -2,15 +2,15 @@
 status: approved
 ---
 
-# Claude Token Shield Design
+# Token Shield Design
 
 ## Summary
 
 Token Shield has a pure TypeScript core that turns facts into an assessment, a price list of levers and a recommendation. Three thin hosts sit around it:
 
 - **The mod** (`register.tsx`): adapts engine events into facts, draws every in-session surface, and runs levers with consent.
-- **`cts-statusline`** (Go): the bridge. It copies Claude Code's native `prompt_cache` data into a per-session snapshot file, passes the user's previous statusline through, and draws the segment itself when the mod is absent.
-- **`cts`** (Go): the CLI for checks, history, calibration, setup and backfill.
+- **`tshield-statusline`** (Go): the bridge. It copies Claude Code's native `prompt_cache` data into a per-session snapshot file, passes the user's previous statusline through, and draws the segment itself when the mod is absent.
+- **`tshield`** (Go): the CLI for checks, history, calibration, setup and backfill.
 
 The Go side reimplements the parts of the core the CLI and statusline need. Shared JSON data (prices, invalidation rules, user-facing strings) and shared parity fixtures keep the two languages in step. All state is plain JSON in one data directory, and each file has exactly one writer. Nothing Token Shield draws enters a request to the model, and it runs only commands the user could type.
 
@@ -36,16 +36,16 @@ flowchart LR
     end
     CORE["core/ (pure TS)<br/>assess · cost · levers · recommend<br/>calibrate · history · render · strings"]
     DATA[("data/<br/>prices.json · rules.json<br/>strings.en.json")]
-    BIN["bin/<br/>cts · cts.cmd launchers<br/>&lt;os&gt;-&lt;arch&gt;/cts, cts-statusline"]
+    BIN["bin/<br/>tshield · tshield.cmd launchers<br/>&lt;os&gt;-&lt;arch&gt;/tshield, tshield-statusline"]
   end
 
   subgraph Go["Go module (repo root)"]
-    GSL["cmd/cts-statusline"]
-    GCLI["cmd/cts"]
+    GSL["cmd/tshield-statusline"]
+    GCLI["cmd/tshield"]
     GINT["internal/<br/>native · assess · cost · levers<br/>calib · history · render · store<br/>backfill · settings"]
   end
 
-  STORE[("~/.claude-token-shield/<br/>(CTS_HOME)")]
+  STORE[("~/.token-shield/<br/>(TOKEN_SHIELD_HOME)")]
 
   SLJ -- stdin --> GSL
   GSL -- "snapshot.json<br/>snapshots.jsonl" --> STORE
@@ -82,7 +82,7 @@ plugin/                             the folder Claude Code installs
   bin/                              launchers + per-platform binaries (release branch only)
   test/                             claude plugin test suites (*.test.ts)
 go.mod, embed.go                    Go module at the repo root; embed.go embeds plugin/data
-cmd/cts/, cmd/cts-statusline/       Go entry points
+cmd/tshield/, cmd/tshield-statusline/  Go entry points
 internal/                           Go packages
 fixtures/parity/                    shared cases: input → expected view model
 fixtures/render/                    shared golden text for the segment and /cache-check
@@ -101,7 +101,7 @@ sequenceDiagram
   participant U as User
   participant CC as Claude Code
   participant M as Mod
-  participant B as cts-statusline
+  participant B as tshield-statusline
   participant S as Data dir
 
   U->>CC: types a prompt, Enter
@@ -320,7 +320,7 @@ The controls exist only in the main session's own surfaces; nothing is offered p
 - `≤ 0.05 × prefix` → `MISS`;
 - anything between → `PARTIAL`.
 
-The new expiry is `now + ttl` `[inferred]`. A `nothing-to-fork` answer reports that no probe was possible (REQ-7.0.5). `cts check --probe` never calls the API; it explains that the probe needs the mod (AC 7.4).
+The new expiry is `now + ttl` `[inferred]`. A `nothing-to-fork` answer reports that no probe was possible (REQ-7.0.5). `tshield check --probe` never calls the API; it explains that the probe needs the mod (AC 7.4).
 
 **Keep-alive.** `KeepAlive.start({ until, budgetUsd })` is created only from the user's own command or button (REQ-15.0.4), after confirm mode shows the estimated total (refreshes × warm cost). It schedules one `$.clock.after` at `expires_at − lead` (lead: 2 min on 1h, 30 s on 5m). Each tick:
 
@@ -342,7 +342,7 @@ The mod owns the timer. After each assessment it cancels and re-arms one `$.cloc
 
 ### D14. The bridge stays tiny and wraps rather than replaces
 
-`cts-statusline`:
+`tshield-statusline`:
 
 1. Reads stdin (≤ 1 MiB) and parses only the documented fields it needs into `NativeSnapshot`.
 2. Writes `sessions/<id>/snapshot.json` atomically (temp file, then rename, retried on Windows sharing violations). It appends to `sessions/<id>/snapshots.jsonl` only when a tracked field changed (TTL, warm, model, effort, fast mode, version, miss count, rate-limit percentage).
@@ -351,17 +351,17 @@ The mod owns the timer. After each assessment it cancels and re-arms one `$.cloc
 
 The p95 budget (50 ms) excludes the wrapped command's own time, which is the user's. Any failure in steps 1–2 or 4 still runs step 3 and exits 0 (REQ-21.0.3).
 
-Setup (`/cache-check setup` or `cts setup`):
+Setup (`/cache-check setup` or `tshield setup`):
 
 - shows the current and the new `statusLine` value, and on confirmation saves the previous command into `bridge.json`;
-- copies the binaries to `<data>/bin/` with `cts self-install`, so the configured path survives plugin updates, which move the plugin folder;
-- points `statusLine.command` at `<data>/bin/cts-statusline` and sets `refreshInterval`.
+- copies the binaries to `<data>/bin/` with `tshield self-install`, so the configured path survives plugin updates, which move the plugin folder;
+- points `statusLine.command` at `<data>/bin/tshield-statusline` and sets `refreshInterval`.
 
-`cts setup --undo` restores the saved command.
+`tshield setup --undo` restores the saved command.
 
 ### D15. Platform binaries and launchers
 
-`bin/` holds `cts` (a POSIX sh launcher), `cts.cmd` (a Windows launcher) and `<os>-<arch>/cts[.exe]` plus `cts-statusline[.exe]` for six targets. The launchers pick the right binary, so `cts` works from the Bash tool's PATH. The mod resolves its binary once per session by trying `<plugin root>/bin/<os>-<arch>/cts version --json` candidates through `$.process.run`, and caches the one that answers. It then uses it for `self-install` and to resolve the data directory (`cts paths --json`, which honors `CTS_HOME`). If no binary runs, the mod falls back to `CLAUDE_PLUGIN_DATA` for its own history, and the bridge and CLI features are reported unavailable.
+`bin/` holds `tshield` (a POSIX sh launcher), `tshield.cmd` (a Windows launcher) and `<os>-<arch>/tshield[.exe]` plus `tshield-statusline[.exe]` for six targets. The launchers pick the right binary, so `tshield` works from the Bash tool's PATH. The mod resolves its binary once per session by trying `<plugin root>/bin/<os>-<arch>/tshield version --json` candidates through `$.process.run`, and caches the one that answers. It then uses it for `self-install` and to resolve the data directory (`tshield paths --json`, which honors `TOKEN_SHIELD_HOME`). If no binary runs, the mod falls back to `CLAUDE_PLUGIN_DATA` for its own history, and the bridge and CLI features are reported unavailable.
 
 ### D16. History: per-session chunks written by the mod, calibration computed on read
 
@@ -374,13 +374,13 @@ The mod buffers history records in memory and flushes them with a debounce (on `
 - `ProbeRecord`;
 - `KeepAliveRecord`.
 
-Calibration, avoidable spend, the TTL advisor and the advice report are **computed when read**, by the mod at session start (in the background, off the render path) and by `cts`, from chunks inside the window. Nothing aggregate is stored, so no two writers ever share a file.
+Calibration, avoidable spend, the TTL advisor and the advice report are **computed when read**, by the mod at session start (in the background, off the render path) and by `tshield`, from chunks inside the window. Nothing aggregate is stored, so no two writers ever share a file.
 
-Retention removes session folders whose newest chunk is older than `historyDays` (default 90), on mod start and on `cts prune`. `cts forget` (and `/cache-check forget` after confirmation) deletes `history/`, `sessions/` and `backfill/` (REQ-14.0.9).
+Retention removes session folders whose newest chunk is older than `historyDays` (default 90), on mod start and on `tshield prune`. `tshield forget` (and `/cache-check forget` after confirmation) deletes `history/`, `sessions/` and `backfill/` (REQ-14.0.9).
 
 ### D17. Baseline from transcripts, numbers only
 
-`cts backfill` (offered once after setup, run only on the user's yes) reads Claude Code transcript JSONL under the user's Claude config directory incrementally. It keeps a byte cursor per file in `backfill/cursor.json`. From each assistant message it extracts only the usage counts, timestamp, model, effort and version, and writes `backfill/<n>.json` request records with `source: transcript` and tier `[measured]` for counts, `[inferred]` for causes. Text fields are never read into a record. Fields are picked by key, and the parser discards message content before building a record (REQ-20.0.4).
+`tshield backfill` (offered once after setup, run only on the user's yes) reads Claude Code transcript JSONL under the user's Claude config directory incrementally. It keeps a byte cursor per file in `backfill/cursor.json`. From each assistant message it extracts only the usage counts, timestamp, model, effort and version, and writes `backfill/<n>.json` request records with `source: transcript` and tier `[measured]` for counts, `[inferred]` for causes. Text fields are never read into a record. Fields are picked by key, and the parser discards message content before building a record (REQ-20.0.4).
 
 The baseline is the avoidable spend per week before the install date (REQ-14.0.8). The format is internal to Claude Code, so a parse failure lowers the backfill's coverage and is reported. It never fails the command (REQ-21.0.4).
 
@@ -421,7 +421,7 @@ The threshold is reached when either the dollar value or the token value is exce
 
 ## Data model
 
-All files live under the data directory (`~/.claude-token-shield/`, or `CTS_HOME`). Every record carries `v` (schema version). Readers ignore unknown fields and records with a newer major `v`.
+All files live under the data directory (`~/.token-shield/`, or `TOKEN_SHIELD_HOME`). Every record carries `v` (schema version). Readers ignore unknown fields and records with a newer major `v`.
 
 ```mermaid
 erDiagram
@@ -497,11 +497,11 @@ erDiagram
 | `sessions/<id>/snapshots.jsonl` | bridge | appended rows on change, capped at 2 MiB, then rotated to `.1` |
 | `sessions/<id>/mod-heartbeat.json` | mod | `{ v, ts, pluginVersion }` every 30 s |
 | `history/<id>/<seq>.json` | mod | `{ v, session_id, seq, records: [...] }` |
-| `backfill/cursor.json`, `backfill/<n>.json` | `cts backfill` (holds `backfill/.lock`) | cursor map; request records |
+| `backfill/cursor.json`, `backfill/<n>.json` | `tshield backfill` (holds `backfill/.lock`) | cursor map; request records |
 | `config.json` | mod | effective config |
 | `prices.override.json` | the user | partial price table, merged over `plugin/data/prices.json` |
-| `bridge.json` | setup (mod or `cts`, holding `setup.lock`) | `{ previousCommand, installedAt, binVersion }` |
-| `bin/` | `cts self-install` | stable copies of the binaries |
+| `bridge.json` | setup (mod or `tshield`, holding `setup.lock`) | `{ previousCommand, installedAt, binVersion }` |
+| `bin/` | `tshield self-install` | stable copies of the binaries |
 | `logs/companions.log` | companions | capped 256 KiB, rotated |
 
 **Privacy by construction (REQ-1.0.2, 20.0.4):** every record type above is a closed schema of numbers, timestamps, enums, model ids and cause names. The only free-text fields are ids. Adapters copy whitelisted fields; they never spread an event object into a record. The gate's prompt hash lives only in memory.
@@ -538,7 +538,7 @@ export function gateDecision(a: Assessment, cost: NextTurnCost, cfg: Config, hel
 /** Returns at most one notification for a transition (D13). */
 export function notify(prev: Assessment | null, next: Assessment, log: NotifyLog, cfg: Config, now: number): Notification | null;
 
-/** Builds the view model shared by /cache-check, the panes and cts check. */
+/** Builds the view model shared by /cache-check, the panes and tshield check. */
 export function checkView(a: Assessment, quotes: LeverQuote[], rec: Recommendation, mode: CheckMode): CheckView;
 
 /** Renders a view model as text at a width, in a glyph set; reads only the string catalog. */
@@ -553,7 +553,7 @@ export function evaluateAdvice(recs: RecommendationRecord[], later: HistoryRecor
 export function planShare(rows: SnapshotRow[], requests: RequestRecord[]): PlanShareModel;
 ```
 
-`CheckView` is the contract for "same content" between surfaces (REQ-19.0.1). Its JSON form is published as `schemas/check.schema.json`, and `cts check --json` emits it (AC 19.1).
+`CheckView` is the contract for "same content" between surfaces (REQ-19.0.1). Its JSON form is published as `schemas/check.schema.json`, and `tshield check --json` emits it (AC 19.1).
 
 ### Mod surfaces
 
@@ -576,19 +576,19 @@ All views are built from text cells with a glyph and a label for every colored e
 - **Context:** the categories from `$.session.usage({ breakdown: "summary" })` as horizontal bars, each marked `stable` (system, tools, project context, earlier conversation) or `changes each turn` (latest turn, tool results).
 - **History:** re-cache spend by cause per day (stacked text bars whose segments sum to the total; AC 13.5), the idle-gap histogram against the TTL line, advice outcomes, and the reliability table.
 
-### `cts` CLI
+### `tshield` CLI
 
 ```
-cts check [--verbose|--diff|--probe] [--session <id>] [--json]      exit 0/10/20/30/40/50
-cts history [--session <id>|--all] [--since 7d] [--misses] [--calibration] [--json]
-cts calibration [--json]
-cts ttl [--json]
-cts setup [--undo]      cts self-install      cts paths [--json]
-cts backfill            cts prune             cts forget [--yes]
-cts version [--json]
+tshield check [--verbose|--diff|--probe] [--session <id>] [--json]      exit 0/10/20/30/40/50
+tshield history [--session <id>|--all] [--since 7d] [--misses] [--calibration] [--json]
+tshield calibration [--json]
+tshield ttl [--json]
+tshield setup [--undo]      tshield self-install    tshield paths [--json]
+tshield backfill            tshield prune           tshield forget [--yes]
+tshield version [--json]
 ```
 
-Without `--session`, `cts check` picks the session with the newest snapshot. It assesses from the snapshot plus history, so it is exactly the mod's assessment minus events only the mod sees. Verbose output names that gap.
+Without `--session`, `tshield check` picks the session with the newest snapshot. It assesses from the snapshot plus history, so it is exactly the mod's assessment minus events only the mod sees. Verbose output names that gap.
 
 ## Error handling & edge cases
 
@@ -644,7 +644,7 @@ These engine behaviors are read from the 2.1.332 types but not yet exercised. Th
 | A toast or band is visible while Claude Code's model-switch confirmation is open | show the guard as a status-segment suffix, and in the band right after the dialog closes (before the next request) |
 | `$.prompt.fill` after `{ drop }` puts the text back for a plain Enter | the drop reason says "press ↑ to recall it"; the 60 s identical-resubmit rule is unchanged |
 | `statusLine.refreshInterval` keeps the bridge running while idle | the staleness rule uses "snapshot older than 60 s **and** older than the last main request or event", so an idle unchanged snapshot stays fresh |
-| `$.process.run` children inherit the user's environment (`HOME`/`USERPROFILE`, `CTS_HOME`) | `cts paths` falls back to the OS user-home lookup |
+| `$.process.run` children inherit the user's environment (`HOME`/`USERPROFILE`, `TOKEN_SHIELD_HOME`) | `tshield paths` falls back to the OS user-home lookup |
 | A plugin's `command.run` answer mid-turn is the only case where display-only text can enter a request | D7 already covers it; the test in AC 6.1 confirms |
 
 ## Traceability
@@ -657,7 +657,7 @@ These engine behaviors are read from the 2.1.332 types but not yet exercised. Th
 | REQ-4 Levers and recommendation | D6, `RecommendationRecord` (AC 4.5) |
 | REQ-5 Execution with consent | D8, D11, D12; observe-only hooks (AC 5.4) |
 | REQ-6 `/cache-check` | D7, `checkView`/`renderCheck`, mod surfaces table, `summarize` filters (AC 6.5) |
-| REQ-7 Probe | D12; `cts check --probe` refusal (AC 7.4) |
+| REQ-7 Probe | D12; `tshield check --probe` refusal (AC 7.4) |
 | REQ-8 Status segment | `renderSegment`, `$.ui.status`, D14 wrap (AC 8.3) |
 | REQ-9 Notifications and band | D13, band modes |
 | REQ-10 Guard | D10, D8 labelling |
@@ -666,10 +666,10 @@ These engine behaviors are read from the 2.1.332 types but not yet exercised. Th
 | REQ-13 Visualizers | Visualizers section, `LeverButton` (AC 13.3) |
 | REQ-14 History, calibration, advice | D16, D17, D18, D19 |
 | REQ-15 Keep-alive | D12 |
-| REQ-16 TTL advisor | `adviseTtl` (minimum 10 sessions with at least 20 idle gaps per bucket, else "not enough data"), `/cache-check ttl`, `cts ttl` |
+| REQ-16 TTL advisor | `adviseTtl` (minimum 10 sessions with at least 20 idle gaps per bucket, else "not enough data"), `/cache-check ttl`, `tshield ttl` |
 | REQ-17 Compact and clear controls | D11 `LeverButton`, lever bar and comparator |
 | REQ-18 Statusline companion | D14, D15 |
-| REQ-19 `cts` | CLI interface, `CheckView` schema, exit codes |
+| REQ-19 `tshield` | CLI interface, `CheckView` schema, exit codes |
 | REQ-20 Privacy and context hygiene | D7, D8, D9, D16, D17; privacy by construction; observe-only hooks |
 | REQ-21 Performance and robustness | D1 cached assessment, D14 budget, error boundary, CI on three OSes |
 | REQ-22 Configuration | D20 |

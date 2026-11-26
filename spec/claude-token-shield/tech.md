@@ -2,11 +2,11 @@
 status: approved
 ---
 
-# Claude Token Shield Tech Stack
+# Token Shield Tech Stack
 
 ## Summary
 
-A Claude Code mod written in TypeScript against the engine's hooks-module API (`register.tsx`). Its decision logic lives in a pure TypeScript core with no engine dependencies. Companion Go binaries, stdlib only, provide the statusline bridge and the `cts` CLI. The TypeScript core and Go agree on results through shared JSON test cases ("parity fixtures"). Mod and companions share a local data directory of plain JSON files. Tests use the engine's own kit (`claude plugin test`) for hooks and UI, Vitest with V8 coverage for the TypeScript core, and `go test` for the companions.
+A Claude Code mod written in TypeScript against the engine's hooks-module API (`register.tsx`). Its decision logic lives in a pure TypeScript core with no engine dependencies. Companion Go binaries, stdlib only, provide the statusline bridge and the `tshield` CLI. The TypeScript core and Go agree on results through shared JSON test cases ("parity fixtures"). Mod and companions share a local data directory of plain JSON files. Tests use the engine's own kit (`claude plugin test`) for hooks and UI, Vitest with V8 coverage for the TypeScript core, and `go test` for the companions.
 
 ## Decisions
 
@@ -41,9 +41,9 @@ A Claude Code mod written in TypeScript against the engine's hooks-module API (`
 
 **Alternatives considered:** logic inline in the hooks, which would make it untestable without the engine and impossible to check for parity.
 
-### Companion binaries (statusline bridge and `cts`)
+### Companion binaries (statusline bridge and `tshield`)
 
-**Choice:** Go (current stable release), **standard library only**, one module with two commands: `cts-statusline` and `cts`. Cross-compiled for windows/amd64, windows/arm64, darwin/amd64, darwin/arm64, linux/amd64 and linux/arm64.
+**Choice:** Go (current stable release), **standard library only**, one module with two commands: `tshield-statusline` and `tshield`. Cross-compiled for windows/amd64, windows/arm64, darwin/amd64, darwin/arm64, linux/amd64 and linux/arm64.
 
 **Why:**
 - REQ-21.0.1 sets a statusline p95 of 50 ms. A Go binary starts in milliseconds with no runtime to install, and Claude Code's native installer doesn't guarantee Node is present.
@@ -60,13 +60,13 @@ The author chose Go, accepting that the assessor and cost model exist in two lan
 
 **Choice:** A `fixtures/parity/` folder of JSON cases, each pairing an input (snapshots, events, a price table, the current time) with the expected assessment and costs. The Vitest suite and the `go test` suite both run every case.
 
-**Why:** REQ-19.0.1 requires `cts` and the in-session views to show the same content, and REQ-18.0.1 requires the statusline to render the same segment without the mod. A divergence fails both suites, not just one.
+**Why:** REQ-19.0.1 requires `tshield` and the in-session views to show the same content, and REQ-18.0.1 requires the statusline to render the same segment without the mod. A divergence fails both suites, not just one.
 
 **Alternatives considered:** generating Go from TypeScript, or the reverse: brittle tooling for a small amount of logic.
 
 ### Native-signal bridge
 
-**Choice:** `cts-statusline` is configured as Claude Code's `statusLine.command`. On every run it:
+**Choice:** `tshield-statusline` is configured as Claude Code's `statusLine.command`. On every run it:
 1. reads the statusline JSON from stdin;
 2. writes the `prompt_cache`, `context_window.current_usage`, `rate_limits`, `model`, `effort`, `fast_mode` and `version` fields to the data directory, as one file per session written atomically (temp file, then rename);
 3. runs the user's previous statusline command, if any, passing the same stdin through, and prints its output unchanged;
@@ -83,7 +83,7 @@ The mod reads that snapshot file. Without the bridge, the mod falls back to its 
 
 ### Data storage
 
-**Choice:** Plain JSON files in `~/.claude-token-shield/`, overridable with `CTS_HOME`:
+**Choice:** Plain JSON files in `~/.token-shield/`, overridable with `TOKEN_SHIELD_HOME`:
 - per-session snapshot files, written by the bridge;
 - per-session, size-capped history chunk files, written by the mod through `$.fs.write`;
 - the mod's effective configuration, mirrored for the CLI to read;

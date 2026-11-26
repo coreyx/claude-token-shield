@@ -2,11 +2,11 @@
 status: approved
 ---
 
-# Requirements Specification: Claude Token Shield
+# Requirements Specification: Token Shield
 
 ## 1. Project Summary
 
-This spec covers the first public release of Claude Token Shield: a Claude Code mod, with a statusline script and a `cts` command-line tool as companions. It does four things:
+This spec covers the first public release of Token Shield: a Claude Code mod, with a statusline script and a `tshield` command-line tool as companions. It does four things:
 
 - Reads Claude Code's native prompt-cache signals and turns them into a trustworthy cache state.
 - Prices every cache lever available at the moment and recommends one.
@@ -191,7 +191,7 @@ Source: derived from the seed `cache-check-command.md` (probe mode), reworked by
 - **7.1**: `--probe` in an `UNCERTAIN` fixture shows both quoted costs and sends nothing until the user confirms.
 - **7.2**: A confirmed probe on a warm cache reports `cache_read_input_tokens` ≥ 95% of the prefix and a new expiry about one TTL later.
 - **7.3**: `--probe` in a `COLD`/`HIGH` fixture is declined with a reason; `--probe --force` proceeds to the confirmation step.
-- **7.4**: `cts check --probe` outside the mod explains that an exact-prefix probe needs the mod and makes no request.
+- **7.4**: `tshield check --probe` outside the mod explains that an exact-prefix probe needs the mod and makes no request.
 
 ### REQ-8: Status segment
 
@@ -388,19 +388,19 @@ Source: derived from the analysis design doc (§3.2) and the surface decision (m
 - **18.1**: With the mod disabled, the statusline command shows the segment for a `HOT` fixture payload.
 - **18.2**: Wrapping an existing command shows both outputs, the existing one unchanged.
 
-### REQ-19: `cts` command-line tool
+### REQ-19: `tshield` command-line tool
 
 **User Story**: As a power user, I want to check the cache and history from any terminal and from scripts, so that I can use Token Shield outside the session view.
 
 Source: derived from the analysis design doc (§3.2, §8.1).
 
-- **19.0.1 (Ubiquitous)**: The system shall provide `cts check`, `cts history` and `cts calibration` with the same content as the in-session views.
-- **19.0.2 (Ubiquitous)**: The system shall offer `--json` output for every `cts` command.
-- **19.0.3 (Ubiquitous)**: `cts check` shall exit with code 0 (`HOT`), 10 (`EXPIRING`), 20 (`UNCERTAIN`), 30 (`INVALIDATED`), 40 (`COLD`) or 50 (`UNKNOWN`).
+- **19.0.1 (Ubiquitous)**: The system shall provide `tshield check`, `tshield history` and `tshield calibration` with the same content as the in-session views.
+- **19.0.2 (Ubiquitous)**: The system shall offer `--json` output for every `tshield` command.
+- **19.0.3 (Ubiquitous)**: `tshield check` shall exit with code 0 (`HOT`), 10 (`EXPIRING`), 20 (`UNCERTAIN`), 30 (`INVALIDATED`), 40 (`COLD`) or 50 (`UNKNOWN`).
 
 #### Acceptance Criteria
-- **19.1**: `cts check --json` output validates against the published schema.
-- **19.2**: `cts check` exits with the code matching each state's fixture.
+- **19.1**: `tshield check --json` output validates against the published schema.
+- **19.2**: `tshield check` exits with the code matching each state's fixture.
 
 ### REQ-20: Privacy and context hygiene
 

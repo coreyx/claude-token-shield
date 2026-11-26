@@ -1,4 +1,6 @@
-# Product: Claude Token Shield
+# Product: Token Shield
+
+Token Shield is the product. This repository, `claude-token-shield`, is its implementation for Claude Code.
 
 ## Problem and motivation
 

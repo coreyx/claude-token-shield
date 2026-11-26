@@ -2,7 +2,7 @@
 status: approved
 ---
 
-# Implementation Tasks: Claude Token Shield
+# Implementation Tasks: Token Shield
 
 This document defines the implementation plan as a numbered checklist. Each task is linked to one or more acceptance criteria from [`requirements.md`](./requirements.md). The architecture, decisions (D1–D20) and interfaces the tasks build are in [`design.md`](./design.md). The stack and tools are in [`tech.md`](./tech.md).
 
@@ -21,10 +21,10 @@ The repository builds and tests on three platforms, the shared data files exist,
 - [ ] **TASK-1: Create the repository skeleton**
   - **Associated Acceptance Criteria**: none (project setup)
   - **Concrete Steps**:
-    1. Create `plugin/.claude-plugin/plugin.json` (name `claude-token-shield`, version `0.1.0`, `types`, empty `userConfig`), `plugin/hooks/hooks.json`, a `plugin/hooks/register.tsx` that registers nothing yet, and `plugin/types/index.d.ts`.
+    1. Create `plugin/.claude-plugin/plugin.json` (name `token-shield`, version `0.1.0`, `types`, empty `userConfig`), `plugin/hooks/hooks.json`, a `plugin/hooks/register.tsx` that registers nothing yet, and `plugin/types/index.d.ts`.
     2. Create the root `package.json` (development dependencies only: TypeScript, Vitest, `@vitest/coverage-v8`), `tsconfig.json` extending the engine's generated config, and `vitest.config.ts` with coverage thresholds: critical modules (`assess`, `cost`, `gate`, `recommend`) 90% lines and branches, `core/` overall 80% lines and 70% branches.
-    3. Create `go.mod` at the repo root, `embed.go` (package `ctsdata`, embedding `plugin/data/*.json`), and empty `cmd/cts`, `cmd/cts-statusline` and `internal/` packages that build.
-    4. Add `LICENSE` (MIT), a README stub, `.gitignore` (binaries, coverage, `node_modules`), and `.gitattributes` (LF for `bin/cts`).
+    3. Create `go.mod` at the repo root, `embed.go` (package `shielddata`, embedding `plugin/data/*.json`), and empty `cmd/tshield`, `cmd/tshield-statusline` and `internal/` packages that build.
+    4. Add `LICENSE` (MIT), a README stub, `.gitignore` (binaries, coverage, `node_modules`), and `.gitattributes` (LF for `bin/tshield`).
     5. Verify: `tsc -p plugin`, `claude plugin validate plugin`, `npx vitest run` and `go build ./...` all succeed.
 
 - [ ] **TASK-2: Confirm the engine assumptions with spikes**
@@ -36,7 +36,7 @@ The repository builds and tests on three platforms, the shared data files exist,
        - a toast or band visible while that confirmation is open;
        - `$.prompt.fill` after `{ drop }`;
        - `statusLine.refreshInterval` keeping the statusline running while idle (and its unit);
-       - `$.process.run` inheriting `HOME`/`USERPROFILE` and `CTS_HOME`;
+       - `$.process.run` inheriting `HOME`/`USERPROFILE` and `TOKEN_SHIELD_HOME`;
        - `/cache-check`-style display-only text answered mid-turn.
     3. Record each result, with the version tested and the fallback chosen if the assumption failed, in `spec/claude-token-shield/spikes.md`. Use structure only: no session content, paths or usernames.
     4. If a result needs a change beyond the design's documented fallback, stop and raise it before continuing.
@@ -116,7 +116,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     3. Write golden files under `fixtures/render/` for the segment in every state and for the check at 80 and 120 columns in both glyph sets.
     4. Test: `HOT` reads like `● cache HOT · 812k · warm until 16:40`; `COLD` includes the rebuild cost; ASCII gives `[cache HOT 812k ->16:40]`; `--diff` after a model switch names it; verbose includes the timeline and both expiry values.
 
-### Milestone 3: The statusline bridge and `cts check` work without the mod
+### Milestone 3: The statusline bridge and `tshield check` work without the mod
 
 The Go companions produce the same assessment, costs and text as the core, write native snapshots, and wrap the user's existing statusline.
 
@@ -130,12 +130,12 @@ The Go companions produce the same assessment, costs and text as the core, write
 - [ ] **TASK-13: Build the data-directory store, launchers and self-install**
   - **Associated Acceptance Criteria**: none (infrastructure for the bridge, the CLI and the mod's binary resolution)
   - **Concrete Steps**:
-    1. Implement `internal/store`: data-directory resolution (`CTS_HOME`, else the user's home), atomic replace (temp file, then rename, retried on Windows sharing violations), JSONL append with size rotation, and the lock files.
-    2. Implement `cts paths --json`, `cts version --json` and `cts self-install` (copy both binaries to `<data>/bin/`, renaming the old ones aside first on Windows).
-    3. Write the `bin/cts` (POSIX sh) and `bin/cts.cmd` launchers that pick `bin/<os>-<arch>/` binaries.
+    1. Implement `internal/store`: data-directory resolution (`TOKEN_SHIELD_HOME`, else the user's home), atomic replace (temp file, then rename, retried on Windows sharing violations), JSONL append with size rotation, and the lock files.
+    2. Implement `tshield paths --json`, `tshield version --json` and `tshield self-install` (copy both binaries to `<data>/bin/`, renaming the old ones aside first on Windows).
+    3. Write the `bin/tshield` (POSIX sh) and `bin/tshield.cmd` launchers that pick `bin/<os>-<arch>/` binaries.
     4. Test atomic writes under concurrent readers, rotation, and self-install over a running binary on Windows.
 
-- [ ] **TASK-14: Build the `cts-statusline` bridge**
+- [ ] **TASK-14: Build the `tshield-statusline` bridge**
   - **Associated Acceptance Criteria**: `8.3`, `18.1`, `18.2`, `21.1`
   - **Concrete Steps**:
     1. Read stdin (≤ 1 MiB), parse the documented fields, write `sessions/<id>/snapshot.json` atomically, and append to `snapshots.jsonl` only when a tracked field changed.
@@ -144,20 +144,20 @@ The Go companions produce the same assessment, costs and text as the core, write
     4. Fail open: any error still runs the wrapped command and exits 0, logging to `logs/companions.log`.
     5. Test with a fixture wrapped command and with the mod heartbeat present and absent. Add `go test -bench` on a 1M-token-session payload, asserting p95 ≤ 50 ms excluding the wrapped command.
 
-- [ ] **TASK-15: Build `cts check`**
+- [ ] **TASK-15: Build `tshield check`**
   - **Associated Acceptance Criteria**: `7.4`, `19.1`, `19.2`
   - **Concrete Steps**:
-    1. Implement `cts check [--verbose|--diff] [--session <id>] [--json]`, assessing from the newest (or named) session's snapshot plus its history, and naming in verbose output the events only the mod sees.
+    1. Implement `tshield check [--verbose|--diff] [--session <id>] [--json]`, assessing from the newest (or named) session's snapshot plus its history, and naming in verbose output the events only the mod sees.
     2. Map states to exit codes 0/10/20/30/40/50.
     3. Make `--probe` explain that an exact-prefix probe needs the mod, and make no request.
     4. Test: `--json` validates against `schemas/check.schema.json`; each state fixture exits with its code; `--probe` makes no network call.
 
-- [ ] **TASK-16: Build `cts setup` for the bridge**
+- [ ] **TASK-16: Build `tshield setup` for the bridge**
   - **Associated Acceptance Criteria**: `8.3`
   - **Concrete Steps**:
-    1. Implement `cts setup`: show the current and the new `statusLine` value, ask for confirmation, run `self-install`, save the previous command to `bridge.json`, and write `statusLine.command` and `refreshInterval` (as TASK-2 confirmed) into the user settings, aborting if the file changed since it was shown.
+    1. Implement `tshield setup`: show the current and the new `statusLine` value, ask for confirmation, run `self-install`, save the previous command to `bridge.json`, and write `statusLine.command` and `refreshInterval` (as TASK-2 confirmed) into the user settings, aborting if the file changed since it was shown.
     2. Detect a managed setting that owns `statusLine` and report it without writing.
-    3. Implement `cts setup --undo`, which restores the saved command.
+    3. Implement `tshield setup --undo`, which restores the saved command.
     4. Test setup and undo against fixture settings files, including an existing statusline command and a managed lock.
 
 ### Milestone 4: The mod shows the cache state in session
@@ -169,7 +169,7 @@ With the mod loaded, the status segment, band, toasts and `/cache-check` work fr
   - **Concrete Steps**:
     1. Wrap every hook registration so an exception returns `next(e)` (or the default render) and logs once per error kind through `$.ui.log`.
     2. Declare the `userConfig` fields from design D20. Validate them on `session.start` and `config.set`, show one toast per invalid key, and mirror the effective config to `config.json`.
-    3. Resolve the platform binary once per session through `$.process.run` and the data directory through `cts paths --json`, falling back to `CLAUDE_PLUGIN_DATA` with bridge and CLI features marked unavailable. Run `self-install` when the installed version differs.
+    3. Resolve the platform binary once per session through `$.process.run` and the data directory through `tshield paths --json`, falling back to `CLAUDE_PLUGIN_DATA` with bridge and CLI features marked unavailable. Run `self-install` when the installed version differs.
     4. Read the session version and disable cache features below 2.1.260 with a message naming that version.
     5. Write the `$.state` contract in `plugin/types/index.d.ts`. Test that a forced exception in the assessor leaves prompts submitting and writes one debug-log entry, and that an invalid threshold toasts its name and applies the default.
 
@@ -197,7 +197,7 @@ With the mod loaded, the status segment, band, toasts and `/cache-check` work fr
     1. Register `/cache-check` and parse its arguments (`--verbose`, `--diff`, `--probe`, `--force`, `history …`, `setup`, `keepalive …`, `ttl`, `forget`), dispatching subcommands built in later tasks.
     2. Answer `{ text, isTextDisplayOnly: true }` without calling `next(e)`. While a main turn runs, answer with empty text and open the pane instead (design D7).
     3. Place a display-only lever bar under the output with the applicable command levers.
-    4. Add `/cache-check setup`, which calls the same setup flow as `cts setup` through the confirm band.
+    4. Add `/cache-check setup`, which calls the same setup flow as `tshield setup` through the confirm band.
     5. Test: the answer is display-only in both idle and mid-turn cases; the command makes no model call; verbose output carries tier tags, the timeline and both expiry values; `--diff` after a model switch names it.
 
 ### Milestone 5: The user can act on advice safely
@@ -254,13 +254,13 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
 
 ### Milestone 6: History, calibration and advice are measurable
 
-History, calibration, the advice report, the TTL advisor and the baseline work in the mod and in `cts`, with identical numbers in both.
+History, calibration, the advice report, the TTL advisor and the baseline work in the mod and in `tshield`, with identical numbers in both.
 
 - [ ] **TASK-27: Build history summaries and the history views**
   - **Associated Acceptance Criteria**: `6.5`, `14.1`, `14.2`
   - **Concrete Steps**:
     1. Implement `summarize` in TypeScript and Go: per-turn rows, spend by cause (TTL expiry, model/effort/speed switch, tools, compaction, server-side per Claude Code, unexplained), avoidable spend (expiry re-caches with a return within 2× TTL, invalidating actions taken while warm), and the filters (`--session`, `--all`, `--since`, `--misses`).
-    2. Add `/cache-check history` and `cts history` with `--json`, reading chunks within the window and skipping unreadable or newer-schema chunks with a count in the footer.
+    2. Add `/cache-check history` and `tshield history` with `--json`, reading chunks within the window and skipping unreadable or newer-schema chunks with a count in the footer.
     3. Add parity cases. Test that per-cause spend sums to the total, that a 70-minute gap on a 1h TTL is avoidable while a 3-hour gap is not, and that `--since 7d --misses` lists only misses from the last 7 days.
 
 - [ ] **TASK-28: Build calibration and the drift alarm**
@@ -269,7 +269,7 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
     1. Record the assessment that preceded each main request, and fill its actual outcome when the request lands.
     2. Implement `calibrate` in TypeScript and Go: buckets, Wilson intervals, reliability table, Brier score overall and per version × model × TTL, and drift detection with interval widening (design D19).
     3. Feed calibrated `ε` and intervals back into the assessor at session start (in the background, off the render path), and raise one critical toast per drift episode.
-    4. Add `cts calibration` and `history --calibration`. Test that table counts match the recorded predictions, and that a fixture with `HOT` misses above the interval raises exactly one alert.
+    4. Add `tshield calibration` and `history --calibration`. Test that table counts match the recorded predictions, and that a fixture with `HOT` misses above the interval raises exactly one alert.
 
 - [ ] **TASK-29: Build recommendation records and the advice report**
   - **Associated Acceptance Criteria**: `4.5`, `14.5`
@@ -283,15 +283,15 @@ History, calibration, the advice report, the TTL advisor and the baseline work i
   - **Concrete Steps**:
     1. Implement `adviseTtl` in TypeScript and Go: compare re-cache costs under 5m and 1h across the recorded idle-gap distribution, separately for the main conversation and subagents, and require at least 10 sessions with 20 idle gaps per bucket.
     2. Include the billing explanation (subscriptions use 1h within plan usage, 5m on usage credits).
-    3. Add `/cache-check ttl` and `cts ttl`, offering the TTL setting lever through TASK-21's settings writer.
+    3. Add `/cache-check ttl` and `tshield ttl`, offering the TTL setting lever through TASK-21's settings writer.
     4. Test: a fixture with gaps mostly between 10 and 50 minutes on an API key recommends 1h with the estimated savings; a small fixture shows "not enough data".
 
 - [ ] **TASK-31: Build backfill, the baseline, pruning and deletion**
   - **Associated Acceptance Criteria**: `14.6`, `20.3`
   - **Concrete Steps**:
-    1. Implement `cts backfill` per design D17: incremental per-file cursors, numbers-only extraction picked by key, `backfill/` chunks under a lock, and a coverage report for unparsable lines.
+    1. Implement `tshield backfill` per design D17: incremental per-file cursors, numbers-only extraction picked by key, `backfill/` chunks under a lock, and a coverage report for unparsable lines.
     2. Compute the pre-install baseline of avoidable spend per week, and show it beside the current figure in the history summary.
-    3. Implement `cts prune` and pruning on mod start (`historyDays`), plus `cts forget` and `/cache-check forget` (with confirmation) deleting `history/`, `sessions/` and `backfill/`.
+    3. Implement `tshield prune` and pruning on mod start (`historyDays`), plus `tshield forget` and `/cache-check forget` (with confirmation) deleting `history/`, `sessions/` and `backfill/`.
     4. Offer backfill once after setup, running only on the user's yes.
     5. Test with synthetic transcripts that no text field reaches a record, that the store sits under the data directory, and that forget leaves the history store empty.
 
@@ -359,8 +359,8 @@ Privacy, performance and coverage are verified, the manual checks are done, and 
   - **Concrete Steps**:
     1. Add `.claude-plugin/marketplace.json` and `.github/workflows/release.yml`: cross-compile both binaries for six targets into `plugin/bin/<os>-<arch>/`, commit them to the release branch, and attach them to a GitHub Release.
     2. Verify that a marketplace entry can point at the release branch. If not, switch to the tech.md fallback (binaries from GitHub Releases plus a one-time setup step the mod explains).
-    3. Write the README: install line, setup, commands, surfaces, privacy statement and uninstall (`cts setup --undo`).
-    4. Install from the marketplace on a clean machine on each platform and confirm the mod loads, `cts` runs from the Bash tool, and setup wires the bridge.
+    3. Write the README: install line, setup, commands, surfaces, privacy statement and uninstall (`tshield setup --undo`).
+    4. Install from the marketplace on a clean machine on each platform and confirm the mod loads, `tshield` runs from the Bash tool, and setup wires the bridge.
     5. Before pushing or publishing, run the privacy scan of outgoing commits and text, and confirm the commit email is a GitHub noreply address.
 
 - [ ] **TASK-40: Run the manual acceptance checks**
