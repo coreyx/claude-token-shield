@@ -78,7 +78,7 @@ The repository builds and tests on three platforms, the shared data files exist,
     4. Add the display-cap formatter (`≥ 99%`, `≤ 1%`, no percentage in `UNKNOWN`).
     5. Test one fixture per state (and that it yields no other state), the no-op events (MCP config edit, CLAUDE.md edit), a model switch, and effort changes on Sonnet 5 versus Opus 5.5 with subscription and API-key auth.
 
-- [ ] **TASK-7: Implement the cost model and billing modes**
+- [x] **TASK-7: Implement the cost model and billing modes**
   - **Associated Acceptance Criteria**: `3.1`, `3.2`, `3.3`, `3.4`, `3.5`
   - **Concrete Steps**:
     1. Implement `nextTurnCost` with tiered and per-provider prices from the table in effect at the request's date, warm, cold and penalty, excluding output, tool loops and subagents.
