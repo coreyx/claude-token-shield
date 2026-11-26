@@ -1,0 +1,15 @@
+{
+  "//": "Type-checks the engine-independent core and its Vitest tests. The hooks module is checked by plugin/tsconfig.json, which needs the engine's generated types.",
+  "compilerOptions": {
+    "target": "es2023",
+    "lib": ["es2023"],
+    "types": [],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["plugin/core", "tests", "vitest.config.ts"]
+}

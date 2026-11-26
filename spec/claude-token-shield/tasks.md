@@ -18,7 +18,7 @@ Conventions for every task:
 
 The repository builds and tests on three platforms, the shared data files exist, and the engine behaviors the design assumes are confirmed or replaced by their documented fallbacks.
 
-- [ ] **TASK-1: Create the repository skeleton**
+- [x] **TASK-1: Create the repository skeleton**
   - **Associated Acceptance Criteria**: none (project setup)
   - **Concrete Steps**:
     1. Create `plugin/.claude-plugin/plugin.json` (name `token-shield`, version `0.1.0`, `types`, empty `userConfig`), `plugin/hooks/hooks.json`, a `plugin/hooks/register.tsx` that registers nothing yet, and `plugin/types/index.d.ts`.

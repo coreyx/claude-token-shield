@@ -1,0 +1,9 @@
+# Normalize to LF everywhere: shared fixtures and golden render files are
+# compared byte for byte by both the TypeScript and the Go test suites.
+* text=auto eol=lf
+
+# Windows launchers need CRLF to run under cmd.exe.
+*.cmd text eol=crlf
+
+*.exe binary
+*.png binary

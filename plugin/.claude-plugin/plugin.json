@@ -1,0 +1,10 @@
+{
+  "name": "token-shield",
+  "version": "0.1.0",
+  "description": "Prompt-cache awareness for long Claude Code sessions: trustworthy cache state, priced levers, and guards before expensive rebuilds.",
+  "author": { "name": "coreyx" },
+  "homepage": "https://github.com/coreyx/claude-token-shield",
+  "repository": "https://github.com/coreyx/claude-token-shield",
+  "license": "MIT",
+  "types": "./types/index.d.ts"
+}

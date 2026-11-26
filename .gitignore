@@ -1,0 +1,20 @@
+# Node tooling (development only)
+node_modules/
+coverage/
+
+# Engine-written type declarations, laid beside the mod on each load
+plugin/.claude-plugin/types/
+
+# Platform binaries: built by CI onto the release branch, never committed to main
+plugin/bin/*-*/
+dist/
+
+# Go
+*.test
+*.out
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
