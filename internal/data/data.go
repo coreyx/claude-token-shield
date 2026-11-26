@@ -111,10 +111,14 @@ type Rules struct {
 		} `json:"mayEvent"`
 		MinCalibrationN int `json:"minCalibrationN"`
 	} `json:"priors"`
-	Display struct {
-		MaxProb float64 `json:"maxProb"`
-		MinProb float64 `json:"minProb"`
-	} `json:"display"`
+	Display Display `json:"display"`
+}
+
+// Display holds the display caps: no probability is shown above MaxProb or
+// below MinProb (REQ-2.0.6).
+type Display struct {
+	MaxProb float64 `json:"maxProb"`
+	MinProb float64 `json:"minProb"`
 }
 
 // CatalogString is one catalog entry; Tense is "future", "past" or "none".

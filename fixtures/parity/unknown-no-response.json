@@ -1,0 +1,129 @@
+{
+  "tzOffsetMin": 0,
+  "env": {
+    "provider": "firstParty",
+    "toolSearch": true,
+    "experimentalBetasDisabled": false
+  },
+  "mode": "default",
+  "width": 100,
+  "glyphs": "unicode",
+  "name": "unknown-no-response",
+  "now": 1767282722000,
+  "facts": [
+    {
+      "kind": "snapshot",
+      "receivedAt": 1767282720000,
+      "payload": {
+        "cwd": "/home/example/project",
+        "session_id": "11111111-2222-3333-4444-555555555555",
+        "session_name": "example session title",
+        "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+        "model": {
+          "id": "claude-opus-5-5",
+          "display_name": "Opus"
+        },
+        "workspace": {
+          "current_dir": "/home/example/project",
+          "project_dir": "/home/example/project",
+          "added_dirs": []
+        },
+        "version": "2.1.332",
+        "output_style": {
+          "name": "default"
+        },
+        "cost": {
+          "total_cost_usd": 1.5,
+          "total_duration_ms": 1000,
+          "total_api_duration_ms": 500,
+          "total_lines_added": 1,
+          "total_lines_removed": 0
+        },
+        "context_window": {
+          "total_input_tokens": 812470,
+          "total_output_tokens": 900,
+          "context_window_size": 1000000,
+          "used_percentage": 81,
+          "remaining_percentage": 19,
+          "current_usage": {
+            "input_tokens": 12,
+            "output_tokens": 900,
+            "cache_creation_input_tokens": 3000,
+            "cache_read_input_tokens": 809458
+          }
+        },
+        "exceeds_200k_tokens": true,
+        "fast_mode": false,
+        "effort": {
+          "level": "high"
+        },
+        "thinking": {
+          "enabled": true
+        }
+      }
+    }
+  ],
+  "expect": {
+    "view": {
+      "v": 1,
+      "mode": "default",
+      "at": 1767282722000,
+      "state": "UNKNOWN",
+      "pHit": null,
+      "interval": null,
+      "confidence": "LOW",
+      "lowEvidence": true,
+      "stale": false,
+      "unknownReason": "no_response",
+      "ttl": {
+        "value": null,
+        "tier": "absent"
+      },
+      "expiresAt": {
+        "value": null,
+        "tier": "absent"
+      },
+      "remainingSec": null,
+      "expiry": {
+        "native": null,
+        "shield": null,
+        "driftSec": null
+      },
+      "prefixTokens": {
+        "value": null,
+        "tier": "absent"
+      },
+      "lastRequest": null,
+      "session": {
+        "requests": null,
+        "hitRatio": null,
+        "misses": null,
+        "lastMiss": null
+      },
+      "pending": [],
+      "cost": null,
+      "billing": "api",
+      "levers": [],
+      "recommendation": {
+        "lever": "none",
+        "reasonKey": "recommend.none.unknown",
+        "params": {
+          "reason": "no_response"
+        },
+        "probeHint": false
+      },
+      "drivers": [
+        {
+          "key": "driver.no_response",
+          "params": {},
+          "tier": "measured"
+        }
+      ],
+      "timeline": null,
+      "diff": null
+    },
+    "segment": "? cache UNKNOWN · no response yet",
+    "check": "Cache  UNKNOWN  · no response yet\n────────────────────────────────────────────────────────────────────────────────────────────────────\n\n→ No recommendation: no response yet.",
+    "exitCode": 50
+  }
+}

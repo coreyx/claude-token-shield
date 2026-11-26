@@ -62,8 +62,12 @@ jobs:
       - name: go vet
         run: go vet ./...
 
-      - name: go test with coverage
-        run: go test -cover ./...
+      # The parity fixtures run from internal/render and exercise every internal
+      # package, so coverage is measured across all of them together.
+      - name: go test with coverage (parity included)
+        run: |
+          go test -coverpkg=./internal/... -coverprofile=coverage.out ./...
+          go tool cover -func=coverage.out | tail -1
 
       # Validation reads the manifest and module offline; it needs no sign-in.
       # The hooks module itself is type-checked by validate here: tsc against

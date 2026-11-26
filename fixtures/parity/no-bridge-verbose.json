@@ -1,0 +1,345 @@
+{
+  "tzOffsetMin": 0,
+  "env": {
+    "provider": "firstParty",
+    "toolSearch": true,
+    "experimentalBetasDisabled": false
+  },
+  "mode": "verbose",
+  "width": 100,
+  "glyphs": "unicode",
+  "name": "no-bridge-verbose",
+  "now": 1767282722000,
+  "defaultModel": "claude-opus-5-5",
+  "facts": [
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767276131000",
+        "lane": "main",
+        "tsStart": 1767276131000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 0,
+          "write5m": 0,
+          "write1h": 40000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767276220000",
+        "lane": "main",
+        "tsStart": 1767276220000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 40000,
+          "write5m": 0,
+          "write1h": 6000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767280367000",
+        "lane": "main",
+        "tsStart": 1767280367000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 46000,
+          "write5m": 0,
+          "write1h": 300000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767282002000",
+        "lane": "main",
+        "tsStart": 1767282002000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 346000,
+          "write5m": 0,
+          "write1h": 3000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    }
+  ],
+  "expect": {
+    "view": {
+      "v": 1,
+      "mode": "verbose",
+      "at": 1767282722000,
+      "state": "HOT",
+      "pHit": 0.995,
+      "interval": [
+        0.985,
+        0.9975
+      ],
+      "confidence": "MEDIUM",
+      "lowEvidence": true,
+      "stale": false,
+      "unknownReason": null,
+      "ttl": {
+        "value": "1h",
+        "tier": "measured"
+      },
+      "expiresAt": {
+        "value": 1767285602000,
+        "tier": "inferred"
+      },
+      "remainingSec": 2880,
+      "expiry": {
+        "native": null,
+        "shield": 1767285602000,
+        "driftSec": null
+      },
+      "prefixTokens": {
+        "value": 350100,
+        "tier": "inferred"
+      },
+      "lastRequest": {
+        "tsStart": 1767282002000,
+        "tier": "measured"
+      },
+      "session": {
+        "requests": null,
+        "hitRatio": null,
+        "misses": null,
+        "lastMiss": null
+      },
+      "pending": [],
+      "cost": {
+        "tokens": 350100,
+        "warmUsd": 0.07002,
+        "coldUsd": 2.8007999999999997,
+        "showDollars": true,
+        "dollarLabel": "cost.api_equivalent",
+        "priceDate": "2026-11-03",
+        "tailTier": "estimated",
+        "planShare": null
+      },
+      "billing": "api",
+      "levers": [
+        {
+          "lever": "continue",
+          "nowUsd": 0.08367390000000001,
+          "nowTokens": 350100,
+          "horizonUsd": 0.4337739,
+          "effectKey": "effect.unchanged",
+          "whenKey": "lever.continue.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "compact",
+          "nowUsd": 1.1826463999999999,
+          "nowTokens": 68008,
+          "horizonUsd": 1.2506544,
+          "effectKey": "effect.compact",
+          "whenKey": "lever.compact.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "clear",
+          "nowUsd": 0.32,
+          "nowTokens": 40000,
+          "horizonUsd": 0.36,
+          "effectKey": "effect.clear",
+          "whenKey": "lever.clear.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "rewind",
+          "nowUsd": 0.0693,
+          "nowTokens": 346500,
+          "horizonUsd": 0.41580000000000006,
+          "effectKey": "effect.rewind",
+          "whenKey": "lever.rewind.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "recap",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.none",
+          "whenKey": "lever.recap.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "btw",
+          "nowUsd": 0.07002,
+          "nowTokens": 350100,
+          "horizonUsd": 0.07002,
+          "effectKey": "effect.none",
+          "whenKey": "lever.btw.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "keepalive",
+          "nowUsd": 0.07002,
+          "nowTokens": 350100,
+          "horizonUsd": 0.07002,
+          "effectKey": "effect.keepalive",
+          "whenKey": "lever.keepalive.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "probe",
+          "nowUsd": 0.08367390000000001,
+          "nowTokens": 350100,
+          "horizonUsd": 0.08367390000000001,
+          "effectKey": "effect.probe",
+          "whenKey": "lever.probe.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "ttl",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.ttl",
+          "whenKey": "lever.ttl.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "model",
+          "nowUsd": 2.8007999999999997,
+          "nowTokens": 350100,
+          "horizonUsd": 2.8007999999999997,
+          "effectKey": "effect.rebuild",
+          "whenKey": "lever.model.when",
+          "tier": "estimated",
+          "recommended": false
+        }
+      ],
+      "recommendation": {
+        "lever": "none",
+        "reasonKey": "recommend.none.hot",
+        "params": {
+          "expiresAt": 1767285602000
+        },
+        "probeHint": false
+      },
+      "drivers": [
+        {
+          "key": "driver.ttl",
+          "params": {
+            "ttl": "1h",
+            "source": "request"
+          },
+          "tier": "measured"
+        },
+        {
+          "key": "driver.expiry",
+          "params": {
+            "source": "shield"
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.remaining",
+          "params": {
+            "seconds": 2880,
+            "margin": 17
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.pending_none",
+          "params": {},
+          "tier": "measured"
+        },
+        {
+          "key": "driver.native_unavailable",
+          "params": {},
+          "tier": "measured"
+        },
+        {
+          "key": "driver.eps",
+          "params": {
+            "eps": 0.005,
+            "n": 0,
+            "evidence": "low"
+          },
+          "tier": "estimated"
+        }
+      ],
+      "timeline": [
+        {
+          "tsStart": 1767276131000,
+          "gapSec": null,
+          "read": 0,
+          "write": 40000,
+          "input": 500,
+          "outcome": "COLD_START"
+        },
+        {
+          "tsStart": 1767276220000,
+          "gapSec": 89,
+          "read": 40000,
+          "write": 6000,
+          "input": 500,
+          "outcome": "PARTIAL"
+        },
+        {
+          "tsStart": 1767280367000,
+          "gapSec": 4147,
+          "read": 46000,
+          "write": 300000,
+          "input": 500,
+          "outcome": "PARTIAL"
+        },
+        {
+          "tsStart": 1767282002000,
+          "gapSec": 1635,
+          "read": 346000,
+          "write": 3000,
+          "input": 500,
+          "outcome": "HIT"
+        }
+      ],
+      "diff": null
+    },
+    "segment": "● cache HOT · 350k · warm until 16:40",
+    "check": "Cache  HOT  · expected read ≥ 99% (98.5%–99.8%) · confidence MEDIUM\n────────────────────────────────────────────────────────────────────────────────────────────────────\nLast request   15:40:02 (12m ago)                                                         [measured]\nTTL            1 hour → warm until 16:40                                                  [inferred]\nExpiry         Claude Code unknown · Token Shield 16:40:02 · drift 0s                     [inferred]\nPrefix         350,100 tokens                                                             [inferred]\nSession        no native session data                                                     [measured]\nPending        none                                                                       [measured]\nNext turn      warm ≈ $0.07 · cold ≈ $2.80                                               [estimated]\n               API-equivalent, prices 2026-11-03                                          [measured]\n\nLevers\n                 continue               now $0.08 · next 5 turns $0.43                   [estimated]\n                   prefix unchanged\n                 /compact               now $1.18 · next 5 turns $1.25                   [estimated]\n                   prefix shrinks to the system layer plus a summary\n                 /clear                 now $0.32 · next 5 turns $0.36                   [estimated]\n                   prefix shrinks to the system layer; the conversation is gone\n                 /rewind                now $0.07 · next 5 turns $0.42                    [inferred]\n                   prefix shrinks to that earlier point\n                 /recap                 now $0.00                                         [inferred]\n                   no effect on the prefix\n                 /btw                   now $0.07                                        [estimated]\n                   no effect on the prefix\n                 keep-alive             now $0.07                                        [estimated]\n                   keeps the cache warm until the end time\n                 probe                  now $0.08                                        [estimated]\n                   measures the cache and refreshes its expiry\n                 TTL setting            now $0.00                                        [estimated]\n                   changes the lifetime of later cache writes\n                 model / effort / fast  now $2.80                                        [estimated]\n                   rebuilds the prefix on the new setting\n\nTimeline (main conversation)\n               start     gap      read     write    input   outcome\n               14:02:11  -        0        40,000   500     first write                   [measured]\n               14:03:40  1m 29s   40,000   6,000    500     partial                       [measured]\n               15:12:47  1h 09m   46,000   300,000  500     partial                       [measured]\n               15:40:02  27m 15s  346,000  3,000    500     hit                           [measured]\n\nRationale\n               1. ttl 1h (request)                                                        [measured]\n               2. expiry from shield                                                      [inferred]\n               3. 2880s remaining, margin 17s                                             [inferred]\n               4. no pending events since the last request                                [measured]\n               5. native cache data unavailable; using Token Shield's own observations    [measured]\n               6. ε 0.005 (low evidence, n=0)                                            [estimated]\nCalibration    priors only (n=0, LOW evidence)                                           [estimated]\n\n→ No action needed: warm until 16:40.                                                    [estimated]",
+    "exitCode": 0
+  }
+}

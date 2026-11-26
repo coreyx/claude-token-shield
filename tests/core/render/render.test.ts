@@ -11,7 +11,7 @@ import { renderSegment } from '../../../plugin/core/render/segment'
 import type { RenderOptions } from '../../../plugin/core/render/segment'
 import { outcome } from '../../../plugin/core/view/view'
 import { repoFile, rules, strings } from '../helpers'
-import { build, STATES } from './scenarios'
+import { build, scenarioInput, STATES } from './scenarios'
 
 const base = { strings, display: rules.display, tzOffsetMin: 0 }
 const seg = (glyphs = UNICODE, billing: RenderOptions['billing'] = 'api'): RenderOptions => ({ ...base, glyphs, billing })
@@ -28,6 +28,13 @@ function golden(name: string, text: string): void {
   }
   expect(`${text}\n`).toBe(readFileSync(path, 'utf8'))
 }
+
+describe('shared scenario inputs', () => {
+  it('match fixtures/render/scenarios.json, which the Go renderer rebuilds the goldens from', () => {
+    const inputs = Object.fromEntries(STATES.map(s => [s, scenarioInput(s)]))
+    golden('scenarios.json', JSON.stringify(inputs, null, 2))
+  })
+})
 
 describe('renderSegment', () => {
   it('reads like the mockup in HOT (AC 8.1)', () => {

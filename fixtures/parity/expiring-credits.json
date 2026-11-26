@@ -1,0 +1,396 @@
+{
+  "tzOffsetMin": 0,
+  "env": {
+    "provider": "firstParty",
+    "toolSearch": true,
+    "experimentalBetasDisabled": false
+  },
+  "mode": "default",
+  "width": 100,
+  "glyphs": "unicode",
+  "name": "expiring-credits",
+  "now": 1767282272000,
+  "facts": [
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767276131000",
+        "lane": "main",
+        "tsStart": 1767276131000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 0,
+          "write5m": 40000,
+          "write1h": 0,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767276220000",
+        "lane": "main",
+        "tsStart": 1767276220000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 40000,
+          "write5m": 6000,
+          "write1h": 0,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767280367000",
+        "lane": "main",
+        "tsStart": 1767280367000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 46000,
+          "write5m": 300000,
+          "write1h": 0,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767282002000",
+        "lane": "main",
+        "tsStart": 1767282002000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "5m",
+        "usage": {
+          "input": 500,
+          "read": 346000,
+          "write5m": 3000,
+          "write1h": 0,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "snapshot",
+      "receivedAt": 1767282270000,
+      "payload": {
+        "cwd": "/home/example/project",
+        "session_id": "11111111-2222-3333-4444-555555555555",
+        "session_name": "example session title",
+        "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+        "model": {
+          "id": "claude-opus-5-5",
+          "display_name": "Opus"
+        },
+        "workspace": {
+          "current_dir": "/home/example/project",
+          "project_dir": "/home/example/project",
+          "added_dirs": []
+        },
+        "version": "2.1.332",
+        "output_style": {
+          "name": "default"
+        },
+        "cost": {
+          "total_cost_usd": 1.5,
+          "total_duration_ms": 1000,
+          "total_api_duration_ms": 500,
+          "total_lines_added": 1,
+          "total_lines_removed": 0
+        },
+        "context_window": {
+          "total_input_tokens": 812470,
+          "total_output_tokens": 900,
+          "context_window_size": 1000000,
+          "used_percentage": 81,
+          "remaining_percentage": 19,
+          "current_usage": {
+            "input_tokens": 12,
+            "output_tokens": 900,
+            "cache_creation_input_tokens": 3000,
+            "cache_read_input_tokens": 809458
+          }
+        },
+        "exceeds_200k_tokens": true,
+        "prompt_cache": {
+          "warm": true,
+          "caching_observed": true,
+          "ttl": "5m",
+          "expires_at": 1767282302,
+          "requests": 214,
+          "misses": 1,
+          "expected_rebuilds": 1,
+          "hit_ratio": 0.972,
+          "cache_write_tokens": 1200000,
+          "miss_recache_tokens": 396000,
+          "last_miss_at": 1767275600,
+          "last_miss_cause": {
+            "causes": [
+              "tools_changed"
+            ],
+            "tools_added": 1,
+            "tools_removed": 0
+          },
+          "miss_causes": {
+            "tools_changed": 1
+          },
+          "recache_tokens_if_cold": 812470
+        },
+        "fast_mode": false,
+        "effort": {
+          "level": "high"
+        },
+        "thinking": {
+          "enabled": true
+        },
+        "rate_limits": {
+          "five_hour": {
+            "used_percentage": 23.5,
+            "resets_at": 1767286800
+          },
+          "seven_day": {
+            "used_percentage": 41.2,
+            "resets_at": 1767366000
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "view": {
+      "v": 1,
+      "mode": "default",
+      "at": 1767282272000,
+      "state": "EXPIRING",
+      "pHit": 0.995,
+      "interval": [
+        0.985,
+        0.9975
+      ],
+      "confidence": "HIGH",
+      "lowEvidence": true,
+      "stale": false,
+      "unknownReason": null,
+      "ttl": {
+        "value": "5m",
+        "tier": "measured"
+      },
+      "expiresAt": {
+        "value": 1767282302000,
+        "tier": "inferred"
+      },
+      "remainingSec": 30,
+      "expiry": {
+        "native": 1767282302000,
+        "shield": 1767282302000,
+        "driftSec": null
+      },
+      "prefixTokens": {
+        "value": 812470,
+        "tier": "inferred"
+      },
+      "lastRequest": {
+        "tsStart": 1767282002000,
+        "tier": "measured"
+      },
+      "session": {
+        "requests": 214,
+        "hitRatio": 0.972,
+        "misses": 1,
+        "lastMiss": {
+          "at": 1767275600000,
+          "causes": [
+            "tools_changed"
+          ]
+        }
+      },
+      "pending": [],
+      "cost": {
+        "tokens": 812470,
+        "warmUsd": 0.162494,
+        "coldUsd": 4.0623499999999995,
+        "showDollars": true,
+        "dollarLabel": "cost.api_equivalent",
+        "priceDate": "2026-11-03",
+        "tailTier": "estimated",
+        "planShare": null
+      },
+      "billing": "subscription-credits",
+      "levers": [
+        {
+          "lever": "continue",
+          "nowUsd": 0.18199328,
+          "nowTokens": 812470,
+          "horizonUsd": 0.9944632800000001,
+          "effectKey": "effect.unchanged",
+          "whenKey": "lever.continue.when",
+          "tier": "estimated",
+          "recommended": true
+        },
+        {
+          "lever": "compact",
+          "nowUsd": 2.0069432799999998,
+          "nowTokens": 104998,
+          "horizonUsd": 2.11194128,
+          "effectKey": "effect.compact",
+          "whenKey": "lever.compact.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "clear",
+          "nowUsd": 0.2,
+          "nowTokens": 40000,
+          "horizonUsd": 0.24000000000000002,
+          "effectKey": "effect.clear",
+          "whenKey": "lever.clear.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "rewind",
+          "nowUsd": 0.0693,
+          "nowTokens": 346500,
+          "horizonUsd": 0.41580000000000006,
+          "effectKey": "effect.rewind",
+          "whenKey": "lever.rewind.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "recap",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.none",
+          "whenKey": "lever.recap.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "btw",
+          "nowUsd": 0.162494,
+          "nowTokens": 812470,
+          "horizonUsd": 0.162494,
+          "effectKey": "effect.none",
+          "whenKey": "lever.btw.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "keepalive",
+          "nowUsd": 0.162494,
+          "nowTokens": 812470,
+          "horizonUsd": 0.162494,
+          "effectKey": "effect.keepalive",
+          "whenKey": "lever.keepalive.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "probe",
+          "nowUsd": 0.18199328,
+          "nowTokens": 812470,
+          "horizonUsd": 0.18199328,
+          "effectKey": "effect.probe",
+          "whenKey": "lever.probe.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "ttl",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.ttl",
+          "whenKey": "lever.ttl.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "model",
+          "nowUsd": 4.0623499999999995,
+          "nowTokens": 812470,
+          "horizonUsd": 4.0623499999999995,
+          "effectKey": "effect.rebuild",
+          "whenKey": "lever.model.when",
+          "tier": "estimated",
+          "recommended": false
+        }
+      ],
+      "recommendation": {
+        "lever": "continue",
+        "reasonKey": "recommend.continue.expiring",
+        "params": {
+          "expiresAt": 1767282302000
+        },
+        "probeHint": false
+      },
+      "drivers": [
+        {
+          "key": "driver.ttl",
+          "params": {
+            "ttl": "5m",
+            "source": "prompt_cache.ttl"
+          },
+          "tier": "measured"
+        },
+        {
+          "key": "driver.expiry",
+          "params": {
+            "source": "claude-code"
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.remaining",
+          "params": {
+            "seconds": 30,
+            "margin": 17
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.pending_none",
+          "params": {},
+          "tier": "measured"
+        },
+        {
+          "key": "driver.eps",
+          "params": {
+            "eps": 0.005,
+            "n": 0,
+            "evidence": "low"
+          },
+          "tier": "estimated"
+        }
+      ],
+      "timeline": null,
+      "diff": null
+    },
+    "segment": "◐ cache EXPIRING · 812k · send by 15:45 or re-cache ≈$3.90",
+    "check": "Cache  EXPIRING  · expected read ≥ 99% (98.5%–99.8%) · confidence HIGH\n────────────────────────────────────────────────────────────────────────────────────────────────────\nLast request   15:40:02 (4m 30s ago)\nTTL            5 minutes → warm until 15:45\nPrefix         812,470 tokens\nSession        214 requests · read ratio 97.2% · misses 1\n               last miss 13:53: tools changed\nPending        none\nNext turn      warm ≈ $0.16 · cold ≈ $4.06\n               API-equivalent, prices 2026-11-03\n\nLevers\n               ▶ continue               now $0.18 · next 5 turns $0.99\n                 /compact               now $2.01 · next 5 turns $2.11\n                 /clear                 now $0.20 · next 5 turns $0.24\n                 /rewind                now $0.07 · next 5 turns $0.42\n                 /recap                 now $0.00\n                 /btw                   now $0.16\n                 keep-alive             now $0.16\n                 probe                  now $0.18\n                 TTL setting            now $0.00\n                 model / effort / fast  now $4.06\n\n→ Send before 15:45 to keep the cache.",
+    "exitCode": 10
+  }
+}

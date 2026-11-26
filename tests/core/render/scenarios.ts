@@ -66,6 +66,16 @@ export interface Built {
   readonly view: (mode: CheckMode, billing?: BillingMode) => CheckView
 }
 
+/**
+ * A scenario's raw inputs in the parity fixtures' form, so the Go renderer can
+ * rebuild the same session for the shared goldens.
+ */
+export function scenarioInput(which: CacheState): { now: number; facts: unknown[] } {
+  const sc = SCENARIOS[which]
+  const facts = [...requests(), ...(sc.extra ?? [])].map(f => (f.kind === 'request' ? { kind: 'request', request: f.request } : f))
+  return { now: sc.now, facts: [...facts, { kind: 'snapshot', receivedAt: sc.now, payload: payload(sc.overrides ?? {}, sc.cache) }] }
+}
+
 /** Builds the scenario for `which`. */
 export function build(which: CacheState): Built {
   const sc = SCENARIOS[which]

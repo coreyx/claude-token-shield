@@ -120,7 +120,7 @@ The repository builds and tests on three platforms, the shared data files exist,
 
 The Go companions produce the same assessment, costs and text as the core, write native snapshots, and wrap the user's existing statusline.
 
-- [ ] **TASK-12: Port the core to Go with parity fixtures**
+- [x] **TASK-12: Port the core to Go with parity fixtures**
   - **Associated Acceptance Criteria**: `2.1`, `3.1`, `8.1`
   - **Concrete Steps**:
     1. Implement `internal/native`, `internal/assess`, `internal/cost`, `internal/levers` and `internal/render` against the embedded data files, mirroring the TypeScript functions.

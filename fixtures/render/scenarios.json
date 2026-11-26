@@ -1,0 +1,1129 @@
+{
+  "HOT": {
+    "now": 1767282722000,
+    "facts": [
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276131000",
+          "lane": "main",
+          "tsStart": 1767276131000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 402000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276220000",
+          "lane": "main",
+          "tsStart": 1767276220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 402000,
+            "write5m": 0,
+            "write1h": 6000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767277865000",
+          "lane": "main",
+          "tsStart": 1767277865000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 1000,
+            "read": 14000,
+            "write5m": 0,
+            "write1h": 396000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767280367000",
+          "lane": "main",
+          "tsStart": 1767280367000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 61000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767282002000",
+          "lane": "main",
+          "tsStart": 1767282002000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 61000,
+            "write5m": 0,
+            "write1h": 3000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "snapshot",
+        "receivedAt": 1767282722000,
+        "payload": {
+          "cwd": "/home/example/project",
+          "session_id": "11111111-2222-3333-4444-555555555555",
+          "session_name": "example session title",
+          "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+          "model": {
+            "id": "claude-opus-5-5",
+            "display_name": "Opus"
+          },
+          "workspace": {
+            "current_dir": "/home/example/project",
+            "project_dir": "/home/example/project",
+            "added_dirs": []
+          },
+          "version": "2.1.332",
+          "output_style": {
+            "name": "default"
+          },
+          "cost": {
+            "total_cost_usd": 1.5,
+            "total_duration_ms": 1000,
+            "total_api_duration_ms": 500,
+            "total_lines_added": 1,
+            "total_lines_removed": 0
+          },
+          "context_window": {
+            "total_input_tokens": 812470,
+            "total_output_tokens": 900,
+            "context_window_size": 1000000,
+            "used_percentage": 81,
+            "remaining_percentage": 19,
+            "current_usage": {
+              "input_tokens": 12,
+              "output_tokens": 900,
+              "cache_creation_input_tokens": 3000,
+              "cache_read_input_tokens": 809458
+            }
+          },
+          "exceeds_200k_tokens": true,
+          "prompt_cache": {
+            "warm": true,
+            "caching_observed": true,
+            "ttl": "1h",
+            "expires_at": 1767285602,
+            "requests": 214,
+            "misses": 1,
+            "expected_rebuilds": 1,
+            "hit_ratio": 0.972,
+            "cache_write_tokens": 1200000,
+            "miss_recache_tokens": 396000,
+            "last_miss_at": 1767275600,
+            "last_miss_cause": {
+              "causes": [
+                "tools_changed"
+              ],
+              "tools_added": 1,
+              "tools_removed": 0
+            },
+            "miss_causes": {
+              "tools_changed": 1
+            },
+            "recache_tokens_if_cold": 812470
+          },
+          "fast_mode": false,
+          "effort": {
+            "level": "high"
+          },
+          "thinking": {
+            "enabled": true
+          },
+          "rate_limits": {
+            "five_hour": {
+              "used_percentage": 23.5,
+              "resets_at": 1767286800
+            },
+            "seven_day": {
+              "used_percentage": 41.2,
+              "resets_at": 1767366000
+            }
+          }
+        }
+      }
+    ]
+  },
+  "EXPIRING": {
+    "now": 1767285180000,
+    "facts": [
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276131000",
+          "lane": "main",
+          "tsStart": 1767276131000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 402000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276220000",
+          "lane": "main",
+          "tsStart": 1767276220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 402000,
+            "write5m": 0,
+            "write1h": 6000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767277865000",
+          "lane": "main",
+          "tsStart": 1767277865000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 1000,
+            "read": 14000,
+            "write5m": 0,
+            "write1h": 396000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767280367000",
+          "lane": "main",
+          "tsStart": 1767280367000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 61000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767282002000",
+          "lane": "main",
+          "tsStart": 1767282002000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 61000,
+            "write5m": 0,
+            "write1h": 3000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "snapshot",
+        "receivedAt": 1767285180000,
+        "payload": {
+          "cwd": "/home/example/project",
+          "session_id": "11111111-2222-3333-4444-555555555555",
+          "session_name": "example session title",
+          "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+          "model": {
+            "id": "claude-opus-5-5",
+            "display_name": "Opus"
+          },
+          "workspace": {
+            "current_dir": "/home/example/project",
+            "project_dir": "/home/example/project",
+            "added_dirs": []
+          },
+          "version": "2.1.332",
+          "output_style": {
+            "name": "default"
+          },
+          "cost": {
+            "total_cost_usd": 1.5,
+            "total_duration_ms": 1000,
+            "total_api_duration_ms": 500,
+            "total_lines_added": 1,
+            "total_lines_removed": 0
+          },
+          "context_window": {
+            "total_input_tokens": 812470,
+            "total_output_tokens": 900,
+            "context_window_size": 1000000,
+            "used_percentage": 81,
+            "remaining_percentage": 19,
+            "current_usage": {
+              "input_tokens": 12,
+              "output_tokens": 900,
+              "cache_creation_input_tokens": 3000,
+              "cache_read_input_tokens": 809458
+            }
+          },
+          "exceeds_200k_tokens": true,
+          "prompt_cache": {
+            "warm": true,
+            "caching_observed": true,
+            "ttl": "1h",
+            "expires_at": 1767285602,
+            "requests": 214,
+            "misses": 1,
+            "expected_rebuilds": 1,
+            "hit_ratio": 0.972,
+            "cache_write_tokens": 1200000,
+            "miss_recache_tokens": 396000,
+            "last_miss_at": 1767275600,
+            "last_miss_cause": {
+              "causes": [
+                "tools_changed"
+              ],
+              "tools_added": 1,
+              "tools_removed": 0
+            },
+            "miss_causes": {
+              "tools_changed": 1
+            },
+            "recache_tokens_if_cold": 812470
+          },
+          "fast_mode": false,
+          "effort": {
+            "level": "high"
+          },
+          "thinking": {
+            "enabled": true
+          },
+          "rate_limits": {
+            "five_hour": {
+              "used_percentage": 23.5,
+              "resets_at": 1767286800
+            },
+            "seven_day": {
+              "used_percentage": 41.2,
+              "resets_at": 1767366000
+            }
+          }
+        }
+      }
+    ]
+  },
+  "UNCERTAIN": {
+    "now": 1767285600000,
+    "facts": [
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276131000",
+          "lane": "main",
+          "tsStart": 1767276131000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 402000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276220000",
+          "lane": "main",
+          "tsStart": 1767276220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 402000,
+            "write5m": 0,
+            "write1h": 6000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767277865000",
+          "lane": "main",
+          "tsStart": 1767277865000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 1000,
+            "read": 14000,
+            "write5m": 0,
+            "write1h": 396000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767280367000",
+          "lane": "main",
+          "tsStart": 1767280367000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 61000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767282002000",
+          "lane": "main",
+          "tsStart": 1767282002000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 61000,
+            "write5m": 0,
+            "write1h": 3000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "snapshot",
+        "receivedAt": 1767285600000,
+        "payload": {
+          "cwd": "/home/example/project",
+          "session_id": "11111111-2222-3333-4444-555555555555",
+          "session_name": "example session title",
+          "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+          "model": {
+            "id": "claude-opus-5-5",
+            "display_name": "Opus"
+          },
+          "workspace": {
+            "current_dir": "/home/example/project",
+            "project_dir": "/home/example/project",
+            "added_dirs": []
+          },
+          "version": "2.1.332",
+          "output_style": {
+            "name": "default"
+          },
+          "cost": {
+            "total_cost_usd": 1.5,
+            "total_duration_ms": 1000,
+            "total_api_duration_ms": 500,
+            "total_lines_added": 1,
+            "total_lines_removed": 0
+          },
+          "context_window": {
+            "total_input_tokens": 812470,
+            "total_output_tokens": 900,
+            "context_window_size": 1000000,
+            "used_percentage": 81,
+            "remaining_percentage": 19,
+            "current_usage": {
+              "input_tokens": 12,
+              "output_tokens": 900,
+              "cache_creation_input_tokens": 3000,
+              "cache_read_input_tokens": 809458
+            }
+          },
+          "exceeds_200k_tokens": true,
+          "prompt_cache": {
+            "warm": true,
+            "caching_observed": true,
+            "ttl": "1h",
+            "expires_at": 1767285602,
+            "requests": 214,
+            "misses": 1,
+            "expected_rebuilds": 1,
+            "hit_ratio": 0.972,
+            "cache_write_tokens": 1200000,
+            "miss_recache_tokens": 396000,
+            "last_miss_at": 1767275600,
+            "last_miss_cause": {
+              "causes": [
+                "tools_changed"
+              ],
+              "tools_added": 1,
+              "tools_removed": 0
+            },
+            "miss_causes": {
+              "tools_changed": 1
+            },
+            "recache_tokens_if_cold": 812470
+          },
+          "fast_mode": false,
+          "effort": {
+            "level": "high"
+          },
+          "thinking": {
+            "enabled": true
+          },
+          "rate_limits": {
+            "five_hour": {
+              "used_percentage": 23.5,
+              "resets_at": 1767286800
+            },
+            "seven_day": {
+              "used_percentage": 41.2,
+              "resets_at": 1767366000
+            }
+          }
+        }
+      }
+    ]
+  },
+  "INVALIDATED": {
+    "now": 1767282722000,
+    "facts": [
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276131000",
+          "lane": "main",
+          "tsStart": 1767276131000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 402000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276220000",
+          "lane": "main",
+          "tsStart": 1767276220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 402000,
+            "write5m": 0,
+            "write1h": 6000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767277865000",
+          "lane": "main",
+          "tsStart": 1767277865000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 1000,
+            "read": 14000,
+            "write5m": 0,
+            "write1h": 396000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767280367000",
+          "lane": "main",
+          "tsStart": 1767280367000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 61000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767282002000",
+          "lane": "main",
+          "tsStart": 1767282002000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 61000,
+            "write5m": 0,
+            "write1h": 3000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "event",
+        "event": {
+          "ts": 1767282600000,
+          "kind": "model_switch",
+          "detail": {
+            "from": "claude-opus-5-5",
+            "to": "claude-sonnet-5-5"
+          }
+        }
+      },
+      {
+        "kind": "snapshot",
+        "receivedAt": 1767282722000,
+        "payload": {
+          "cwd": "/home/example/project",
+          "session_id": "11111111-2222-3333-4444-555555555555",
+          "session_name": "example session title",
+          "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+          "model": {
+            "id": "claude-opus-5-5",
+            "display_name": "Opus"
+          },
+          "workspace": {
+            "current_dir": "/home/example/project",
+            "project_dir": "/home/example/project",
+            "added_dirs": []
+          },
+          "version": "2.1.332",
+          "output_style": {
+            "name": "default"
+          },
+          "cost": {
+            "total_cost_usd": 1.5,
+            "total_duration_ms": 1000,
+            "total_api_duration_ms": 500,
+            "total_lines_added": 1,
+            "total_lines_removed": 0
+          },
+          "context_window": {
+            "total_input_tokens": 812470,
+            "total_output_tokens": 900,
+            "context_window_size": 1000000,
+            "used_percentage": 81,
+            "remaining_percentage": 19,
+            "current_usage": {
+              "input_tokens": 12,
+              "output_tokens": 900,
+              "cache_creation_input_tokens": 3000,
+              "cache_read_input_tokens": 809458
+            }
+          },
+          "exceeds_200k_tokens": true,
+          "prompt_cache": {
+            "warm": true,
+            "caching_observed": true,
+            "ttl": "1h",
+            "expires_at": 1767285602,
+            "requests": 214,
+            "misses": 1,
+            "expected_rebuilds": 1,
+            "hit_ratio": 0.972,
+            "cache_write_tokens": 1200000,
+            "miss_recache_tokens": 396000,
+            "last_miss_at": 1767275600,
+            "last_miss_cause": {
+              "causes": [
+                "tools_changed"
+              ],
+              "tools_added": 1,
+              "tools_removed": 0
+            },
+            "miss_causes": {
+              "tools_changed": 1
+            },
+            "recache_tokens_if_cold": 812470
+          },
+          "fast_mode": false,
+          "effort": {
+            "level": "high"
+          },
+          "thinking": {
+            "enabled": true
+          },
+          "rate_limits": {
+            "five_hour": {
+              "used_percentage": 23.5,
+              "resets_at": 1767286800
+            },
+            "seven_day": {
+              "used_percentage": 41.2,
+              "resets_at": 1767366000
+            }
+          }
+        }
+      }
+    ]
+  },
+  "COLD": {
+    "now": 1767288600000,
+    "facts": [
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276131000",
+          "lane": "main",
+          "tsStart": 1767276131000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 402000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276220000",
+          "lane": "main",
+          "tsStart": 1767276220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 402000,
+            "write5m": 0,
+            "write1h": 6000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767277865000",
+          "lane": "main",
+          "tsStart": 1767277865000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 1000,
+            "read": 14000,
+            "write5m": 0,
+            "write1h": 396000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767280367000",
+          "lane": "main",
+          "tsStart": 1767280367000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 61000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767282002000",
+          "lane": "main",
+          "tsStart": 1767282002000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 61000,
+            "write5m": 0,
+            "write1h": 3000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "snapshot",
+        "receivedAt": 1767288600000,
+        "payload": {
+          "cwd": "/home/example/project",
+          "session_id": "11111111-2222-3333-4444-555555555555",
+          "session_name": "example session title",
+          "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+          "model": {
+            "id": "claude-opus-5-5",
+            "display_name": "Opus"
+          },
+          "workspace": {
+            "current_dir": "/home/example/project",
+            "project_dir": "/home/example/project",
+            "added_dirs": []
+          },
+          "version": "2.1.332",
+          "output_style": {
+            "name": "default"
+          },
+          "cost": {
+            "total_cost_usd": 1.5,
+            "total_duration_ms": 1000,
+            "total_api_duration_ms": 500,
+            "total_lines_added": 1,
+            "total_lines_removed": 0
+          },
+          "context_window": {
+            "total_input_tokens": 812470,
+            "total_output_tokens": 900,
+            "context_window_size": 1000000,
+            "used_percentage": 81,
+            "remaining_percentage": 19,
+            "current_usage": {
+              "input_tokens": 12,
+              "output_tokens": 900,
+              "cache_creation_input_tokens": 3000,
+              "cache_read_input_tokens": 809458
+            }
+          },
+          "exceeds_200k_tokens": true,
+          "prompt_cache": {
+            "warm": false,
+            "caching_observed": true,
+            "ttl": "1h",
+            "expires_at": null,
+            "requests": 214,
+            "misses": 1,
+            "expected_rebuilds": 1,
+            "hit_ratio": 0.972,
+            "cache_write_tokens": 1200000,
+            "miss_recache_tokens": 396000,
+            "last_miss_at": 1767275600,
+            "last_miss_cause": {
+              "causes": [
+                "tools_changed"
+              ],
+              "tools_added": 1,
+              "tools_removed": 0
+            },
+            "miss_causes": {
+              "tools_changed": 1
+            },
+            "recache_tokens_if_cold": 812470
+          },
+          "fast_mode": false,
+          "effort": {
+            "level": "high"
+          },
+          "thinking": {
+            "enabled": true
+          },
+          "rate_limits": {
+            "five_hour": {
+              "used_percentage": 23.5,
+              "resets_at": 1767286800
+            },
+            "seven_day": {
+              "used_percentage": 41.2,
+              "resets_at": 1767366000
+            }
+          }
+        }
+      }
+    ]
+  },
+  "UNKNOWN": {
+    "now": 1767282722000,
+    "facts": [
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276131000",
+          "lane": "main",
+          "tsStart": 1767276131000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 402000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767276220000",
+          "lane": "main",
+          "tsStart": 1767276220000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 402000,
+            "write5m": 0,
+            "write1h": 6000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767277865000",
+          "lane": "main",
+          "tsStart": 1767277865000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 1000,
+            "read": 14000,
+            "write5m": 0,
+            "write1h": 396000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767280367000",
+          "lane": "main",
+          "tsStart": 1767280367000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 2000,
+            "read": 0,
+            "write5m": 0,
+            "write1h": 61000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "request",
+        "request": {
+          "id": "req-1767282002000",
+          "lane": "main",
+          "tsStart": 1767282002000,
+          "tsStartTier": "measured",
+          "model": "claude-opus-5-5",
+          "speed": "standard",
+          "ttl": "1h",
+          "usage": {
+            "input": 3000,
+            "read": 61000,
+            "write5m": 0,
+            "write1h": 3000,
+            "output": 600
+          },
+          "source": "mod"
+        }
+      },
+      {
+        "kind": "snapshot",
+        "receivedAt": 1767282722000,
+        "payload": {
+          "cwd": "/home/example/project",
+          "session_id": "11111111-2222-3333-4444-555555555555",
+          "session_name": "example session title",
+          "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+          "model": {
+            "id": "claude-opus-5-5",
+            "display_name": "Opus"
+          },
+          "workspace": {
+            "current_dir": "/home/example/project",
+            "project_dir": "/home/example/project",
+            "added_dirs": []
+          },
+          "version": "2.1.332",
+          "output_style": {
+            "name": "default"
+          },
+          "cost": {
+            "total_cost_usd": 1.5,
+            "total_duration_ms": 1000,
+            "total_api_duration_ms": 500,
+            "total_lines_added": 1,
+            "total_lines_removed": 0
+          },
+          "context_window": {
+            "total_input_tokens": 812470,
+            "total_output_tokens": 900,
+            "context_window_size": 1000000,
+            "used_percentage": 81,
+            "remaining_percentage": 19,
+            "current_usage": {
+              "input_tokens": 12,
+              "output_tokens": 900,
+              "cache_creation_input_tokens": 3000,
+              "cache_read_input_tokens": 809458
+            }
+          },
+          "exceeds_200k_tokens": true,
+          "fast_mode": false,
+          "effort": {
+            "level": "high"
+          },
+          "thinking": {
+            "enabled": true
+          },
+          "rate_limits": {
+            "five_hour": {
+              "used_percentage": 23.5,
+              "resets_at": 1767286800
+            },
+            "seven_day": {
+              "used_percentage": 41.2,
+              "resets_at": 1767366000
+            }
+          }
+        }
+      }
+    ]
+  }
+}

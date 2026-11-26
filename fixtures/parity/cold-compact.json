@@ -1,0 +1,372 @@
+{
+  "tzOffsetMin": 0,
+  "env": {
+    "provider": "firstParty",
+    "toolSearch": true,
+    "experimentalBetasDisabled": false
+  },
+  "mode": "default",
+  "width": 100,
+  "glyphs": "unicode",
+  "name": "cold-compact",
+  "now": 1767288600000,
+  "facts": [
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767276131000",
+        "lane": "main",
+        "tsStart": 1767276131000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 0,
+          "write5m": 0,
+          "write1h": 40000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767276220000",
+        "lane": "main",
+        "tsStart": 1767276220000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 40000,
+          "write5m": 0,
+          "write1h": 6000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767280367000",
+        "lane": "main",
+        "tsStart": 1767280367000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 46000,
+          "write5m": 0,
+          "write1h": 300000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "request",
+      "request": {
+        "id": "req-1767282002000",
+        "lane": "main",
+        "tsStart": 1767282002000,
+        "tsStartTier": "measured",
+        "model": "claude-opus-5-5",
+        "speed": "standard",
+        "ttl": "1h",
+        "usage": {
+          "input": 500,
+          "read": 346000,
+          "write5m": 0,
+          "write1h": 3000,
+          "output": 600
+        },
+        "source": "mod"
+      }
+    },
+    {
+      "kind": "snapshot",
+      "receivedAt": 1767288595000,
+      "payload": {
+        "cwd": "/home/example/project",
+        "session_id": "11111111-2222-3333-4444-555555555555",
+        "session_name": "example session title",
+        "transcript_path": "/home/example/.claude/projects/example/transcript.jsonl",
+        "model": {
+          "id": "claude-opus-5-5",
+          "display_name": "Opus"
+        },
+        "workspace": {
+          "current_dir": "/home/example/project",
+          "project_dir": "/home/example/project",
+          "added_dirs": []
+        },
+        "version": "2.1.332",
+        "output_style": {
+          "name": "default"
+        },
+        "cost": {
+          "total_cost_usd": 1.5,
+          "total_duration_ms": 1000,
+          "total_api_duration_ms": 500,
+          "total_lines_added": 1,
+          "total_lines_removed": 0
+        },
+        "context_window": {
+          "total_input_tokens": 812470,
+          "total_output_tokens": 900,
+          "context_window_size": 1000000,
+          "used_percentage": 81,
+          "remaining_percentage": 19,
+          "current_usage": {
+            "input_tokens": 12,
+            "output_tokens": 900,
+            "cache_creation_input_tokens": 3000,
+            "cache_read_input_tokens": 809458
+          }
+        },
+        "exceeds_200k_tokens": true,
+        "prompt_cache": {
+          "warm": false,
+          "caching_observed": true,
+          "ttl": "1h",
+          "expires_at": null,
+          "requests": 214,
+          "misses": 1,
+          "expected_rebuilds": 1,
+          "hit_ratio": 0.972,
+          "cache_write_tokens": 1200000,
+          "miss_recache_tokens": 396000,
+          "last_miss_at": 1767275600,
+          "last_miss_cause": {
+            "causes": [
+              "tools_changed"
+            ],
+            "tools_added": 1,
+            "tools_removed": 0
+          },
+          "miss_causes": {
+            "tools_changed": 1
+          },
+          "recache_tokens_if_cold": 812470
+        },
+        "fast_mode": false,
+        "effort": {
+          "level": "high"
+        },
+        "thinking": {
+          "enabled": true
+        }
+      }
+    }
+  ],
+  "expect": {
+    "view": {
+      "v": 1,
+      "mode": "default",
+      "at": 1767288600000,
+      "state": "COLD",
+      "pHit": 0.01,
+      "interval": [
+        0.005,
+        0.03
+      ],
+      "confidence": "HIGH",
+      "lowEvidence": true,
+      "stale": false,
+      "unknownReason": null,
+      "ttl": {
+        "value": "1h",
+        "tier": "measured"
+      },
+      "expiresAt": {
+        "value": 1767285602000,
+        "tier": "inferred"
+      },
+      "remainingSec": -2998,
+      "expiry": {
+        "native": null,
+        "shield": 1767285602000,
+        "driftSec": null
+      },
+      "prefixTokens": {
+        "value": 812470,
+        "tier": "inferred"
+      },
+      "lastRequest": {
+        "tsStart": 1767282002000,
+        "tier": "measured"
+      },
+      "session": {
+        "requests": 214,
+        "hitRatio": 0.972,
+        "misses": 1,
+        "lastMiss": {
+          "at": 1767275600000,
+          "causes": [
+            "tools_changed"
+          ]
+        }
+      },
+      "pending": [],
+      "cost": {
+        "tokens": 812470,
+        "warmUsd": 0.162494,
+        "coldUsd": 6.499759999999999,
+        "showDollars": true,
+        "dollarLabel": "cost.api_equivalent",
+        "priceDate": "2026-11-03",
+        "tailTier": "estimated",
+        "planShare": null
+      },
+      "billing": "api",
+      "levers": [
+        {
+          "lever": "continue",
+          "nowUsd": 6.43638734,
+          "nowTokens": 812470,
+          "horizonUsd": 7.24885734,
+          "effectKey": "effect.unchanged",
+          "whenKey": "lever.continue.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "compact",
+          "nowUsd": 6.16329544,
+          "nowTokens": 104998,
+          "horizonUsd": 6.26829344,
+          "effectKey": "effect.compact",
+          "whenKey": "lever.compact.when",
+          "tier": "estimated",
+          "recommended": true
+        },
+        {
+          "lever": "clear",
+          "nowUsd": 0.32,
+          "nowTokens": 40000,
+          "horizonUsd": 0.36,
+          "effectKey": "effect.clear",
+          "whenKey": "lever.clear.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "rewind",
+          "nowUsd": null,
+          "nowTokens": 346500,
+          "horizonUsd": null,
+          "effectKey": "effect.rewind",
+          "whenKey": "lever.rewind.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "recap",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.none",
+          "whenKey": "lever.recap.when",
+          "tier": "inferred",
+          "recommended": false
+        },
+        {
+          "lever": "btw",
+          "nowUsd": null,
+          "nowTokens": 812470,
+          "horizonUsd": null,
+          "effectKey": "effect.none",
+          "whenKey": "lever.btw.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "ttl",
+          "nowUsd": 0,
+          "nowTokens": 0,
+          "horizonUsd": 0,
+          "effectKey": "effect.ttl",
+          "whenKey": "lever.ttl.when",
+          "tier": "estimated",
+          "recommended": false
+        },
+        {
+          "lever": "model",
+          "nowUsd": 6.499759999999999,
+          "nowTokens": 812470,
+          "horizonUsd": 6.499759999999999,
+          "effectKey": "effect.rebuild",
+          "whenKey": "lever.model.when",
+          "tier": "estimated",
+          "recommended": false
+        }
+      ],
+      "recommendation": {
+        "lever": "compact",
+        "reasonKey": "recommend.cheapest",
+        "params": {
+          "lever": "compact",
+          "usd": 6.26829344
+        },
+        "probeHint": false
+      },
+      "drivers": [
+        {
+          "key": "driver.ttl",
+          "params": {
+            "ttl": "1h",
+            "source": "prompt_cache.ttl"
+          },
+          "tier": "measured"
+        },
+        {
+          "key": "driver.expiry",
+          "params": {
+            "source": "shield"
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.remaining",
+          "params": {
+            "seconds": -2998,
+            "margin": 17
+          },
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.pending_none",
+          "params": {},
+          "tier": "measured"
+        },
+        {
+          "key": "driver.warm_false",
+          "params": {},
+          "tier": "inferred"
+        },
+        {
+          "key": "driver.eps",
+          "params": {
+            "eps": 0.01,
+            "n": 0,
+            "evidence": "low"
+          },
+          "tier": "estimated"
+        }
+      ],
+      "timeline": null,
+      "diff": null
+    },
+    "segment": "○ cache COLD since 16:40 · next prompt re-caches 812k ≈$6.50",
+    "check": "Cache  COLD  · expected read ≤ 1% (0.5%–3.0%) · confidence HIGH\n────────────────────────────────────────────────────────────────────────────────────────────────────\nLast request   15:40:02 (1h 49m ago)\nTTL            1 hour → expired 16:40\nPrefix         812,470 tokens\nSession        214 requests · read ratio 97.2% · misses 1\n               last miss 13:53: tools changed\nPending        none\nNext turn      warm ≈ $0.16 · cold ≈ $6.50\n               API-equivalent, prices 2026-11-03\n\nLevers\n                 continue               now $6.44 · next 5 turns $7.25\n               ▶ /compact               now $6.16 · next 5 turns $6.27\n                 /clear                 now $0.32 · next 5 turns $0.36\n                 /rewind                now cost unknown\n                 /recap                 now $0.00\n                 /btw                   now cost unknown\n                 TTL setting            now $0.00\n                 model / effort / fast  now $6.50\n\n→ Cheapest over the next 5 turns: /compact ($6.27).",
+    "exitCode": 40
+  }
+}
