@@ -236,15 +236,18 @@ Source: derived from `product.md` (journey 2, goal 2) and the analysis design do
 
 - **10.0.1 (Event-Driven)**: When the user starts a model switch while the cache is warm, the system shall show the rebuild cost and any cheaper alternative (for example, a subagent on the other model for a one-off task) before the switch takes effect.
 - **10.0.2 (Event-Driven)**: When the user changes effort on a model without per-message effort, or toggles fast mode, while the cache is warm, the system shall show the rebuild cost before the next request.
-- **10.0.3 (Ubiquitous)**: The system shall leave Claude Code's own warm-cache confirmation as it is, neither replacing nor suppressing it, and shall show its own information alongside it.
+- **10.0.3 (Ubiquitous)**: Except as 10.0.6 allows, the system shall leave Claude Code's own warm-cache confirmation as it is, neither replacing nor suppressing it, and shall show its own information alongside it.
 - **10.0.4 (Ubiquitous)**: The system shall label everything it adds around a native prompt or message as coming from Token Shield, so the user can always tell Claude Code's text from Token Shield's.
 - **10.0.5 (State-Driven)**: While the cache is already cold, the system shall not warn about an invalidating action.
+- **10.0.6 (Optional Feature)**: Where the switch confirmation is turned on, when the user starts a model switch while the cache is warm and the rebuild cost reaches the threshold, the system shall ask Claude Code to confirm the switch and shall put the rebuild cost, labelled as Token Shield's, in that confirmation. It shall never approve or refuse a switch on the user's behalf.
 
 #### Acceptance Criteria
 - **10.1**: `/model` with a warm 812k cache shows Claude Code's unchanged confirmation and, alongside it, the rebuild cost labelled as Token Shield's, before the switch takes effect.
 - **10.2**: `/model` with a cold cache shows no Token Shield warning.
 - **10.3**: An effort change on Opus 5.5 with a subscription shows no warning; on Sonnet 5 it shows the cost.
 - **10.4**: Every Token Shield toast, band and row shown during a switch carries the Token Shield name or mark.
+- **10.5**: With the switch confirmation on, `/model` and the model picker, with a warm cache whose rebuild cost reaches the threshold, show Claude Code's confirmation containing the Token Shield-labelled rebuild cost, and the switch happens only if the user confirms.
+- **10.6**: With the switch confirmation off (the default), or with a cold cache or a rebuild cost under the threshold, Token Shield adds no confirmation step to a switch.
 
 ### REQ-11: Resume guidance
 
@@ -442,7 +445,7 @@ Source: derived from the analysis design doc (§3.3, §11, §12).
 
 Source: derived from the analysis design doc (§8.6).
 
-- **22.0.1 (Ubiquitous)**: The system shall let the user configure: the threshold, the warn windows per TTL, the gate on or off, muted notification levels, price overrides, the glyph set (Unicode or ASCII), and keep-alive defaults.
+- **22.0.1 (Ubiquitous)**: The system shall let the user configure: the threshold, the warn windows per TTL, the gate on or off, the switch confirmation on or off (REQ-10.0.6, default off), muted notification levels, price overrides, the glyph set (Unicode or ASCII), and keep-alive defaults.
 - **22.0.2 (Unwanted Behavior)**: If the configuration contains an invalid value, then the system shall use that setting's default and tell the user which setting was invalid.
 
 #### Acceptance Criteria
@@ -459,5 +462,6 @@ Resolved 2026-11-25:
 - Keep-alive is a standing opt-in with an end time and a budget, with no per-refresh confirmation (REQ-15).
 - The plan-share estimate is included, tagged `[estimated]` (REQ-3.0.2).
 - Claude Code's own switch confirmation is kept unchanged, and Token Shield's added information is labelled as its own (REQ-10.0.3, 10.0.4).
+- Revised 2026-11-26 after the engine spikes ([spikes.md](./spikes.md)): an opt-in switch confirmation may put the rebuild cost inside Claude Code's confirmation, off by default (REQ-10.0.6).
 - The behavior to absorb from `session-info` is the compact and clear controls (REQ-17).
 - `session-info` keeps its own `/COMPACT` and `/CLEAR` buttons; both mods offer the controls.

@@ -215,19 +215,20 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
 - [ ] **TASK-22: Build the submit gate**
   - **Associated Acceptance Criteria**: `12.1`, `12.2`, `12.3`, `12.4`, `12.5`, `21.2`
   - **Concrete Steps**:
-    1. Implement the `prompt.submit` hook per design D9: pass commands, meta prompts and non-composer origins; read the cached assessment; hold with a Token Shield drop reason; refill the composer (or use TASK-2's fallback); pass the resubmitted identical prompt within 60 s.
+    1. Implement the `prompt.submit` hook per design D9: pass commands, meta prompts and non-composer origins; read the cached assessment; hold with a Token Shield drop reason, without calling `$.prompt.fill` (Claude Code restores the dropped prompt itself; see spikes.md §3); pass the resubmitted identical prompt within 60 s.
     2. Keep the hash in memory only, and never touch `text` or `context`.
     3. Show the band with the recommended lever when holding, and a warning toast instead of holding when the gate is set to `warn`.
     4. Test: hold, release, 61-second re-hold, byte-identical release, `UNKNOWN` never held, and a fresh install holding in the `COLD` fixture. Add a timing harness asserting p95 hook overhead ≤ 20 ms.
 
 - [ ] **TASK-23: Build the guard before invalidating actions**
-  - **Associated Acceptance Criteria**: `10.1`, `10.2`, `10.3`, `10.4`
+  - **Associated Acceptance Criteria**: `10.1`, `10.2`, `10.3`, `10.4`, `10.5`, `10.6`
   - **Concrete Steps**:
-    1. In `classic.PreModelSwitch`, while warm, show a Token Shield toast and the band in guard mode with Claude Code's estimate and the cheaper alternative, then return `next(e)` unchanged.
-    2. On `/effort`, `/fast` or the matching `config.set` while warm, create the pending event and toast the cost when the rules say `WILL`.
-    3. Treat `/reload-plugins` as a `MAY` event with an info toast.
-    4. Stay silent when the cache is cold or invalidated.
-    5. Test: a warm 812k switch shows Claude Code's unchanged confirmation path plus the labelled cost; a cold switch shows nothing; effort on Opus 5.5 with a subscription shows nothing, and on Sonnet 5 shows the cost; every guard surface carries the Token Shield name.
+    1. In `classic.PreModelSwitch`, while warm, show a Token Shield toast (held 30 s) and the band in guard mode with Claude Code's estimate and the cheaper alternative, then return `next(e)` unchanged. Act on one event per switch burst, the one whose `to_model` matches the request; stay silent when `to_model` equals `from_model`; clear the guard on `classic.PostModelSwitch`, the next submit, or an unchanged model in the snapshot (design D10, spikes.md §1–2).
+    2. With `switchConfirm: on`, a warm event whose rebuild cost reaches the threshold returns `next(e)`'s result plus `permissionDecision: "ask"` and a Token Shield-labelled `permissionDecisionReason`; never `allow` or `deny`, and an existing `deny` beneath stands.
+    3. On `/effort`, `/fast` or the matching `config.set` while warm, create the pending event and toast the cost when the rules say `WILL`.
+    4. Treat `/reload-plugins` as a `MAY` event with an info toast.
+    5. Stay silent when the cache is cold or invalidated.
+    6. Test: a warm 812k switch shows Claude Code's unchanged confirmation path plus the labelled cost; a cold switch shows nothing; a paired event burst produces one toast; a same-model pick shows nothing; with `switchConfirm` on, a warm over-threshold switch returns `ask` with the labelled reason, and a cold or under-threshold one returns `next(e)` unchanged; with it off, no result carries a `permissionDecision`; effort on Opus 5.5 with a subscription shows nothing, and on Sonnet 5 shows the cost; every guard surface carries the Token Shield name.
 
 - [ ] **TASK-24: Build resume guidance**
   - **Associated Acceptance Criteria**: `11.1`, `11.2`, `11.3`
@@ -336,7 +337,7 @@ Privacy, performance and coverage are verified, the manual checks are done, and 
   - **Associated Acceptance Criteria**: `1.2`, `5.4`, `6.1`, `20.1`, `20.2`, `20.3`
   - **Concrete Steps**:
     1. Add an automated test that runs a scripted fixture session through every surface and searches the whole data directory for the fixture's prompt, response and tool strings.
-    2. Run a live scripted session twice, with Token Shield enabled and disabled, exercising every surface. Compare total input tokens (equal apart from approved probe or keep-alive requests), and confirm the request after `/cache-check` carries none of its output.
+    2. Run a live scripted session twice, with Token Shield enabled and disabled, exercising every surface, with `switchConfirm` on. Compare total input tokens (equal apart from approved probe or keep-alive requests), and confirm the request after `/cache-check` carries none of its output.
     3. Monitor network connections during that session and confirm none come from Token Shield outside approved actions.
     4. Confirm `claude plugin validate` and the CI check show no forbidden hooks. Record results for the walkthrough.
 
@@ -364,9 +365,9 @@ Privacy, performance and coverage are verified, the manual checks are done, and 
     5. Before pushing or publishing, run the privacy scan of outgoing commits and text, and confirm the commit email is a GitHub noreply address.
 
 - [ ] **TASK-40: Run the manual acceptance checks**
-  - **Associated Acceptance Criteria**: `10.1`, `13.4`, `15.3`
+  - **Associated Acceptance Criteria**: `10.1`, `10.5`, `13.4`, `15.3`
   - **Concrete Steps**:
-    1. Capture `/model` with a warm cache showing Claude Code's unchanged confirmation and Token Shield's labelled cost.
+    1. Capture `/model` with a warm cache showing Claude Code's unchanged confirmation and Token Shield's labelled cost. Repeat with `switchConfirm: on`, through both `/model <name>` and the picker, showing the cost inside Claude Code's confirmation.
     2. Capture every pane view and `/cache-check` at 80 columns with color disabled, and review them for legibility.
     3. Run a keep-alive across a 90-minute idle period on a 1h TTL and confirm the next prompt reads the cache.
     4. Redact any private details from the captures, and record exact steps and results for the walkthrough.

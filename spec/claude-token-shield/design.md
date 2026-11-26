@@ -109,7 +109,7 @@ sequenceDiagram
   M->>M: Gate.decide(assessment) (in memory, ≤ 20 ms)
   alt hold
     M-->>CC: { drop: "Token Shield: …" }
-    M->>CC: $.prompt.fill(same text)
+    CC->>U: shows the reason, puts the text back in the box
   else pass
     M-->>CC: next(e) unchanged
     CC->>M: turn.step results (usage, model, effort, cacheTtl)
@@ -137,7 +137,7 @@ sequenceDiagram
 | Session id, version, plugin root | `$.session.id()`, `$.session.version()`, `$.process.hookEnv()` (`CLAUDE_PLUGIN_ROOT`) | |
 | Context composition | `$.session.usage({ breakdown: "summary" })` | Local estimate; no API call |
 
-Every observing hook returns `next(e)` as received. No Token Shield hook returns `context`, `additionalContext`, a rewritten `text`, a `prompt.compose`/`prompt.section`/`tool.describe` answer, or a `permissionDecision` (REQ-5.0.4, REQ-10.0.3, REQ-20.0.1).
+Every observing hook returns `next(e)` as received. No Token Shield hook returns `context`, `additionalContext`, a rewritten `text`, a `prompt.compose`/`prompt.section`/`tool.describe` answer, or a `permissionDecision` (REQ-5.0.4, REQ-10.0.3, REQ-20.0.1). The one exception is the opt-in switch confirmation (D10), which adds `permissionDecision: "ask"` and a reason to `classic.PreModelSwitch`'s result, never `allow` or `deny` (REQ-10.0.6).
 
 ## Key design decisions
 
@@ -270,7 +270,7 @@ Probes, settings changes, keep-alive starts and the bridge setup are confirmed w
 
 *Why:* `$.ui.ask` runs as an `AskUserQuestion` tool call. Whether that reaches the transcript is not documented, and REQ-20.0.1 can't be risked on it. A band button is engine UI with no transcript row. It also keeps every Token Shield prompt visibly distinct from Claude Code's own (REQ-10.0.4).
 
-### D9. The submit gate holds, refills and remembers a hash only
+### D9. The submit gate holds and remembers a hash only
 
 In `prompt.submit`, the gate passes (`next(e)` untouched) when any of these is true:
 
@@ -283,14 +283,18 @@ Otherwise:
 
 1. Hash the text (SHA-256, kept in memory only, never persisted).
 2. If the same hash was held less than 60 s ago, pass `next(e)` untouched and clear the hold.
-3. Else record `{hash, at}`, return `{ drop: "Token Shield: cache COLD … ≈ $6.50 · Enter again within 60 s to send, or /compact first" }`, and call `$.prompt.fill` with the original text so Enter resends it unchanged.
+3. Else record `{hash, at}`, return `{ drop: "Token Shield: cache COLD … ≈ $6.50 · Enter again within 60 s to send, or /compact first" }`. Claude Code puts a dropped prompt back in the box itself, so Enter resends it unchanged; the gate does not call `$.prompt.fill`, which would double the text ([spikes.md](./spikes.md), §3).
 4. Show the band with the recommended lever.
 
 The gate never rewrites `text` or `context` (REQ-12.0.3). Any exception in the gate passes `next(e)` and logs the error (REQ-21.0.3).
 
-### D10. Guard: information beside Claude Code's confirmation, never instead of it
+### D10. Guard: information beside Claude Code's confirmation, and inside it only when asked
 
 - **`classic.PreModelSwitch`** with `prompt_cache_warm = true`, at or above the threshold's info level: show a toast and the band in guard mode, each headed "Token Shield". They carry Claude Code's `estimated_cache_write_usd` and the cheaper alternative (run the one-off task in a subagent on the other model; or switch after a planned `/compact`). The hook returns `next(e)` unchanged, so Claude Code's own confirmation appears as normal (REQ-10.0.3).
+  - *Timing:* Claude Code's confirmation covers the band and the status row while it is open, so the toast is the warning the user sees while deciding. It is shown with `timeoutMs: 30000` so it lasts through the decision; the band in guard mode is what remains once the dialog closes ([spikes.md](./spikes.md), §2).
+  - *One event per switch:* the engine fires the event in pairs with different `to_model` values. The guard acts on the event whose `to_model` matches the request and ignores the rest of the burst. It stays silent when `to_model` equals `from_model` (§1).
+  - *Clearing:* the band's guard mode and the status suffix end on `classic.PostModelSwitch`, on the next prompt submit, or when the snapshot shows the model did not change (no event fires on cancel).
+- **Switch confirmation (opt-in, `switchConfirm: on`):** when the event is warm and the rebuild cost reaches the threshold, the hook returns `next(e)`'s result plus `permissionDecision: "ask"` and `permissionDecisionReason: "Token Shield: this switch rebuilds the cache (812k tokens), ≈ $6.50"`. Claude Code then shows its own confirmation with that text inside it, the picker included, and the switch goes ahead only on the user's yes (REQ-10.0.6). If a hook beneath already answered `deny`, that answer stands; the guard never answers `allow` or `deny`. The reason is engine UI, not transcript content; the AC 20.1 session runs with the option on to confirm it adds no tokens. The toast and band still show as above.
 - **Effort and fast mode:** a `command.run` for `effort`/`fast` or a `config.set` on those rows, while warm, creates the pending event at once. If the rules give `WILL` for the current model and provider, the guard toasts the cost before the next request (REQ-10.0.2). Per-message-effort models give `NO_EFFECT` (AC 10.3).
 - **`/reload-plugins`:** a `MAY` event (whether it changes tools depends on the plugin). This yields `UNCERTAIN` plus an info toast. Claude Code's own warning stays.
 - In `COLD` or `INVALIDATED` the guard is silent (REQ-10.0.5).
@@ -411,6 +415,7 @@ The source of truth is `userConfig` in `plugin.json`, edited in `/config`. On se
 | `thresholdTokens` | integer > 0 | 250000 |
 | `warnWindow1h` / `warnWindow5m` | duration | 10m / 1m |
 | `gate` | `hold` \| `warn` \| `off` | `hold` |
+| `switchConfirm` | `on` \| `off` | `off` |
 | `mutedLevels` | subset of info, warning, critical | none |
 | `glyphs` | `unicode` \| `ascii` | `unicode` |
 | `keepAliveDefaultBudgetUsd` / `keepAliveDefaultMinutes` | number | 1 / 60 |
@@ -627,7 +632,7 @@ Without `--session`, `tshield check` picks the session with the newest snapshot.
 | Core unit | Vitest + coverage-v8 | reducer, assessor (one fixture per state; precedence), cost (AC 3.1 numbers), levers, recommend, gate, notify, calibrate, advice, planshare, config validation, renderers at 80 and 120 columns in both glyph sets. Targets: critical modules (assess, cost, gate, recommend) ≥ 90% lines and branches; core overall ≥ 80% lines, ≥ 70% branches |
 | Parity | Vitest + `go test` over `fixtures/parity/*.json` and `fixtures/render/*.txt` | identical `CheckView`, costs, exit-code mapping and segment text |
 | Go unit | `go test -cover` | native parsing, atomic writes, wrap and timeout, self-install, backfill cursor, CLI flags. Target ≥ 80% statements |
-| Mod behavior | `claude plugin test` | `/cache-check` display-only answer (incl. mid-turn), gate hold/refill/resubmit/61 s, guard passes `next(e)` untouched, lever bar runs `$.command.run`, clear arm/disarm timing, notifications on transitions, invalid config toast, no forbidden hook registrations (AC 5.4 also by `claude plugin validate` and a grep in CI) |
+| Mod behavior | `claude plugin test` | `/cache-check` display-only answer (incl. mid-turn), gate hold/resubmit/61 s (no `$.prompt.fill` call), switch confirmation adds `ask` only when on, warm and over the threshold, guard passes `next(e)` untouched, lever bar runs `$.command.run`, clear arm/disarm timing, notifications on transitions, invalid config toast, no forbidden hook registrations (AC 5.4 also by `claude plugin validate` and a grep in CI) |
 | Benchmarks | `go test -bench` (bridge on a 1M-token-session payload); a timing harness around the gate hook | AC 21.1, 21.2 |
 | Backtest | Go integration test over `fixtures/sessions/` | predicted vs actual outcome per request; reliability and Brier reported |
 | Manual (walkthrough) | scripted session | AC 6.1/20.1 token-count comparison with and without Token Shield; AC 10.1 screenshot; AC 13.4 80-column monochrome screenshots; AC 15.3 90-minute keep-alive; AC 20.2 network monitor |
@@ -636,7 +641,7 @@ All fixtures are synthetic: real structure, every value replaced.
 
 ## Assumptions to confirm early
 
-These engine behaviors are read from the 2.1.332 types but not yet exercised. The first implementation tasks are small spikes that confirm each one, with the fallback ready if one fails.
+These engine behaviors were read from the 2.1.332 types before they were exercised. TASK-2 confirmed each one in a live session; the results, and the decisions taken from them, are in [spikes.md](./spikes.md).
 
 | Assumption | Fallback |
 |---|---|
@@ -660,7 +665,7 @@ These engine behaviors are read from the 2.1.332 types but not yet exercised. Th
 | REQ-7 Probe | D12; `tshield check --probe` refusal (AC 7.4) |
 | REQ-8 Status segment | `renderSegment`, `$.ui.status`, D14 wrap (AC 8.3) |
 | REQ-9 Notifications and band | D13, band modes |
-| REQ-10 Guard | D10, D8 labelling |
+| REQ-10 Guard | D10 (toast during the confirmation, band after it, opt-in switch confirmation), D8 labelling, D20 `switchConfirm` |
 | REQ-11 Resume | `classic.SessionStart` adapter, band resume mode, edge-case rows |
 | REQ-12 Gate | D9, default `gate: hold` (AC 12.5), threshold config (AC 22.1) |
 | REQ-13 Visualizers | Visualizers section, `LeverButton` (AC 13.3) |
