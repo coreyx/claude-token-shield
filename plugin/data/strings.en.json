@@ -933,6 +933,46 @@
     "driver.resume": {
       "text": "resumed or forked session: timing from the last response and the last recorded TTL",
       "tense": "none"
+    },
+    "probe.confirm": {
+      "text": "Token Shield {dot} probe now? It re-sends the cached prefix ({tokens} tokens) with a one-line prompt: {approx} {warm} if warm, {approx} {cold} if cold, and the cache is warm afterwards either way.",
+      "tense": "future"
+    },
+    "probe.decline_lost": {
+      "text": "Token Shield: no probe: the cache is already lost, so a probe would just pay the rebuild. Add --force to probe anyway.",
+      "tense": "none"
+    },
+    "probe.decline_hot": {
+      "text": "Token Shield: no probe: the cache is warm with more than 5 minutes left, so a probe would only confirm it. Add --force to probe anyway.",
+      "tense": "none"
+    },
+    "probe.result": {
+      "text": "Token Shield: probe {outcome}: {read} tokens read from cache, {write} written, {uncached} uncached; cost {cost}. Warm until {time}.",
+      "tense": "past"
+    },
+    "probe.nothing": {
+      "text": "Token Shield: no probe was possible: there is no request to fork yet (or the conversation was cleared). Nothing was sent.",
+      "tense": "none"
+    },
+    "probe.failed": {
+      "text": "Token Shield: the probe didn't complete ({reason}); nothing changed.",
+      "tense": "none"
+    },
+    "probe.outcome.HIT": {
+      "text": "hit",
+      "tense": "none"
+    },
+    "probe.outcome.MISS": {
+      "text": "miss",
+      "tense": "none"
+    },
+    "probe.outcome.PARTIAL": {
+      "text": "partial hit",
+      "tense": "none"
+    },
+    "probe.cancelled": {
+      "text": "Token Shield: probe cancelled; nothing was sent.",
+      "tense": "none"
     }
   }
 }

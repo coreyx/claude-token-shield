@@ -237,7 +237,7 @@ Levers run with consent, prompts that would trigger an expensive rebuild are hel
     2. Within the TTL, compute the expiry from `seconds_since_last_response` and the session's last recorded TTL (`[inferred]`), show "warm until HH:MM" in the segment, and show no band or warning.
     3. Test: a session last active 3 hours ago shows the cost and four options; one active 10 minutes ago on a 1h TTL shows "warm until HH:MM" and no warning; the first request after resume carries no Token Shield text.
 
-- [ ] **TASK-25: Build the probe**
+- [x] **TASK-25: Build the probe**
   - **Associated Acceptance Criteria**: `7.1`, `7.2`, `7.3`
   - **Concrete Steps**:
     1. Implement `/cache-check --probe [--force]` per design D12: refusal rules, quotes for both outcomes and the side effect, shown in the confirm band.

@@ -21,7 +21,7 @@ import type {
   UnknownReason,
 } from './types';
 
-const TTL_SEC: Readonly<Record<Ttl, number>> = { '5m': 300, '1h': 3600 };
+export const TTL_SEC: Readonly<Record<Ttl, number>> = { '5m': 300, '1h': 3600 };
 
 /**
  * When the start time of the last request was not measured and its duration is

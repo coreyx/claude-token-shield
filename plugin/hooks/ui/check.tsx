@@ -6,6 +6,7 @@ import { renderCheck } from '../../core/render/check'
 import { glyphParams, glyphSet } from '../../core/render/format'
 import type { TokenShieldBand, TokenShieldLevers, TokenShieldPane } from '../../types'
 import { isCommandLever } from '../actions/levers'
+import { offerProbe } from '../actions/probe'
 import { cancelSetting, offerSetting } from '../actions/settings'
 import { host } from '../host/host'
 import { evaluateFor, isTurnRunning } from '../session/model'
@@ -23,7 +24,7 @@ export const PANE_ID = 'token-shield'
 export const LEVER_BAR_ID = 'token-shield-levers'
 
 /** Options built in later tasks; until then they say so. */
-const LATER = new Set(['--probe', '--force', 'history', 'keepalive', 'forget'])
+const LATER = new Set(['history', 'keepalive', 'forget'])
 
 /** A display-only answer: shown to the person, never sent in a request (REQ-6.0.5). */
 function shown(text: string) {
@@ -51,6 +52,7 @@ export async function answerCacheCheck($: EngineInterface, args: string, columns
   const option = words[0]
   if (option === 'setup') return shown(await offerSetup($))
   if (option === 'ttl') return shown(await offerTtl($, words.slice(1), t))
+  if (option === '--probe' && words.slice(1).every(w => w === '--force')) return shown(await offerProbe($, words.includes('--force')))
   if (option !== undefined && LATER.has(option)) return shown(t('command.not_yet', { option }))
   if (option !== undefined && option !== '--verbose' && option !== '--diff') return shown(t('command.unknown_option', { option }))
 
@@ -177,7 +179,9 @@ export async function confirmSetup($: EngineInterface): Promise<void> {
  */
 export async function cancelConfirm($: EngineInterface): Promise<void> {
   const h = host()
+  const action = (await read($, bandAtom))?.lever
   await update($, bandAtom, () => null)
   const wasSetting = await cancelSetting($)
-  if (h?.data) $.ui.toast(formatString(h.data.strings, wasSetting ? 'setting.cancelled' : 'setup.cancelled'))
+  const key = wasSetting ? 'setting.cancelled' : action === 'probe' ? 'probe.cancelled' : 'setup.cancelled'
+  if (h?.data) $.ui.toast(formatString(h.data.strings, key))
 }

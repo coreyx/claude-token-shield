@@ -4,6 +4,7 @@ import type { EngineInterface, RenderElement, RenderInput } from 'claude-code'
 import { formatString } from '../../core/data/load'
 import type { TokenShieldBand } from '../../types'
 import { host } from '../host/host'
+import { runProbe } from '../actions/probe'
 import { confirmSetting } from '../actions/settings'
 import { cancelConfirm, confirmSetup } from './check'
 
@@ -47,4 +48,5 @@ export async function drawBand($: EngineInterface, e: RenderInput<'AbovePrompt'>
 async function runConfirmed($: EngineInterface, action: string | null): Promise<void> {
   if (action === 'setup') await confirmSetup($)
   else if (action === 'setting') await confirmSetting($)
+  else if (action === 'probe') await runProbe($)
 }
