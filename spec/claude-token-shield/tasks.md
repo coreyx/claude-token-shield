@@ -348,7 +348,7 @@ Privacy, performance and coverage are verified, the manual checks are done, and 
     2. Inject a failure into each component (assessor, snapshot reader, history writer, renderer, bridge parse, wrapped command) and confirm prompts, commands and rendering continue with one debug-log entry.
     3. Fix any regression before proceeding.
 
-- [ ] **TASK-38: Audit coverage and run the backtest**
+- [x] **TASK-38: Audit coverage and run the backtest**
   - **Associated Acceptance Criteria**: `21.4`
   - **Concrete Steps**:
     1. Check that the coverage thresholds pass: critical modules ≥ 90% lines and branches, `core/` ≥ 80% lines and 70% branches, Go ≥ 80% statements. Add tests where they fall short, or propose a justified lower target.

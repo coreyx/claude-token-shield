@@ -1,0 +1,4548 @@
+{
+ "name": "steady-1h",
+ "ttl": "1h",
+ "facts": [
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-0",
+    "lane": "main",
+    "tsStart": 1767776400000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 43218,
+     "output": 1152
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776405000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780000,
+     "recache_tokens_if_cold": 44370
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776551000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780000,
+     "recache_tokens_if_cold": 44370
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-1",
+    "lane": "main",
+    "tsStart": 1767776561000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 44370,
+     "write5m": 0,
+     "write1h": 2759,
+     "output": 728
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776566000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780161,
+     "recache_tokens_if_cold": 47857
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776690000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780161,
+     "recache_tokens_if_cold": 47857
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-2",
+    "lane": "main",
+    "tsStart": 1767776700000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 47857,
+     "write5m": 0,
+     "write1h": 1779,
+     "output": 376
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776705000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780300,
+     "recache_tokens_if_cold": 50012
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776793000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780300,
+     "recache_tokens_if_cold": 50012
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-3",
+    "lane": "main",
+    "tsStart": 1767776803000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 50012,
+     "write5m": 0,
+     "write1h": 1848,
+     "output": 670
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767776808000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780403,
+     "recache_tokens_if_cold": 52530
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767779571000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767780403,
+     "recache_tokens_if_cold": 52530
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-4",
+    "lane": "main",
+    "tsStart": 1767779581000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 52530,
+     "write5m": 0,
+     "write1h": 6624,
+     "output": 863
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767779586000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767783181,
+     "recache_tokens_if_cold": 60017
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767779689000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767783181,
+     "recache_tokens_if_cold": 60017
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-5",
+    "lane": "main",
+    "tsStart": 1767779699000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 60017,
+     "write5m": 0,
+     "write1h": 2538,
+     "output": 409
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767779704000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767783299,
+     "recache_tokens_if_cold": 62964
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767784331000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 62964
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-6",
+    "lane": "main",
+    "tsStart": 1767784341000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 69471,
+     "output": 728
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767784346000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767787941,
+     "recache_tokens_if_cold": 70199
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767784375000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767787941,
+     "recache_tokens_if_cold": 70199
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-7",
+    "lane": "main",
+    "tsStart": 1767784385000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 70199,
+     "write5m": 0,
+     "write1h": 4986,
+     "output": 371
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767784390000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767787985,
+     "recache_tokens_if_cold": 75556
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767784405000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767787985,
+     "recache_tokens_if_cold": 75556
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-8",
+    "lane": "main",
+    "tsStart": 1767784415000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 75556,
+     "write5m": 0,
+     "write1h": 5513,
+     "output": 1115
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767784420000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767788015,
+     "recache_tokens_if_cold": 82184
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786028000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767788015,
+     "recache_tokens_if_cold": 82184
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-9",
+    "lane": "main",
+    "tsStart": 1767786038000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 82184,
+     "write5m": 0,
+     "write1h": 3578,
+     "output": 511
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786043000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789638,
+     "recache_tokens_if_cold": 86273
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786078000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789638,
+     "recache_tokens_if_cold": 86273
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-10",
+    "lane": "main",
+    "tsStart": 1767786088000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 86273,
+     "write5m": 0,
+     "write1h": 6795,
+     "output": 1011
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786093000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789688,
+     "recache_tokens_if_cold": 94079
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786164000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789688,
+     "recache_tokens_if_cold": 94079
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-11",
+    "lane": "main",
+    "tsStart": 1767786174000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 94079,
+     "write5m": 0,
+     "write1h": 4494,
+     "output": 714
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786179000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789774,
+     "recache_tokens_if_cold": 99287
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786225000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789774,
+     "recache_tokens_if_cold": 99287
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-12",
+    "lane": "main",
+    "tsStart": 1767786235000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 99287,
+     "write5m": 0,
+     "write1h": 5761,
+     "output": 718
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786240000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789835,
+     "recache_tokens_if_cold": 105766
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786370000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789835,
+     "recache_tokens_if_cold": 105766
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-13",
+    "lane": "main",
+    "tsStart": 1767786380000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 105766,
+     "write5m": 0,
+     "write1h": 4346,
+     "output": 952
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786385000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789980,
+     "recache_tokens_if_cold": 111064
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786409000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767789980,
+     "recache_tokens_if_cold": 111064
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-14",
+    "lane": "main",
+    "tsStart": 1767786419000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 111064,
+     "write5m": 0,
+     "write1h": 2271,
+     "output": 869
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786424000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767790019,
+     "recache_tokens_if_cold": 114204
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786492000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767790019,
+     "recache_tokens_if_cold": 114204
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-15",
+    "lane": "main",
+    "tsStart": 1767786502000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 114204,
+     "write5m": 0,
+     "write1h": 4094,
+     "output": 725
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767786507000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767790102,
+     "recache_tokens_if_cold": 119023
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767795830000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 119023
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-16",
+    "lane": "main",
+    "tsStart": 1767795840000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 125657,
+     "output": 440
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767795845000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767799440,
+     "recache_tokens_if_cold": 126097
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767798991000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767799440,
+     "recache_tokens_if_cold": 126097
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-17",
+    "lane": "main",
+    "tsStart": 1767799001000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 126097,
+     "write5m": 0,
+     "write1h": 4200,
+     "output": 384
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767799006000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767802601,
+     "recache_tokens_if_cold": 130681
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767801091000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767802601,
+     "recache_tokens_if_cold": 130681
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-18",
+    "lane": "main",
+    "tsStart": 1767801101000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 130681,
+     "write5m": 0,
+     "write1h": 3945,
+     "output": 1039
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767801106000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767804701,
+     "recache_tokens_if_cold": 135665
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767804293000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767804701,
+     "recache_tokens_if_cold": 135665
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-19",
+    "lane": "main",
+    "tsStart": 1767804303000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 135665,
+     "write5m": 0,
+     "write1h": 2963,
+     "output": 645
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767804308000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767807903,
+     "recache_tokens_if_cold": 139273
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767814453000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 139273
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-20",
+    "lane": "main",
+    "tsStart": 1767814463000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 144102,
+     "output": 1166
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767814468000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767818063,
+     "recache_tokens_if_cold": 145268
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767814551000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767818063,
+     "recache_tokens_if_cold": 145268
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-21",
+    "lane": "main",
+    "tsStart": 1767814561000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 145268,
+     "write5m": 0,
+     "write1h": 6374,
+     "output": 1145
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767814566000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767818161,
+     "recache_tokens_if_cold": 152787
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767814684000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767818161,
+     "recache_tokens_if_cold": 152787
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-22",
+    "lane": "main",
+    "tsStart": 1767814694000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 152787,
+     "write5m": 0,
+     "write1h": 2235,
+     "output": 337
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767814699000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767818294,
+     "recache_tokens_if_cold": 155359
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767817503000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767818294,
+     "recache_tokens_if_cold": 155359
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-23",
+    "lane": "main",
+    "tsStart": 1767817513000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 155359,
+     "write5m": 0,
+     "write1h": 2029,
+     "output": 967
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767817518000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767821113,
+     "recache_tokens_if_cold": 158355
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767821146000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 158355
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-24",
+    "lane": "main",
+    "tsStart": 1767821156000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 163980,
+     "output": 663
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767821161000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767824756,
+     "recache_tokens_if_cold": 164643
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767822253000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767824756,
+     "recache_tokens_if_cold": 164643
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-25",
+    "lane": "main",
+    "tsStart": 1767822263000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 164643,
+     "write5m": 0,
+     "write1h": 4929,
+     "output": 525
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767822268000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767825863,
+     "recache_tokens_if_cold": 170097
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767822304000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767825863,
+     "recache_tokens_if_cold": 170097
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-26",
+    "lane": "main",
+    "tsStart": 1767822314000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 174167,
+     "output": 421
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767822319000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767825914,
+     "recache_tokens_if_cold": 174588
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767831582000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 174588
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-27",
+    "lane": "main",
+    "tsStart": 1767831592000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 178789,
+     "output": 1117
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767831597000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767835192,
+     "recache_tokens_if_cold": 179906
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767831704000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767835192,
+     "recache_tokens_if_cold": 179906
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-28",
+    "lane": "main",
+    "tsStart": 1767831714000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 179906,
+     "write5m": 0,
+     "write1h": 4555,
+     "output": 825
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767831719000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767835314,
+     "recache_tokens_if_cold": 185286
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767831834000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767835314,
+     "recache_tokens_if_cold": 185286
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-29",
+    "lane": "main",
+    "tsStart": 1767831844000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 185286,
+     "write5m": 0,
+     "write1h": 5246,
+     "output": 931
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767831849000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767835444,
+     "recache_tokens_if_cold": 191463
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767840208000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 191463
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-30",
+    "lane": "main",
+    "tsStart": 1767840218000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 192996,
+     "output": 1098
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767840223000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767843818,
+     "recache_tokens_if_cold": 194094
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767840262000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767843818,
+     "recache_tokens_if_cold": 194094
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-31",
+    "lane": "main",
+    "tsStart": 1767840272000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 194094,
+     "write5m": 0,
+     "write1h": 6812,
+     "output": 424
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767840277000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767843872,
+     "recache_tokens_if_cold": 201330
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767841629000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767843872,
+     "recache_tokens_if_cold": 201330
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-32",
+    "lane": "main",
+    "tsStart": 1767841639000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 201330,
+     "write5m": 0,
+     "write1h": 2027,
+     "output": 474
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767841644000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767845239,
+     "recache_tokens_if_cold": 203831
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767841710000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767845239,
+     "recache_tokens_if_cold": 203831
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-33",
+    "lane": "main",
+    "tsStart": 1767841720000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 203831,
+     "write5m": 0,
+     "write1h": 3529,
+     "output": 989
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767841725000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767845320,
+     "recache_tokens_if_cold": 208349
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767844845000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767845320,
+     "recache_tokens_if_cold": 208349
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-34",
+    "lane": "main",
+    "tsStart": 1767844855000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 208349,
+     "write5m": 0,
+     "write1h": 2871,
+     "output": 1054
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767844860000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767848455,
+     "recache_tokens_if_cold": 212274
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767844917000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767848455,
+     "recache_tokens_if_cold": 212274
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-35",
+    "lane": "main",
+    "tsStart": 1767844927000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 212274,
+     "write5m": 0,
+     "write1h": 3284,
+     "output": 322
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767844932000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767848527,
+     "recache_tokens_if_cold": 215880
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767846948000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767848527,
+     "recache_tokens_if_cold": 215880
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-36",
+    "lane": "main",
+    "tsStart": 1767846958000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 215880,
+     "write5m": 0,
+     "write1h": 6105,
+     "output": 302
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767846963000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767850558,
+     "recache_tokens_if_cold": 222287
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767847091000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767850558,
+     "recache_tokens_if_cold": 222287
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-37",
+    "lane": "main",
+    "tsStart": 1767847101000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 222287,
+     "write5m": 0,
+     "write1h": 4875,
+     "output": 461
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767847106000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767850701,
+     "recache_tokens_if_cold": 227623
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767850818000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 227623
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-38",
+    "lane": "main",
+    "tsStart": 1767850828000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 232610,
+     "output": 1195
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767850833000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854428,
+     "recache_tokens_if_cold": 233805
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767850905000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854428,
+     "recache_tokens_if_cold": 233805
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-39",
+    "lane": "main",
+    "tsStart": 1767850915000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 233805,
+     "write5m": 0,
+     "write1h": 4662,
+     "output": 1148
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767850920000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854515,
+     "recache_tokens_if_cold": 239615
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767850952000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854515,
+     "recache_tokens_if_cold": 239615
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-40",
+    "lane": "main",
+    "tsStart": 1767850962000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 239615,
+     "write5m": 0,
+     "write1h": 6188,
+     "output": 1075
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767850967000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854562,
+     "recache_tokens_if_cold": 246878
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767851002000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854562,
+     "recache_tokens_if_cold": 246878
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-41",
+    "lane": "main",
+    "tsStart": 1767851012000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 246878,
+     "write5m": 0,
+     "write1h": 4248,
+     "output": 390
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767851017000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854612,
+     "recache_tokens_if_cold": 251516
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767851069000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854612,
+     "recache_tokens_if_cold": 251516
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-42",
+    "lane": "main",
+    "tsStart": 1767851079000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 251516,
+     "write5m": 0,
+     "write1h": 7131,
+     "output": 665
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767851084000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854679,
+     "recache_tokens_if_cold": 259312
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852384000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767854679,
+     "recache_tokens_if_cold": 259312
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-43",
+    "lane": "main",
+    "tsStart": 1767852394000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 266317,
+     "output": 637
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852399000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767855994,
+     "recache_tokens_if_cold": 266954
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852452000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767855994,
+     "recache_tokens_if_cold": 266954
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-44",
+    "lane": "main",
+    "tsStart": 1767852462000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 266954,
+     "write5m": 0,
+     "write1h": 2812,
+     "output": 960
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852467000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767856062,
+     "recache_tokens_if_cold": 270726
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852570000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767856062,
+     "recache_tokens_if_cold": 270726
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-45",
+    "lane": "main",
+    "tsStart": 1767852580000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 270726,
+     "write5m": 0,
+     "write1h": 6801,
+     "output": 978
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852585000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767856180,
+     "recache_tokens_if_cold": 278505
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852628000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767856180,
+     "recache_tokens_if_cold": 278505
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-46",
+    "lane": "main",
+    "tsStart": 1767852638000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 278505,
+     "write5m": 0,
+     "write1h": 6171,
+     "output": 898
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767852643000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767856238,
+     "recache_tokens_if_cold": 285574
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767854773000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767856238,
+     "recache_tokens_if_cold": 285574
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-47",
+    "lane": "main",
+    "tsStart": 1767854783000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 285574,
+     "write5m": 0,
+     "write1h": 6301,
+     "output": 722
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767854788000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767858383,
+     "recache_tokens_if_cold": 292597
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767857561000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767858383,
+     "recache_tokens_if_cold": 292597
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-48",
+    "lane": "main",
+    "tsStart": 1767857571000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 292597,
+     "write5m": 0,
+     "write1h": 2694,
+     "output": 384
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767857576000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767861171,
+     "recache_tokens_if_cold": 295675
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767859000000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767861171,
+     "recache_tokens_if_cold": 295675
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-49",
+    "lane": "main",
+    "tsStart": 1767859010000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 295675,
+     "write5m": 0,
+     "write1h": 4123,
+     "output": 684
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767859015000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767862610,
+     "recache_tokens_if_cold": 300482
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767860971000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767862610,
+     "recache_tokens_if_cold": 300482
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-50",
+    "lane": "main",
+    "tsStart": 1767860981000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 300482,
+     "write5m": 0,
+     "write1h": 5226,
+     "output": 710
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767860986000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767864581,
+     "recache_tokens_if_cold": 306418
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767861068000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767864581,
+     "recache_tokens_if_cold": 306418
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-51",
+    "lane": "main",
+    "tsStart": 1767861078000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 306418,
+     "write5m": 0,
+     "write1h": 3535,
+     "output": 947
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767861083000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767864678,
+     "recache_tokens_if_cold": 310900
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767867387000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 310900
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-52",
+    "lane": "main",
+    "tsStart": 1767867397000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 317591,
+     "output": 409
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767867402000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767870997,
+     "recache_tokens_if_cold": 318000
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871140000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 318000
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-53",
+    "lane": "main",
+    "tsStart": 1767871150000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 325176,
+     "output": 801
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871155000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767874750,
+     "recache_tokens_if_cold": 325977
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871270000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767874750,
+     "recache_tokens_if_cold": 325977
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-54",
+    "lane": "main",
+    "tsStart": 1767871280000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 325977,
+     "write5m": 0,
+     "write1h": 2070,
+     "output": 338
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871285000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767874880,
+     "recache_tokens_if_cold": 328385
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871300000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767874880,
+     "recache_tokens_if_cold": 328385
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-55",
+    "lane": "main",
+    "tsStart": 1767871310000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 328385,
+     "write5m": 0,
+     "write1h": 7220,
+     "output": 1156
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871315000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767874910,
+     "recache_tokens_if_cold": 336761
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871441000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767874910,
+     "recache_tokens_if_cold": 336761
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-56",
+    "lane": "main",
+    "tsStart": 1767871451000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 336761,
+     "write5m": 0,
+     "write1h": 4310,
+     "output": 772
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871456000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767875051,
+     "recache_tokens_if_cold": 341843
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871479000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767875051,
+     "recache_tokens_if_cold": 341843
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-57",
+    "lane": "main",
+    "tsStart": 1767871489000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 341843,
+     "write5m": 0,
+     "write1h": 6459,
+     "output": 370
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767871494000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767875089,
+     "recache_tokens_if_cold": 348672
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767872617000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767875089,
+     "recache_tokens_if_cold": 348672
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-58",
+    "lane": "main",
+    "tsStart": 1767872627000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 348672,
+     "write5m": 0,
+     "write1h": 5436,
+     "output": 1165
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767872632000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767876227,
+     "recache_tokens_if_cold": 355273
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767874755000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767876227,
+     "recache_tokens_if_cold": 355273
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-59",
+    "lane": "main",
+    "tsStart": 1767874765000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 355273,
+     "write5m": 0,
+     "write1h": 2507,
+     "output": 388
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767874770000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767878365,
+     "recache_tokens_if_cold": 358168
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767878209000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767878365,
+     "recache_tokens_if_cold": 358168
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-60",
+    "lane": "main",
+    "tsStart": 1767878219000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 358168,
+     "write5m": 0,
+     "write1h": 4948,
+     "output": 580
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767878224000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767881819,
+     "recache_tokens_if_cold": 363696
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767879428000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767881819,
+     "recache_tokens_if_cold": 363696
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-61",
+    "lane": "main",
+    "tsStart": 1767879438000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 363696,
+     "write5m": 0,
+     "write1h": 5883,
+     "output": 680
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767879443000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767883038,
+     "recache_tokens_if_cold": 370259
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767879532000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767883038,
+     "recache_tokens_if_cold": 370259
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-62",
+    "lane": "main",
+    "tsStart": 1767879542000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 370259,
+     "write5m": 0,
+     "write1h": 1878,
+     "output": 533
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767879547000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767883142,
+     "recache_tokens_if_cold": 372670
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767879575000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767883142,
+     "recache_tokens_if_cold": 372670
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-63",
+    "lane": "main",
+    "tsStart": 1767879585000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 372670,
+     "write5m": 0,
+     "write1h": 7042,
+     "output": 1192
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767879590000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767883185,
+     "recache_tokens_if_cold": 380904
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767888607000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 380904
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-64",
+    "lane": "main",
+    "tsStart": 1767888617000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 383904,
+     "output": 305
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767888622000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767892217,
+     "recache_tokens_if_cold": 384209
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767888719000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767892217,
+     "recache_tokens_if_cold": 384209
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-65",
+    "lane": "main",
+    "tsStart": 1767888729000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 384209,
+     "write5m": 0,
+     "write1h": 2631,
+     "output": 825
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767888734000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767892329,
+     "recache_tokens_if_cold": 387665
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767888790000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767892329,
+     "recache_tokens_if_cold": 387665
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-66",
+    "lane": "main",
+    "tsStart": 1767888800000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 387665,
+     "write5m": 0,
+     "write1h": 6370,
+     "output": 671
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767888805000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767892400,
+     "recache_tokens_if_cold": 394706
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767890471000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767892400,
+     "recache_tokens_if_cold": 394706
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-67",
+    "lane": "main",
+    "tsStart": 1767890481000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 394706,
+     "write5m": 0,
+     "write1h": 1631,
+     "output": 786
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767890486000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767894081,
+     "recache_tokens_if_cold": 397123
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767896739000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 397123
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-68",
+    "lane": "main",
+    "tsStart": 1767896749000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 401204,
+     "output": 1108
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767896754000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767900349,
+     "recache_tokens_if_cold": 402312
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767900351000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": false,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": null,
+     "recache_tokens_if_cold": 402312
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-69",
+    "lane": "main",
+    "tsStart": 1767900361000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 0,
+     "write5m": 0,
+     "write1h": 406776,
+     "output": 867
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767900366000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767903961,
+     "recache_tokens_if_cold": 407643
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767900387000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767903961,
+     "recache_tokens_if_cold": 407643
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-70",
+    "lane": "main",
+    "tsStart": 1767900397000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 407643,
+     "write5m": 0,
+     "write1h": 3644,
+     "output": 600
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767900402000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767903997,
+     "recache_tokens_if_cold": 411887
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767900500000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767903997,
+     "recache_tokens_if_cold": 411887
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-71",
+    "lane": "main",
+    "tsStart": 1767900510000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 411887,
+     "write5m": 0,
+     "write1h": 4040,
+     "output": 309
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767900515000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767904110,
+     "recache_tokens_if_cold": 416236
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902593000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767904110,
+     "recache_tokens_if_cold": 416236
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-72",
+    "lane": "main",
+    "tsStart": 1767902603000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 416236,
+     "write5m": 0,
+     "write1h": 5518,
+     "output": 728
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902608000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906203,
+     "recache_tokens_if_cold": 422482
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902653000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906203,
+     "recache_tokens_if_cold": 422482
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-73",
+    "lane": "main",
+    "tsStart": 1767902663000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 422482,
+     "write5m": 0,
+     "write1h": 1989,
+     "output": 799
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902668000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906263,
+     "recache_tokens_if_cold": 425270
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902778000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906263,
+     "recache_tokens_if_cold": 425270
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-74",
+    "lane": "main",
+    "tsStart": 1767902788000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 425270,
+     "write5m": 0,
+     "write1h": 6973,
+     "output": 979
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902793000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906388,
+     "recache_tokens_if_cold": 433222
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902923000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906388,
+     "recache_tokens_if_cold": 433222
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-75",
+    "lane": "main",
+    "tsStart": 1767902933000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 433222,
+     "write5m": 0,
+     "write1h": 5344,
+     "output": 1088
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902938000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906533,
+     "recache_tokens_if_cold": 439654
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902968000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906533,
+     "recache_tokens_if_cold": 439654
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-76",
+    "lane": "main",
+    "tsStart": 1767902978000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 439654,
+     "write5m": 0,
+     "write1h": 6596,
+     "output": 1104
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767902983000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906578,
+     "recache_tokens_if_cold": 447354
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767903056000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906578,
+     "recache_tokens_if_cold": 447354
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-77",
+    "lane": "main",
+    "tsStart": 1767903066000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 447354,
+     "write5m": 0,
+     "write1h": 4007,
+     "output": 378
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767903071000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906666,
+     "recache_tokens_if_cold": 451739
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767904715000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767906666,
+     "recache_tokens_if_cold": 451739
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-78",
+    "lane": "main",
+    "tsStart": 1767904725000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 451739,
+     "write5m": 0,
+     "write1h": 5921,
+     "output": 1098
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767904730000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767908325,
+     "recache_tokens_if_cold": 458758
+    }
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767904863000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767908325,
+     "recache_tokens_if_cold": 458758
+    }
+   }
+  },
+  {
+   "kind": "request",
+   "request": {
+    "id": "steady-1h-79",
+    "lane": "main",
+    "tsStart": 1767904873000,
+    "tsStartTier": "measured",
+    "durationMs": 4000,
+    "model": "claude-opus-5-5",
+    "speed": "standard",
+    "ttl": "1h",
+    "usage": {
+     "input": 10,
+     "read": 458758,
+     "write5m": 0,
+     "write1h": 6010,
+     "output": 676
+    },
+    "source": "mod"
+   }
+  },
+  {
+   "kind": "snapshot",
+   "receivedAt": 1767904878000,
+   "payload": {
+    "session_id": "00000103-0000-4000-8000-000000000103",
+    "model": {
+     "id": "claude-opus-5-5"
+    },
+    "version": "2.1.332",
+    "prompt_cache": {
+     "warm": true,
+     "caching_observed": true,
+     "ttl": "1h",
+     "expires_at": 1767908473,
+     "recache_tokens_if_cold": 465444
+    }
+   }
+  }
+ ]
+}
