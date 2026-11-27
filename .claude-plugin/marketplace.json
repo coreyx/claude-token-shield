@@ -1,0 +1,20 @@
+{
+  "name": "token-shield",
+  "owner": { "name": "coreyx" },
+  "metadata": {
+    "description": "Token Shield: prompt-cache awareness for long Claude Code sessions."
+  },
+  "plugins": [
+    {
+      "name": "token-shield",
+      "description": "Prompt-cache awareness for long Claude Code sessions: trustworthy cache state, priced levers, and guards before expensive rebuilds.",
+      "homepage": "https://github.com/coreyx/claude-token-shield",
+      "license": "MIT",
+      "source": {
+        "source": "github",
+        "repo": "coreyx/claude-token-shield",
+        "ref": "release"
+      }
+    }
+  ]
+}

@@ -74,6 +74,13 @@ jobs:
       - name: Bridge latency (p95 per round)
         run: go test -count=1 -run TestP95 -v ./internal/bridge | grep -E 'round|ok|FAIL'
 
+      # The release build cross-compiles every target, so one that stops
+      # compiling fails here rather than at a release tag. One OS is enough:
+      # cross-compiling gives the same binaries from any of them.
+      - name: Build every release target
+        if: matrix.os == 'ubuntu-latest'
+        run: node scripts/build-release.mjs "$(node -p "require('./plugin/.claude-plugin/plugin.json').version")"
+
       # Validation reads the manifest and module offline; it needs no sign-in.
       # The hooks module itself is type-checked by validate here: tsc against
       # the engine's types needs files the engine writes when it loads the mod,
