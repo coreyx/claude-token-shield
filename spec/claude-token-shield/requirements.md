@@ -411,13 +411,13 @@ Source: derived from the analysis design doc (§3.2, §8.1).
 
 Source: derived from `product.md` (Constraints: privacy; Goals 4) and the analysis design doc (§3.3, §8.6).
 
-- **20.0.1 (Ubiquitous)**: No Token Shield surface shall write context: no transcript messages sent to the model, no injected hook context, no command output sent in requests.
+- **20.0.1 (Ubiquitous)**: No Token Shield surface shall write context: no transcript message of its own sent to the model, no injected hook context, and no command output sent in requests. The note Claude Code records in the conversation for every slash command a user types, built-in or plugin, giving the command's name without its arguments or output, is Claude Code's and outside this requirement.
 - **20.0.2 (Ubiquitous)**: The system shall store data only on the user's machine, in a location outside any project directory.
 - **20.0.3 (Ubiquitous)**: The system shall make network requests only for an action the user approved (a probe or keep-alive), and only through Claude Code.
 - **20.0.4 (Ubiquitous)**: The system shall not store prompt text, response text, file contents or tool results.
 
 #### Acceptance Criteria
-- **20.1**: Over a scripted session that exercises every Token Shield surface, total input tokens equal those of the same session with Token Shield disabled, apart from approved probe or keep-alive requests.
+- **20.1**: Over a scripted session that exercises every Token Shield surface, total input tokens equal those of the same session with Token Shield disabled, apart from approved probe or keep-alive requests and Claude Code's note for each Token Shield command typed (its name only, about 40 tokens, carried into each later request), and the session's requests contain no text from any Token Shield output.
 - **20.2**: With network access monitored, Token Shield makes no connection outside approved actions.
 - **20.3**: The store sits under the user's home directory and contains no strings from the session's prompts or responses.
 

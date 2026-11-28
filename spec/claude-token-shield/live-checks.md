@@ -63,7 +63,7 @@ It prints numbers only: one line per request with the model it went to, then the
 | Token Shield on | | | |
 | Token Shield off | | | |
 
-**Pass:** the totals match apart from small differences in the model's own answers (compare the per-request figures if they differ), and the answer to step 6 is "no".
+**Pass:** both runs' requests went to the same models in the same order. The on run's totals are larger only by Claude Code's note for each Token Shield command typed (about 40 tokens each, its name only, carried into every later request: AC 20.1) and by small differences in the model's own answers; compare the per-request figures to tell these apart. The answer to step 6 is "no".
 
 ## Check 2: no network traffic from Token Shield (AC 20.2)
 

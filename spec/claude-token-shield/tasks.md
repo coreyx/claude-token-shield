@@ -337,7 +337,7 @@ Privacy, performance and coverage are verified, the manual checks are done, and 
   - **Associated Acceptance Criteria**: `1.2`, `5.4`, `6.1`, `20.1`, `20.2`, `20.3`
   - **Concrete Steps**:
     1. Add an automated test that runs a scripted fixture session through every surface and searches the whole data directory for the fixture's prompt, response and tool strings.
-    2. Run a live scripted session twice, with Token Shield enabled and disabled, exercising every surface, with `switchConfirm` on. Compare total input tokens (equal apart from approved probe or keep-alive requests), and confirm the request after `/cache-check` carries none of its output.
+    2. Run a live scripted session twice, with Token Shield enabled and disabled, exercising every surface, with `switchConfirm` on. Compare total input tokens (equal apart from what AC 20.1 allows: approved probe or keep-alive requests and Claude Code's per-command note), and confirm the request after `/cache-check` carries none of its output.
     3. Monitor network connections during that session and confirm none come from Token Shield outside approved actions.
     4. Confirm `claude plugin validate` and the CI check show no forbidden hooks. Record results for the walkthrough.
 
