@@ -32,7 +32,7 @@ Run this once:
 
 Token Shield shows what it will change, and nothing changes until you press **Confirm**. Setup copies the companions to `~/.token-shield/bin/` and points Claude Code's status line at the bridge, which records Claude Code's cache signals for Token Shield and still runs any status line you already had. Restart Claude Code afterwards. Without setup Token Shield still works, with less certainty about the cache.
 
-Settings are in `/config` under Token Shield: the rebuild thresholds, the submit gate (`hold`, `warn` or `off`), expiry warnings, `switchConfirm`, keep-alive defaults, glyphs (`ascii` for terminals that can't draw the symbols) and how many days of history to keep.
+Settings are in `/config` under Token Shield: the rebuild thresholds, the submit gate (`hold`, `warn` or `off`), expiry warnings, **Confirm costly model switches**, keep-alive defaults, glyphs (`ascii` for terminals that can't draw the symbols) and how many days of history to keep.
 
 ## Commands
 
@@ -60,7 +60,7 @@ Settings are in `/config` under Token Shield: the rebuild thresholds, the submit
 - **Band** above the prompt: a warning as expiry approaches, the cost of a pending action, and **Confirm** and **Cancel** buttons when Token Shield asks before acting.
 - **Toasts** when something changes the cache's state, such as a model or effort switch or a resumed session.
 - **Submit gate**: a prompt that would rebuild the cache above your threshold is held until you send it again (or only warned about, or neither, as you choose).
-- **Model-switch guard**: the rebuild cost of a warm switch, shown as a toast or, with `switchConfirm` on, inside Claude Code's own confirmation.
+- **Model-switch guard**: the rebuild cost of a warm switch, shown as a toast or, with **Confirm costly model switches** on in `/config`, inside Claude Code's own confirmation.
 
 On a subscription, costs are shown in tokens and API-equivalent dollars; the thresholds work in tokens.
 

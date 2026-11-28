@@ -35,7 +35,7 @@ The checks the automated suites can't make, for TASK-36 (steps 2–3) and TASK-4
 
 2. Make a throwaway project folder with a small README in it, so the scripted session has something to read.
 3. Start Claude Code there with the plugin loaded: `claude --plugin-dir <repo>/plugin`. Run `/cache-check setup` and press **Confirm**, then restart Claude Code so the statusline bridge is active.
-4. In `/config`, set Token Shield's **switchConfirm** to `on`.
+4. In `/config`, set Token Shield's **Confirm costly model switches** to `on`.
 
 ## Check 1: the same session costs the same tokens with Token Shield on and off (AC 20.1)
 
@@ -82,19 +82,19 @@ While running the session with Token Shield on, watch for connections from its t
 
 ## Check 3: the model-switch guard on screen (AC 10.1, 10.5)
 
-1. With a warm cache (send a prompt, then switch within a few minutes) and **switchConfirm off**, run `/model sonnet`. Capture the screen while Claude Code's confirmation is open: its own confirmation unchanged, and the Token Shield toast with the rebuild cost at the top.
-2. Set **switchConfirm on** and repeat with `/model sonnet`, and again through the model picker (`/model` with no argument). Capture each: the cost line starting **Token Shield:** inside Claude Code's confirmation.
+1. With a warm cache (send a prompt, then switch within a few minutes) and **Confirm costly model switches** set to `off`, run `/model sonnet`. Capture the screen while Claude Code's confirmation is open: its own confirmation unchanged, and the Token Shield toast with the rebuild cost at the top.
+2. Set **Confirm costly model switches** to `on` and repeat with `/model sonnet`, and again through the model picker (`/model` with no argument). Capture each: the cost line starting **Token Shield:** inside Claude Code's confirmation.
 3. Cancel one switch and confirm the other; the switch happens only on confirm.
 
 | Capture | Done |
 |---|---|
-| switchConfirm off, `/model sonnet` | |
-| switchConfirm on, `/model sonnet` | |
-| switchConfirm on, picker | |
+| Confirm costly model switches off, `/model sonnet` | |
+| Confirm costly model switches on, `/model sonnet` | |
+| Confirm costly model switches on, picker | |
 
 ## Check 4: every view at 80 columns without colour (AC 13.4)
 
-Resize the terminal to 80 columns and turn colour off (`NO_COLOR=1` in the environment before starting Claude Code). Capture `/cache-check`, `/cache-check --verbose`, and each pane view: `/cache-view map`, `runway`, `levers`, `context` and `history`. Then set Token Shield's **glyphs** to `ascii` and capture `/cache-check` once more.
+Resize the terminal to 80 columns and turn colour off (`NO_COLOR=1` in the environment before starting Claude Code). Capture `/cache-check`, `/cache-check --verbose`, and each pane view: `/cache-view map`, `runway`, `levers`, `context` and `history`. Then set Token Shield's **Glyphs** to `ascii` and capture `/cache-check` once more.
 
 **Pass:** every line fits, and every state and pattern reads from its glyph or label alone.
 
