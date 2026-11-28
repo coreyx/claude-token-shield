@@ -17,6 +17,7 @@ import { cancelKeepAliveOffer, offerKeepAlive } from '../actions/keepalive'
 import { offerProbe } from '../actions/probe'
 import { offerBackfillOnce, offerForget } from '../actions/store'
 import { cancelSetting, offerSetting } from '../actions/settings'
+import { describeProblem } from '../host/companions'
 import { host } from '../host/host'
 import { flushHistory, historySessions, readSessionHistory } from '../persist/history'
 import { evaluateFor, isTurnRunning } from '../session/model'
@@ -242,7 +243,7 @@ async function offerSetup($: EngineInterface): Promise<string> {
   const h = host()!
   const s = h.data!.strings
   const g = glyphParams(glyphSet(h.config.glyphs))
-  if (h.companions.bin === null) return formatString(s, 'setup.no_binary')
+  if (h.companions.bin === null) return formatString(s, 'setup.no_binary', { reason: describeProblem(s, h.companions.problem) })
   const text = formatString(s, 'setup.confirm', g)
   await update($, bandAtom, () => ({ mode: 'confirm' as const, text, lever: 'setup' }))
   return text

@@ -74,7 +74,7 @@ export async function startHost($: EngineInterface, options: Readonly<Record<str
     companions = await resolveCompanions($)
   } catch (err) {
     reportFailure($, 'companions', err)
-    companions = { bin: null, dataDir: '', available: false, version: null }
+    companions = { bin: null, dataDir: '', available: false, version: null, problem: null }
   }
   try {
     await mirrorConfig($, companions.dataDir, config)

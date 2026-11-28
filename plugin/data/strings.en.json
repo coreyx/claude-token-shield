@@ -859,7 +859,23 @@
       "tense": "none"
     },
     "setup.no_binary": {
-      "text": "Token Shield: the tshield binary isn't available on this machine, so the bridge can't be set up here.",
+      "text": "Token Shield: the statusline bridge can't be set up, because {reason}.",
+      "tense": "none"
+    },
+    "companions.not_found": {
+      "text": "{path} isn't there: rebuild it or reinstall Token Shield, then restart Claude Code",
+      "tense": "none"
+    },
+    "companions.not_runnable": {
+      "text": "{path} is there but didn't run: rebuild it or reinstall Token Shield, then restart Claude Code",
+      "tense": "none"
+    },
+    "companions.no_platform": {
+      "text": "Token Shield has no tshield build for this machine ({platform})",
+      "tense": "none"
+    },
+    "companions.unchecked": {
+      "text": "Token Shield couldn't look for tshield when the session started: restart Claude Code to try again",
       "tense": "none"
     },
     "setup.done": {
@@ -1291,7 +1307,7 @@
       "tense": "none"
     },
     "forget.no_binary": {
-      "text": "Token Shield: deleting history needs the tshield binary, which isn't available here.",
+      "text": "Token Shield: deleting history needs the tshield binary, and {reason}.",
       "tense": "none"
     },
     "forget.cancelled": {

@@ -30,6 +30,8 @@ export interface EngineOptions {
   rules?: string
   /** Answer as if the companion binary ran (data in /home/example/.token-shield). */
   binary?: boolean
+  /** A file sits at the binary's path but doesn't run, as a broken build would. */
+  brokenBinary?: boolean
   env?: Record<string, string>
   model?: string
   now?: number
@@ -87,6 +89,7 @@ export function engine(on: On, o: EngineOptions = {}): Seen {
   })
   on('fs.exists', (_, e) => {
     const p = norm(e.path)
+    if (o.brokenBinary === true && p.includes('/bin/linux-amd64/tshield')) return { value: true }
     return { value: seen.files.has(p) || [...seen.files.keys()].some(k => k.startsWith(`${p}/`)) }
   })
   on('fs.stat', (_, e) => {

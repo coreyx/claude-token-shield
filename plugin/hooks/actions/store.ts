@@ -5,6 +5,7 @@ import { formatString } from '../../core/data/load'
 import { glyphParams, glyphSet } from '../../core/render/format'
 import type { TokenShieldBand } from '../../types'
 import { reportFailure } from '../host/failure'
+import { describeProblem } from '../host/companions'
 import { host } from '../host/host'
 
 /** The band, set to confirm mode for forget and the backfill offer. */
@@ -53,7 +54,8 @@ export async function pruneInBackground($: EngineInterface): Promise<void> {
 export async function offerForget($: EngineInterface): Promise<string> {
   const t = formatter()
   if (t === null) return 'Token Shield: not started.'
-  if (!host()?.companions.bin) return t('forget.no_binary')
+  const h = host()!
+  if (!h.companions.bin) return t('forget.no_binary', { reason: describeProblem(h.data!.strings, h.companions.problem) })
   const text = t('forget.confirm')
   await update($, bandAtom, () => ({ mode: 'confirm' as const, text, lever: 'forget' }))
   return text

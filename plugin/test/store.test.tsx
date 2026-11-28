@@ -34,10 +34,12 @@ test('/cache-check forget asks first, then deletes through tshield forget --yes 
   await band.unmount()
 })
 
-test('without the tshield binary, forget says it needs it', async ($, on) => {
+test('without the tshield binary, forget says it needs it and names the path it tried', async ($, on) => {
   engine(on)
   await $.session.start(START)
-  expect((await $.command.run(check('forget'))).text).toBe("Token Shield: deleting history needs the tshield binary, which isn't available here.")
+  expect((await $.command.run(check('forget'))).text).toMatch(
+    /^Token Shield: deleting history needs the tshield binary, and \S*\/bin\/linux-amd64\/tshield isn't there: rebuild it or reinstall Token Shield, then restart Claude Code\.$/,
+  )
 })
 
 test('after setup, the backfill is offered once and runs only on Confirm (design D17)', async ($, on) => {

@@ -2,6 +2,9 @@ import type { On } from 'claude-code'
 import { expect, test } from 'claude-code/testing'
 import type { Engine } from 'claude-code/testing'
 
+import { parseStrings } from '../core/data/load'
+import { describeProblem } from '../hooks/host/companions'
+import { STRINGS_JSON } from './data.generated'
 import { engine, SESSION, START, T0 } from './engine'
 import type { Seen } from './engine'
 
@@ -132,6 +135,30 @@ test('/cache-check setup asks in the band and runs tshield setup on Confirm', as
   expect(seen.runs.some(r => r[1] === 'setup' && r[2] === '--yes')).toBe(true)
   expect(seen.toasts.some(t => /setup didn't complete|bridge is set up/.test(t))).toBe(true)
   await band.unmount()
+})
+
+test('without the binary, setup names the path it tried and offers nothing', async ($, on) => {
+  const seen = engine(on)
+  uiCalls(on)
+  await $.session.start(START)
+  const { text } = await $.command.run(check('setup'))
+  expect(text).toMatch(/^Token Shield: the statusline bridge can't be set up, because \S*\/bin\/linux-amd64\/tshield isn't there: rebuild it or reinstall Token Shield, then restart Claude Code\.$/)
+  expect(seen.runs.some(r => r[1] === 'setup')).toBe(false)
+})
+
+test('a binary that is there but does not run is named as such', async ($, on) => {
+  engine(on, { brokenBinary: true })
+  uiCalls(on)
+  await $.session.start(START)
+  const { text } = await $.command.run(check('setup'))
+  expect(text).toMatch(/because \S*\/bin\/linux-amd64\/tshield is there but didn't run: rebuild it or reinstall Token Shield/)
+})
+
+test('the other reasons a binary is missing read as complete clauses', () => {
+  const s = parseStrings(STRINGS_JSON)
+  expect(describeProblem(s, { kind: 'no-platform', platform: 'FreeBSD riscv64' })).toBe('Token Shield has no tshield build for this machine (FreeBSD riscv64)')
+  expect(describeProblem(s, null)).toBe("Token Shield couldn't look for tshield when the session started: restart Claude Code to try again")
+  expect(describeProblem(s, { kind: 'not-runnable', path: 'C:\\example\\bin\\windows-amd64\\tshield.exe' })).toBe("C:\\example\\bin\\windows-amd64\\tshield.exe is there but didn't run: rebuild it or reinstall Token Shield, then restart Claude Code")
 })
 
 test('an unknown option says what works', async ($, on) => {
