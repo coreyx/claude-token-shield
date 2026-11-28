@@ -68,7 +68,7 @@ On a subscription, costs are shown in tokens and API-equivalent dollars; the thr
 
 - **Nothing leaves your machine.** Token Shield sends no data anywhere. The companions contain no networking code, which a test checks on every build.
 - **No prompt text is kept.** History records numbers only: token counts, timestamps, model names and cache states. A test sweeps everything Token Shield writes, shows and logs for prompt, answer and tool text, and finds none.
-- **Nothing reaches the model.** Token Shield's output is drawn for you and never added to the conversation, and it never changes what Claude Code sends.
+- **Nothing Token Shield shows reaches the model.** Its output is drawn for you and never added to the conversation. Claude Code itself still notes in the conversation that a command was run, by name only, as it does for every slash command: about 40 tokens each, without the command's arguments or output.
 - **Nothing is spent without you.** A probe or a keep-alive runs only after you confirm it, a keep-alive within the budget you set.
 
 Data lives in `~/.token-shield/` (or `TOKEN_SHIELD_HOME`). History older than the configured number of days is removed automatically, and `/cache-check forget` removes all of it.

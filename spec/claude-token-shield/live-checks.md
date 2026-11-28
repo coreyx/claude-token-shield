@@ -39,8 +39,9 @@ The checks the automated suites can't make, for TASK-36 (steps 2–3) and TASK-4
 
 ## Check 1: the same session costs the same tokens with Token Shield on and off (AC 20.1)
 
-Run this script twice in fresh sessions in the same folder: once with the plugin loaded, once without (`claude` with no `--plugin-dir`). Type the prompts exactly. Lines marked *(on only)* are Token Shield's commands; skip them in the run without it.
+Run this script twice in fresh sessions in the same folder: once with the plugin loaded, once without (`claude` with no `--plugin-dir`). Type the prompts exactly. Lines marked *(on only)* are Token Shield's commands; skip them in the run without it. Note which session id is which run as you go.
 
+0. `/model opus`. Claude Code saves a `/model` choice as the default for later sessions, so step 5 of the first run would otherwise start the second run on Sonnet, and the runs wouldn't be comparable.
 1. `Read README.md and summarize it in three lines.`
 2. *(on only)* `/cache-check`, then `/cache-check --verbose`, then `/cache-view map` (close the pane), then `/cache-check history`.
 3. `List two improvements to that README, one line each.`
@@ -52,10 +53,10 @@ Run this script twice in fresh sessions in the same folder: once with the plugin
 Then total each run's input tokens from its transcript (under `~/.claude/projects/<project>/<session id>.jsonl`; the newest file in that project folder is the session you just ran):
 
 ```
-node scripts/sum-transcript.mjs <transcript.jsonl>
+node scripts/sum-transcript.mjs <transcript.jsonl> --per-request
 ```
 
-It prints numbers only. Don't run a probe or a keep-alive in either session: those are the approved requests the comparison may differ by.
+It prints numbers only: one line per request with the model it went to, then the totals. Check that both runs' requests went to the same models in the same order (Opus, then Sonnet for the last). Don't run a probe or a keep-alive in either session: those are the approved requests the comparison may differ by.
 
 | | Requests | Total input tokens | Model's answer to step 6 |
 |---|---|---|---|
