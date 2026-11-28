@@ -8,13 +8,30 @@ The checks the automated suites can't make, for TASK-36 (steps 2–3) and TASK-4
 
 ## Before you start
 
-1. Build the companions for this machine from the repository root (the release workflow does this for every platform; locally it's one command each):
+1. Build the companions for this machine from the repository root (the release workflow does this for every platform; locally it's two commands). Each `-o` must be paired with its own `./cmd/...` folder: pointing `go build -o` at any other package writes a library archive under the `.exe` name, which can't run.
 
-   | OS | Commands |
-   |---|---|
-   | Windows | `go build -o plugin/bin/windows-amd64/tshield.exe ./cmd/tshield` and `go build -o plugin/bin/windows-amd64/tshield-statusline.exe ./cmd/tshield-statusline` |
-   | macOS (Apple silicon) | `go build -o plugin/bin/darwin-arm64/tshield ./cmd/tshield` and the same for `tshield-statusline` |
-   | Linux | `go build -o plugin/bin/linux-amd64/tshield ./cmd/tshield` and the same for `tshield-statusline` |
+   Windows:
+
+   ```
+   go build -o plugin/bin/windows-amd64/tshield.exe ./cmd/tshield
+   go build -o plugin/bin/windows-amd64/tshield-statusline.exe ./cmd/tshield-statusline
+   ```
+
+   macOS (Apple silicon):
+
+   ```
+   go build -o plugin/bin/darwin-arm64/tshield ./cmd/tshield
+   go build -o plugin/bin/darwin-arm64/tshield-statusline ./cmd/tshield-statusline
+   ```
+
+   Linux (x64):
+
+   ```
+   go build -o plugin/bin/linux-amd64/tshield ./cmd/tshield
+   go build -o plugin/bin/linux-amd64/tshield-statusline ./cmd/tshield-statusline
+   ```
+
+   Then check the build answers, using the same folder: `plugin/bin/windows-amd64/tshield.exe version --json` (or `plugin/bin/<os>-<arch>/tshield version --json`) prints one line of JSON with `"os"` and `"arch"`. If it errors instead, rebuild before going on. Token Shield checks for the binary when a session starts, so a session that was already open when you rebuilt needs a restart.
 
 2. Make a throwaway project folder with a small README in it, so the scripted session has something to read.
 3. Start Claude Code there with the plugin loaded: `claude --plugin-dir <repo>/plugin`. Run `/cache-check setup` and press **Confirm**, then restart Claude Code so the statusline bridge is active.
